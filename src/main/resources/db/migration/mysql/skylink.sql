@@ -1,4 +1,3 @@
-
 create table flight (
     id int primary key,
     flight_number varchar(20) unique not null,
