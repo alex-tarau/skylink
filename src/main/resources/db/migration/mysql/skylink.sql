@@ -34,19 +34,19 @@ create table airline (
 
 create table reservation (
     id int primary key,
-    payment_status VARCHAR(20),
-    flight_id INT,
-    passenger_id INT,
+    payment_status varchar(20),
+    flight_id int not null,
+    passenger_id int not null,
     constraint fk$flight$id foreign key (flight_id) references flight (id)
     constraint fk$passenger$id foreign key (passenger_id) references passenger (id)
 );
 
 create table payment (
     id int primary key,
-    reservation_id INT UNIQUE,
-    method VARCHAR(50),
-    amount decimal(10, 2),
-    created_at DATETIME,
-    sent_at DATETIME,
+    reservation_id int unique not null,
+    method varchar(50) not null,
+    amount decimal(10, 2) not null,
+    created_at DATETIME not null,
+    sent_at DATETIME not null,
     constraint fk$reservation$id foreign key (reservation_id) references reservation (id)
 );
