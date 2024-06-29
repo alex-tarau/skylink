@@ -14,13 +14,15 @@ create table airline (
 
 create table flight (
     id int primary key auto_increment,
-    airport_id int not null,
+    origin_airport_id int not null,
+    destination_airport_id int not null,
     airline_id int not null,
     flight_number varchar(20) unique not null,
     departure datetime not null,
     arrival datetime not null,
     available_seats int not null,
-    constraint fk$airport$id foreign key (airport_id) references airport (id),
+    constraint fk$origin_airport$id foreign key (origin_airport_id) references airport (id),
+    constraint fk$destination_airport$id foreign key (destination_airport_id) references airport (id),
     constraint fk$airline$id foreign key (airline_id) references airline (id)
 );
 
