@@ -44,7 +44,7 @@ create table reservation (
 
 create table payment (
     id int primary key auto_increment,
-    reservation_id int unique not null,
+    reservation_id int not null,
     method varchar(50) not null,
     amount decimal(10, 2) not null,
     created_at datetime not null,
