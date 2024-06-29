@@ -37,7 +37,7 @@ create table reservation (
     id int primary key auto_increment,
     flight_id int not null,
     passenger_id int not null,
-    status varchar(20) not null,
+    status Enum('OPEN','PENDING','SUCCESS','FAIL','CANCEL') not null,
     constraint fk$flight$id foreign key (flight_id) references flight (id),
     constraint fk$passenger$id foreign key (passenger_id) references passenger (id)
 );
