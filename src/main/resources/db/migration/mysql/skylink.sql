@@ -19,8 +19,6 @@ create table flight (
     flight_number varchar(20) unique not null,
     departure datetime not null,
     arrival datetime not null,
-    origin varchar(3),
-    destination varchar(3),
     available_seats int not null,
     constraint fk$airport$id foreign key (airport_id) references airport (id),
     constraint fk$airline$id foreign key (airline_id) references airline (id)
