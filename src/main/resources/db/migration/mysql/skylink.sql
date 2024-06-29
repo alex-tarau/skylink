@@ -16,7 +16,7 @@ create table flight (
     id int primary key,
     flight_number varchar(20) unique not null,
     departure datetime not null,
-    arrival datetime,
+    arrival datetime not null,
     available_seats int not null,
     airport_id int not null,
     airline_id int not null
@@ -29,13 +29,13 @@ create table passenger (
     first_name varchar(50) not null,
     last_name varchar(50) not null,
     email varchar(100) not null,
-    passport_number varchar(20) not null
+    number varchar(20) not null
 );
 
 
 create table reservation (
     id int primary key,
-    payment_status varchar(20),
+    status varchar(20),
     flight_id int not null,
     passenger_id int not null,
     constraint fk$flight$id foreign key (flight_id) references flight (id)
@@ -47,7 +47,7 @@ create table payment (
     reservation_id int unique not null,
     method varchar(50) not null,
     amount decimal(10, 2) not null,
-    created_at DATETIME not null,
-    sent_at DATETIME not null,
+    created_at datetime not null,
+    sent_at datetime not null,
     constraint fk$reservation$id foreign key (reservation_id) references reservation (id)
 );
