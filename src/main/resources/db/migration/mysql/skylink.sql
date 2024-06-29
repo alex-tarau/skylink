@@ -1,3 +1,17 @@
+create table airport (
+    id int primary key,
+    airport_code varchar(3) not null,
+    name varchar(100),
+    location varchar(255),
+);
+
+create table airline (
+    id int primary key,
+    name varchar(100) not null,
+    contact_number varchar(20) not null,
+    operating_region varchar(100) not null
+);
+
 create table flight (
     id int primary key,
     flight_number varchar(20) unique not null,
@@ -18,19 +32,6 @@ create table passenger (
     passport_number varchar(20) not null
 );
 
-create table airport (
-    id int primary key,
-    airport_code varchar(3) not null,
-    name varchar(100),
-    location varchar(255),
-);
-
-create table airline (
-    id int primary key,
-    name varchar(100) not null,
-    contact_number varchar(20) not null,
-    operating_region varchar(100) not null
-);
 
 create table reservation (
     id int primary key,
