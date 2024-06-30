@@ -3,6 +3,7 @@ package net.microflax.skylink.jpa;
 import jakarta.persistence.*;
 
 import java.util.Objects;
+
 @Entity
 @Table(name = "passenger")
 public class Passenger {
@@ -12,17 +13,14 @@ public class Passenger {
     @Column(name = "id")
     private int id;
 
-    @Column(name = "first_name",nullable = false,length = 50)
+    @Column(name = "first_name", nullable = false, length = 50)
     private String firstName;
 
-    @Column(name = "last_name",nullable = false,length = 50)
+    @Column(name = "last_name", nullable = false, length = 50)
     private String lastName;
 
-    @Column(name = "email",nullable = false,length = 100)
+    @Column(name = "email", nullable = false, length = 100)
     private String email;
-
-    @Column(name = "passport_number",nullable = false,length = 20)
-    private String passportNumber;
 
     public int getId() {
         return id;
@@ -56,14 +54,6 @@ public class Passenger {
         this.email = email;
     }
 
-    public String getPassportNumber() {
-        return passportNumber;
-    }
-
-    public void setPassportNumber(String passportNumber) {
-        this.passportNumber = passportNumber;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -83,7 +73,6 @@ public class Passenger {
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
-                ", passportNumber='" + passportNumber + '\'' +
                 '}';
     }
 }

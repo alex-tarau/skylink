@@ -1,6 +1,6 @@
 create table airport (
     id int primary key auto_increment,
-    airport_code varchar(3) not null,
+    code varchar(3) not null,
     name varchar(100) not null,
     location varchar(255) not null
 );
@@ -30,16 +30,29 @@ create table passenger (
     id int primary key auto_increment,
     first_name varchar(50) not null,
     last_name varchar(50) not null,
-    email varchar(100) not null,
-    passport_number varchar(20) not null
+    email varchar(100) not null
 );
 
+create table passport(
+    id int primary key auto_increment,
+    passenger_id int not null,
+    first_name varchar(50) not null,
+    last_name varchar(50) not null,
+    birth_date date not null,
+    created_at datetime not null,
+    modified_at datetime,
+    expiration_date datetime not null,
+    passport_number varchar(20) not null,
+    constraint fk$passenger$id foreign key (passenger_id) references passenger (id)
+);
 
 create table reservation (
     id int primary key auto_increment,
     flight_id int not null,
     passenger_id int not null,
-    status Enum('OPEN','PENDING','SUCCESS','FAIL','CANCEL') not null,
+    created_at datetime not null,
+    sent_at datetime not null,
+    modified_at datetime,
     constraint fk$flight$id foreign key (flight_id) references flight (id),
     constraint fk$passenger$id foreign key (passenger_id) references passenger (id)
 );
@@ -49,7 +62,9 @@ create table payment (
     reservation_id int not null,
     method varchar(50) not null,
     amount decimal(10, 2) not null,
+    status Enum('OPEN','PENDING','SUCCESS','FAIL','CANCEL') not null,
     created_at datetime not null,
     sent_at datetime not null,
+    modified_at datetime,
     constraint fk$reservation$id foreign key (reservation_id) references reservation (id)
 );
