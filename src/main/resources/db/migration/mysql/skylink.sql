@@ -5,6 +5,15 @@ create table airport (
     location varchar(255) not null
 );
 
+create table location (
+    id int primary key auto_increment,
+    airport_id int not null,
+    street varchar(100) unique not null,
+    city varchar(100) not null,
+    country varchar(100) not null,
+    constraint fk$airport$id foreign key (airport_id) references airport (id)
+);
+
 create table airline (
     id int primary key auto_increment,
     name varchar(100) not null,
@@ -43,7 +52,7 @@ create table passport(
     modified_at datetime,
     expiration_date datetime not null,
     passport_number varchar(20) not null,
-    constraint fk$passenger$id foreign key (passenger_id) references passenger (id)
+    constraint fk$passenger_passport$id foreign key (passenger_id) references passenger (id)
 );
 
 create table reservation (
@@ -54,7 +63,7 @@ create table reservation (
     sent_at datetime not null,
     modified_at datetime,
     constraint fk$flight$id foreign key (flight_id) references flight (id),
-    constraint fk$passenger$id foreign key (passenger_id) references passenger (id)
+    constraint fk$passenger_reservation$id foreign key (passenger_id) references passenger (id)
 );
 
 create table payment (
