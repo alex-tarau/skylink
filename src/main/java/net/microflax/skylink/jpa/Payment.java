@@ -19,7 +19,7 @@ public class Payment {
     @Column(name = "method", nullable = false, length = 50)
     private String method;
 
-    @Column(name = "amount", nullable = false)
+    @Column(name = "amount", nullable = false,precision = 2)
     private float amount;
 
     @Column(name = "status", nullable = false)
