@@ -1,7 +1,7 @@
 create table airport (
     id int primary key auto_increment,
     code varchar(3) not null,
-    name varchar(100) not null,
+    name varchar(100) unique not null,
     location varchar(255) not null
 );
 
@@ -16,7 +16,7 @@ create table location (
 
 create table airline (
     id int primary key auto_increment,
-    name varchar(100) not null,
+    name varchar(100) unique not null,
     contact_number varchar(20) not null,
     operating_region varchar(100) not null
 );
