@@ -13,14 +13,14 @@ public class Airline {
     @Column(name = "id")
     private int id;
 
-    @Column(name = "name", nullable = false, length = 100)
+    @Column(name = "name", nullable = false, unique = true, length = 100)
     private String name;
 
     @Column(name = "contact_number",nullable = false,length = 20)
     private String contactNumber;
 
     @Column(name = "operating_region",nullable = false,length = 100)
-    private String operatingNumber;
+    private String operatingRegion;
 
     public int getId() {
         return id;
@@ -46,12 +46,12 @@ public class Airline {
         this.contactNumber = contactNumber;
     }
 
-    public String getOperatingNumber() {
-        return operatingNumber;
+    public String getOperatingRegion() {
+        return operatingRegion;
     }
 
-    public void setOperatingNumber(String operatingNumber) {
-        this.operatingNumber = operatingNumber;
+    public void setOperatingRegion(String operatingRegion) {
+        this.operatingRegion = operatingRegion;
     }
 
     @Override
@@ -72,7 +72,7 @@ public class Airline {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", contactNumber='" + contactNumber + '\'' +
-                ", operatingNumber='" + operatingNumber + '\'' +
+                ", operatingNumber='" + operatingRegion + '\'' +
                 '}';
     }
 }
