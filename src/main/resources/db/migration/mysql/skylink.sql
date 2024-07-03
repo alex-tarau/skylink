@@ -1,14 +1,13 @@
 create table airport (
     id int primary key auto_increment,
     code varchar(3) not null,
-    name varchar(100) unique not null,
-    location varchar(255) not null
+    name varchar(100) unique not null
 );
 
 create table location (
     id int primary key auto_increment,
     airport_id int not null,
-    street varchar(100) unique not null,
+    street varchar(100) not null,
     city varchar(100) not null,
     country varchar(100) not null,
     constraint fk$airport$id foreign key (airport_id) references airport (id)
