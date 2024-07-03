@@ -19,8 +19,6 @@ public class Airport {
     @Column(name = "name", unique = true, nullable = false, length = 100)
     private String name;
 
-    @Column(name = "location", nullable = false)
-    private String location;
 
     public int getId() {
         return id;
@@ -46,13 +44,7 @@ public class Airport {
         this.name = name;
     }
 
-    public String getLocation() {
-        return location;
-    }
 
-    public void setLocation(String location) {
-        this.location = location;
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -72,7 +64,6 @@ public class Airport {
                 "id=" + id +
                 ", airportCode='" + airportCode + '\'' +
                 ", name='" + name + '\'' +
-                ", location='" + location + '\'' +
                 '}';
     }
 }
