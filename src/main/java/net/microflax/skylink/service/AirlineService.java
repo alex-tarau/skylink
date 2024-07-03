@@ -6,29 +6,28 @@ import com.github.javafaker.Faker;
 import com.github.javafaker.PhoneNumber;
 import net.microflax.skylink.jpa.Airline;
 import net.microflax.skylink.jpa.AirlineRepository;
+import net.microflax.skylink.jpa.Location;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 @Service
-public class AirlineService {
+public class AirlineService extends AbstractService {
 
     @Autowired
     private AirlineRepository airlineRepository;
-    private final Faker faker = new Faker();
     private final PhoneNumber phoneNumber = faker.phoneNumber();
-    private final Country country = faker.country();
 
 
-    public void persistAirlines() {
+    @Override
+    public void persist() {
         int numberOfAirlines=0;
-        while (numberOfAirlines < 6){
+        while (numberOfAirlines < NUMBER_OF_ENTITIES_TO_PERSIST){
             Airline airline = createAirline();
             airlineRepository.save(airline);
             numberOfAirlines++;
         }
     }
-
 
     private Airline createAirline() {
         Airline airline = new Airline();
