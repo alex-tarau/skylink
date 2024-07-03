@@ -40,12 +40,17 @@ class AirlineServiceTest {
     void setUp() {
         airline = new Airline();
         when(airlineRepository.save(airline)).thenReturn(airline);
+        when(airlineRepository.save(airline)).thenReturn(airline);
+        when(airlineRepository.save(airline)).thenReturn(airline);
+        when(airlineRepository.save(airline)).thenReturn(airline);
+        when(airlineRepository.save(airline)).thenReturn(airline);
+        when(airlineRepository.save(airline)).thenReturn(airline);
     }
 
 
     @Test
-    void persistAirline() {
-        airlineService.persistAirlines();
+    void persist() {
+        airlineService.persist();
         verify(airlineRepository,times(6)).save(airline);
     }
 }
