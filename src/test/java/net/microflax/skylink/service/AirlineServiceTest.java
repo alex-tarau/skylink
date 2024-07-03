@@ -49,8 +49,8 @@ class AirlineServiceTest {
 
 
     @Test
-    void persist() {
-        airlineService.persist();
+    void generate() {
+        airlineService.generate();
         verify(airlineRepository,times(6)).save(airline);
     }
 }
