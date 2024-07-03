@@ -12,15 +12,20 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 @Service
-public class AirlineService extends AbstractService {
+public class AirlineService extends AbstractService<Airline> {
 
     @Autowired
     private AirlineRepository airlineRepository;
-    private final PhoneNumber phoneNumber = faker.phoneNumber();
+    private final PhoneNumber phoneNumber = getFaker().phoneNumber();
 
 
     @Override
-    public void persist() {
+    public void persist(Airline airline) {
+
+    }
+
+    @Override
+    public void generate() {
         int numberOfAirlines=0;
         while (numberOfAirlines < NUMBER_OF_ENTITIES_TO_PERSIST){
             Airline airline = createAirline();
@@ -32,7 +37,7 @@ public class AirlineService extends AbstractService {
     private Airline createAirline() {
         Airline airline = new Airline();
         airline.setContactNumber(phoneNumber.phoneNumber());
-        String countryName = country.name();
+        String countryName = getCountry().name();
         airline.setName("Air " + countryName);
         airline.setOperatingRegion(countryName);
         return airline;

@@ -11,16 +11,21 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class AirportService extends AbstractService {
+public class AirportService extends AbstractService<Airport> {
 
     @Autowired
     private AirportRepository airportRepository;
     @Autowired
     private LocationRepository locationRepository;
-    private final Address address = faker.address();
+    private final Address address = getFaker().address();
 
     @Override
-    public void persist() {
+    public void persist(Airport airport) {
+
+    }
+
+    @Override
+    public void generate() {
         int numberOfAirports = 0;
         while (numberOfAirports < NUMBER_OF_ENTITIES_TO_PERSIST) {
             Location location = createLocation();
@@ -31,8 +36,8 @@ public class AirportService extends AbstractService {
 
     private Airport createAirport() {
         Airport airport = new Airport();
-        airport.setAirportCode(aviation.airport().substring(0, 2));
-        airport.setName(country.name() + "airport");
+        airport.setAirportCode(getAviation().airport().substring(0, 2));
+        airport.setName(getCountry().name() + "airport");
         return airport;
     }
 
