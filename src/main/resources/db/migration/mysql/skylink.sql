@@ -50,7 +50,7 @@ create table passport(
     created_at datetime not null,
     modified_at datetime,
     expiration_date datetime not null,
-    passport_number varchar(20) not null,
+    passport_number varchar(9) not null,
     constraint fk$passenger_passport$id foreign key (passenger_id) references passenger (id)
 );
 
