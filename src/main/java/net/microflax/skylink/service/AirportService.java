@@ -34,7 +34,7 @@ public class AirportService extends AbstractService<Airport> {
         }
     }
 
-    private Airport createAirport() {
+    public Airport createAirport() {
         Airport airport = new Airport();
         airport.setAirportCode(getAviation().airport().substring(0, 2));
         airport.setName(getCountry().name() + "airport");

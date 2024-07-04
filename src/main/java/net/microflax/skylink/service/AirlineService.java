@@ -28,13 +28,12 @@ public class AirlineService extends AbstractService<Airline> {
     public void generate() {
         int numberOfAirlines=0;
         while (numberOfAirlines < NUMBER_OF_ENTITIES_TO_PERSIST){
-            Airline airline = createAirline();
-            airlineRepository.save(airline);
+            airlineRepository.save(createAirline());
             numberOfAirlines++;
         }
     }
 
-    private Airline createAirline() {
+    public Airline createAirline() {
         Airline airline = new Airline();
         airline.setContactNumber(phoneNumber.phoneNumber());
         String countryName = getCountry().name();

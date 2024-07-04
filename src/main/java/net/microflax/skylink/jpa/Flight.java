@@ -26,7 +26,7 @@ public class Flight {
     @JoinColumn(name = "airline_id")
     private Airline airline;
 
-    @Column(name = "flight_number",nullable = false)
+    @Column(name = "flight_number",unique = true, nullable = false)
     private String flightNumber;
 
     @Column(name = "departure",nullable = false)

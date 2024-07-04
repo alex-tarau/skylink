@@ -27,8 +27,6 @@ public class PassengerService extends AbstractService<Passenger> {
 
     private final Name name = getFaker().name();
     private final Internet internet = getFaker().internet();
-    private final DateAndTime dateAndTime = getFaker().date();
-    private final Number number = getFaker().number();
 
 
     @Override
@@ -74,7 +72,7 @@ public class PassengerService extends AbstractService<Passenger> {
         passport.setCreatedAt(LocalDateTime.now());
         passport.setFirstName(passenger.getFirstName());
         passport.setLastName(passenger.getLastName());
-        passport.setBirthDate(dateAndTime.birthday().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+        passport.setBirthDate(getDateAndTime().birthday().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
         passport.setPassport_number(generatePassportNumber());
         passport.setExpirationDate(passport.getCreatedAt().plusYears(10));
         return passport;

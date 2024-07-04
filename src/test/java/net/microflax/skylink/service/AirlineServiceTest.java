@@ -39,12 +39,6 @@ class AirlineServiceTest {
     @BeforeEach
     void setUp() {
         airline = new Airline();
-        when(airlineRepository.save(airline)).thenReturn(airline);
-        when(airlineRepository.save(airline)).thenReturn(airline);
-        when(airlineRepository.save(airline)).thenReturn(airline);
-        when(airlineRepository.save(airline)).thenReturn(airline);
-        when(airlineRepository.save(airline)).thenReturn(airline);
-        when(airlineRepository.save(airline)).thenReturn(airline);
     }
 
 

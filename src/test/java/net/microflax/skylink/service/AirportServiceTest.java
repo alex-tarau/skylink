@@ -41,18 +41,6 @@ class AirportServiceTest {
     void setUp(){
         airport= new Airport();
         location= new Location();
-        when(airportRepository.save(airport)).thenReturn(airport);
-        when(airportRepository.save(airport)).thenReturn(airport);
-        when(airportRepository.save(airport)).thenReturn(airport);
-        when(airportRepository.save(airport)).thenReturn(airport);
-        when(airportRepository.save(airport)).thenReturn(airport);
-        when(airportRepository.save(airport)).thenReturn(airport);
-        when(locationRepository.save(location)).thenReturn(location);
-        when(locationRepository.save(location)).thenReturn(location);
-        when(locationRepository.save(location)).thenReturn(location);
-        when(locationRepository.save(location)).thenReturn(location);
-        when(locationRepository.save(location)).thenReturn(location);
-        when(locationRepository.save(location)).thenReturn(location);
     }
 
 

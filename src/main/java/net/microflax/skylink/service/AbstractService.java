@@ -2,6 +2,7 @@ package net.microflax.skylink.service;
 
 import com.github.javafaker.Aviation;
 import com.github.javafaker.Country;
+import com.github.javafaker.DateAndTime;
 import com.github.javafaker.Faker;
 import org.slf4j.Logger;
 
@@ -10,6 +11,7 @@ public abstract class AbstractService<E> {
     private final Faker faker = new Faker();
     private final Aviation aviation = faker.aviation();
     private final Country country = faker.country();
+    private final DateAndTime dateAndTime = getFaker().date();
     protected static final int NUMBER_OF_ENTITIES_TO_PERSIST = 6;
 
     /**
@@ -32,5 +34,9 @@ public abstract class AbstractService<E> {
 
     public Aviation getAviation() {
         return aviation;
+    }
+
+    public DateAndTime getDateAndTime() {
+        return dateAndTime;
     }
 }

@@ -40,8 +40,6 @@ class PassengerServiceTest {
     @Mock
     private DateAndTime dateAndTime;
 
-    @Mock
-    private Lorem lorem;
 
     @InjectMocks
     private PassengerService passengerService;
@@ -50,18 +48,6 @@ class PassengerServiceTest {
     void setUp() {
         passenger = new Passenger();
         passport = new Passport();
-        when(passengerRepository.save(passenger)).thenReturn(passenger);
-        when(passengerRepository.save(passenger)).thenReturn(passenger);
-        when(passengerRepository.save(passenger)).thenReturn(passenger);
-        when(passengerRepository.save(passenger)).thenReturn(passenger);
-        when(passengerRepository.save(passenger)).thenReturn(passenger);
-        when(passengerRepository.save(passenger)).thenReturn(passenger);
-        when(passportRepository.save(passport)).thenReturn(passport);
-        when(passportRepository.save(passport)).thenReturn(passport);
-        when(passportRepository.save(passport)).thenReturn(passport);
-        when(passportRepository.save(passport)).thenReturn(passport);
-        when(passportRepository.save(passport)).thenReturn(passport);
-        when(passportRepository.save(passport)).thenReturn(passport);
     }
 
 
