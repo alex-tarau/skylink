@@ -1,12 +1,18 @@
 package net.microflax.skylink.service;
 
 import com.github.javafaker.*;
+import com.github.javafaker.Number;
 import net.microflax.skylink.jpa.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.Random;
 import java.util.UUID;
 
@@ -22,20 +28,24 @@ public class PassengerService extends AbstractService<Passenger> {
     private final Name name = getFaker().name();
     private final Internet internet = getFaker().internet();
     private final DateAndTime dateAndTime = getFaker().date();
-    private final Lorem lorem = getFaker().lorem();
+    private final Number number = getFaker().number();
 
 
     @Override
     public void persist(Passenger passenger) {
-        Passenger jpaPassenger = createPassenger(passenger);
-        passengerRepository.save(jpaPassenger);
-        Passport jpaPassport = createPassport(jpaPassenger);
-        passportRepository.save(jpaPassport);
+
     }
 
     @Override
     public void generate() {
-
+        int numberOfPassengers = 0;
+        while (numberOfPassengers < NUMBER_OF_ENTITIES_TO_PERSIST) {
+            Passenger passenger = createPassenger(new Passenger());
+            passengerRepository.save(passenger);
+            Passport passport= createPassport(passenger);
+            passportRepository.save(passport);
+            numberOfPassengers++;
+        }
     }
 
     public void renewPassport(int id) {
@@ -64,23 +74,14 @@ public class PassengerService extends AbstractService<Passenger> {
         passport.setCreatedAt(LocalDateTime.now());
         passport.setFirstName(passenger.getFirstName());
         passport.setLastName(passenger.getLastName());
-        passport.setBirthDate(LocalDate.parse(dateAndTime.birthday().toString()));
+        passport.setBirthDate(dateAndTime.birthday().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
         passport.setPassport_number(generatePassportNumber());
         passport.setExpirationDate(passport.getCreatedAt().plusYears(10));
         return passport;
     }
 
     private String generatePassportNumber() {
-        String passportNumber = lorem.characters(9, true, true).toUpperCase();
-        char firstCharacter = passportNumber.charAt(0);
-        if (firstCharacter == 'A' || firstCharacter == 'I' || firstCharacter == 'E' || firstCharacter == 'O' ||
-                firstCharacter == 'U') {
-            return passportNumber;
-        } else {
-            char[] vowels = {'A', 'I', 'E', 'O', 'U'};
-            return vowels[new Random().nextInt(vowels.length)] + lorem.characters(8,
-                    true, true).toUpperCase();
-        }
+            return getFaker().bothify("?"+"#".repeat(7),true);
     }
 
 }
