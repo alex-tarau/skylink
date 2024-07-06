@@ -50,7 +50,7 @@ public class FlightService extends AbstractService<Flight> {
         flight.setAvailableSeats((int) number.randomNumber(3, true));
         flight.setOriginAirport(airportService.createAirport());
         flight.setDestinationAirport(airportService.createAirport());
-        flight.setAirline(airlineService.createAirline());
+        //flight.setAirline(airlineService.createAirline());
         flight.setFlightNumber(generateFlightNumber(flight));
         return flight;
     }

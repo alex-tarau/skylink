@@ -70,7 +70,7 @@ class FlightServiceTest {
         airline.setName("Air Canada");
         flight = new Flight();
         when(airportService.createAirport()).thenReturn(airport);
-        when(airlineService.createAirline()).thenReturn(airline);
+        //when(airlineService.createAirline()).thenReturn(airline);
     }
 
     @Test
