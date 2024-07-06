@@ -1,6 +1,8 @@
-package net.microflax.skylink.jpa;
+package net.microflax.skylink.flight;
 
 import jakarta.persistence.*;
+import net.microflax.skylink.airline.Airline;
+import net.microflax.skylink.airport.Airport;
 
 import java.time.LocalDateTime;
 import java.util.Objects;

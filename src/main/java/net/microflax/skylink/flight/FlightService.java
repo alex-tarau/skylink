@@ -1,16 +1,13 @@
-package net.microflax.skylink.service;
+package net.microflax.skylink.flight;
 
 import com.github.javafaker.Number;
-import net.microflax.skylink.jpa.*;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.time.FastDateParser;
+import net.microflax.skylink.airline.AirlineService;
+import net.microflax.skylink.airport.AirportService;
+import net.microflax.skylink.AbstractService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
-import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 @Service

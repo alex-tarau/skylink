@@ -1,4 +1,4 @@
-package net.microflax.skylink.jpa;
+package net.microflax.skylink.passenger;
 
 import jakarta.persistence.*;
 

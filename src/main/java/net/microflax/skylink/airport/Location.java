@@ -1,4 +1,4 @@
-package net.microflax.skylink.jpa;
+package net.microflax.skylink.airport;
 
 import jakarta.persistence.*;
 
@@ -13,6 +13,7 @@ public class Location {
     @Column(name = "id")
     private int id;
 
+    @ManyToOne
     @JoinColumn(name = "airport_id", nullable = false)
     private Airport airport;
 

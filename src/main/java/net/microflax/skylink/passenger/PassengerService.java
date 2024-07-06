@@ -1,21 +1,14 @@
-package net.microflax.skylink.service;
+package net.microflax.skylink.passenger;
 
 import com.github.javafaker.*;
-import com.github.javafaker.Number;
-import net.microflax.skylink.jpa.*;
+import net.microflax.skylink.AbstractService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.stereotype.Service;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.time.format.FormatStyle;
-import java.util.Date;
-import java.util.Random;
-import java.util.UUID;
 
 @Service
 public class PassengerService extends AbstractService<Passenger> {

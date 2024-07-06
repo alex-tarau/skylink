@@ -1,10 +1,9 @@
-package net.microflax.skylink.service;
+package net.microflax.skylink;
 
 import com.github.javafaker.Aviation;
 import com.github.javafaker.Country;
 import com.github.javafaker.DateAndTime;
 import com.github.javafaker.Faker;
-import org.slf4j.Logger;
 
 public abstract class AbstractService<E> {
 

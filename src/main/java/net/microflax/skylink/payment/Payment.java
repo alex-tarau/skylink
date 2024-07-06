@@ -1,6 +1,7 @@
-package net.microflax.skylink.jpa;
+package net.microflax.skylink.payment;
 
 import jakarta.persistence.*;
+import net.microflax.skylink.reservation.Reservation;
 
 import java.time.LocalDateTime;
 

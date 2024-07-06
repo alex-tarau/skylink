@@ -4,19 +4,23 @@ import com.github.javafaker.Address;
 import com.github.javafaker.Faker;
 import com.github.javafaker.Number;
 import com.github.javafaker.PhoneNumber;
-import net.microflax.skylink.jpa.*;
+import net.microflax.skylink.airline.Airline;
+import net.microflax.skylink.airline.AirlineRepository;
+import net.microflax.skylink.airline.AirlineService;
+import net.microflax.skylink.airport.Airport;
+import net.microflax.skylink.airport.AirportRepository;
+import net.microflax.skylink.airport.AirportService;
+import net.microflax.skylink.flight.Flight;
+import net.microflax.skylink.flight.FlightRepository;
+import net.microflax.skylink.flight.FlightService;
+import net.microflax.skylink.airport.LocationRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)

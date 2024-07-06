@@ -1,14 +1,9 @@
-package net.microflax.skylink.service;
+package net.microflax.skylink.airport;
 
 import com.github.javafaker.Address;
-import com.github.javafaker.Aviation;
-import com.github.javafaker.Country;
-import com.github.javafaker.Faker;
-import net.microflax.skylink.jpa.*;
+import net.microflax.skylink.AbstractService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 public class AirportService extends AbstractService<Airport> {

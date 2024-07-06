@@ -1,4 +1,4 @@
-package net.microflax.skylink.jpa;
+package net.microflax.skylink.passenger;
 
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 @Transactional
-public interface AirportRepository extends JpaRepository<Airport,Integer> {
+public interface PassengerRepository extends JpaRepository<Passenger,Integer> {
 }

@@ -1,4 +1,4 @@
-package net.microflax.skylink.jpa;
+package net.microflax.skylink.airport;
 
 import jakarta.persistence.*;
 
@@ -13,7 +13,7 @@ public class Airport {
     @Column(name = "id")
     private int id;
 
-    @Column(name = "airport_code", nullable = false, length = 3)
+    @Column(name = "code", nullable = false, length = 3)
     private String airportCode;
 
     @Column(name = "name", unique = true, nullable = false, length = 100)
