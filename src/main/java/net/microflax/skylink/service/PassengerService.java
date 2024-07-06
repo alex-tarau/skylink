@@ -12,6 +12,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.Date;
 import java.util.Random;
 import java.util.UUID;
@@ -31,7 +32,15 @@ public class PassengerService extends AbstractService<Passenger> {
 
     @Override
     public void persist(Passenger passenger) {
+        passengerRepository.save(passenger);
+        passportRepository.save(createPassport(passenger));
+    }
 
+    public void persistPassport(Passenger passenger,String birthDate){
+        passengerRepository.save(passenger);
+        Passport passport = createPassport(passenger);
+        passport.setBirthDate(LocalDate.parse(birthDate,DateTimeFormatter.ofPattern("DD-MM-YYYY")));
+        passportRepository.save(passport);
     }
 
     @Override
@@ -40,12 +49,15 @@ public class PassengerService extends AbstractService<Passenger> {
         while (numberOfPassengers < NUMBER_OF_ENTITIES_TO_PERSIST) {
             Passenger passenger = createPassenger(new Passenger());
             passengerRepository.save(passenger);
-            Passport passport= createPassport(passenger);
-            passportRepository.save(passport);
+            passportRepository.save(createPassport(passenger));
             numberOfPassengers++;
         }
     }
 
+    /**
+     * Renew the passport
+     * @param id the id of the passport to renew
+     */
     public void renewPassport(int id) {
         Passport newPassport = passportRepository.findById(id).get();
         if ((LocalDateTime.now().getYear() - newPassport.getCreatedAt().getYear()) <= 15) {
@@ -67,7 +79,7 @@ public class PassengerService extends AbstractService<Passenger> {
     }
 
     private Passport createPassport(Passenger passenger) {
-        Passport passport= new Passport();
+        Passport passport = new Passport();
         passport.setPassenger(passenger);
         passport.setCreatedAt(LocalDateTime.now());
         passport.setFirstName(passenger.getFirstName());
@@ -79,7 +91,7 @@ public class PassengerService extends AbstractService<Passenger> {
     }
 
     private String generatePassportNumber() {
-            return getFaker().bothify("?"+"#".repeat(7),true);
+        return getFaker().bothify("?" + "#".repeat(7), true);
     }
 
 }

@@ -44,10 +44,6 @@ public class FlightService extends AbstractService<Flight> {
         }
     }
 
-    public LocalDateTime formatFlightTime(String localDateTime) {
-        return LocalDateTime.parse(localDateTime, DateTimeFormatter.ofPattern("YYYY-MM-DDThh:mm"));
-    }
-
     private Flight createFlight() {
         Flight flight = new Flight();
         flight.setArrival(getDateAndTime().past(10, TimeUnit.DAYS).toInstant().atZone(ZoneId.systemDefault()).
