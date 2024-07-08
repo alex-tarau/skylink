@@ -11,16 +11,18 @@ public class Payment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private int id;
 
     @ManyToOne
     @JoinColumn(name = "reservation_id")
     private Reservation reservation;
 
-    @Column(name = "method", nullable = false, length = 50)
+    @Column(name = "method", nullable = false)
+    @Enumerated(EnumType.STRING)
     private String method;
 
-    @Column(name = "amount", nullable = false,precision = 2)
+    @Column(name = "amount", nullable = false, precision = 2)
     private float amount;
 
     @Column(name = "status", nullable = false)
@@ -30,7 +32,7 @@ public class Payment {
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 
-    @Column(name = "sent_at", nullable = false)
+    @Column(name = "sent_at")
     private LocalDateTime sentAt;
 
     @Column(name = "modified_at")
@@ -135,5 +137,24 @@ public class Payment {
          * The payment is canceled
          */
         CANCEL
+    }
+
+    public enum Method {
+        /**
+         * payment with credit card
+         */
+        CREDIT,
+        /**
+         * payment with debit card
+         */
+        DEBIT,
+        /**
+         * payment with credit card
+         */
+        MASTER,
+        /**
+         * payment with Paypal
+         */
+        PAY_PAL,
     }
 }

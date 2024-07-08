@@ -13,6 +13,7 @@ public class Reservation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private int id;
 
     @ManyToOne
@@ -25,9 +26,6 @@ public class Reservation {
 
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
-
-    @Column(name = "sent_at", nullable = false)
-    private LocalDateTime sentAt;
 
     @Column(name = "modified_at")
     private LocalDateTime modifiedAt;
@@ -64,14 +62,6 @@ public class Reservation {
         this.createdAt = createdAt;
     }
 
-    public LocalDateTime getSentAt() {
-        return sentAt;
-    }
-
-    public void setSentAt(LocalDateTime sentAt) {
-        this.sentAt = sentAt;
-    }
-
     public LocalDateTime getModifiedAt() {
         return modifiedAt;
     }
@@ -99,7 +89,6 @@ public class Reservation {
                 ", flight=" + flight +
                 ", passenger=" + passenger +
                 ", createdAt=" + createdAt +
-                ", sentAt=" + sentAt +
                 ", modifiedAt=" + modifiedAt +
                 '}';
     }

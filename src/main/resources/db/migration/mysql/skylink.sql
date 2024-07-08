@@ -59,7 +59,6 @@ create table reservation (
     flight_id int not null,
     passenger_id int not null,
     created_at datetime not null,
-    sent_at datetime not null,
     modified_at datetime,
     constraint fk$flight$id foreign key (flight_id) references flight (id),
     constraint fk$passenger_reservation$id foreign key (passenger_id) references passenger (id)
@@ -68,11 +67,11 @@ create table reservation (
 create table payment (
     id int primary key auto_increment,
     reservation_id int not null,
-    method varchar(50) not null,
+    method ENUM('CREDIT','DEBIT','MASTER','PAYPAL') not null,
     amount decimal(10, 2) not null,
     status Enum('OPEN','PENDING','SUCCESS','FAIL','CANCEL') not null,
     created_at datetime not null,
-    sent_at datetime not null,
+    sent_at datetime,
     modified_at datetime,
     constraint fk$reservation$id foreign key (reservation_id) references reservation (id)
 );
