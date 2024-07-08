@@ -1,11 +1,7 @@
 package net.microflax.skylink.service;
 
 import com.github.javafaker.*;
-import net.microflax.skylink.airport.Airport;
-import net.microflax.skylink.airport.AirportRepository;
-import net.microflax.skylink.airport.AirportService;
-import net.microflax.skylink.airport.Location;
-import net.microflax.skylink.airport.LocationRepository;
+import net.microflax.skylink.airport.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -13,20 +9,12 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class AirportServiceTest {
 
-
-    @Mock
-    private Faker faker;
-
-    @Mock
-    private Aviation aviation;
-
-    @Mock
-    private Address address;
 
     private Airport airport;
     private Location location;
@@ -37,6 +25,9 @@ class AirportServiceTest {
     @Mock
     private LocationRepository locationRepository;
 
+    @Mock
+    private AirportSimulator airportSimulator;
+
     @InjectMocks
     private AirportService airportService;
 
@@ -44,13 +35,16 @@ class AirportServiceTest {
     void setUp(){
         airport= new Airport();
         location= new Location();
+        location.setAirport(airport);
+        when(airportRepository.save(airport)).thenReturn(airport);
+        when(locationRepository.save(location)).thenReturn(location);
     }
 
 
     @Test
-    void generate() {
-        airportService.generate();
-        verify(airportRepository,times(6)).save(airport);
-        verify(locationRepository,times(6)).save(location);
+    void persist(){
+        airportService.persist(airport,location);
+        verify(airportRepository).save(airport);
+        verify(locationRepository).save(location);
     }
 }

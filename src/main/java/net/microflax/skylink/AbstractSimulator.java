@@ -7,6 +7,8 @@ import net.microflax.skylink.airport.Location;
 import net.microflax.skylink.flight.Flight;
 import net.microflax.skylink.passenger.Passenger;
 import net.microflax.skylink.passenger.Passport;
+import net.microflax.skylink.payment.Payment;
+import net.microflax.skylink.reservation.Reservation;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -15,8 +17,11 @@ import java.util.concurrent.TimeUnit;
 public abstract class AbstractSimulator {
 
     private final Faker faker = new Faker();
-    protected static final int NUMBER_OF_ENTITIES_TO_PERSIST = 6;
+    private static final int NUMBER_OF_ENTITIES_TO_PERSIST = 6;
 
+    /**
+     * Run the simulator
+     */
     public void run(){
         int i=0;
         while (i < NUMBER_OF_ENTITIES_TO_PERSIST){
@@ -24,7 +29,11 @@ public abstract class AbstractSimulator {
             i++;
         }
     }
-    protected abstract void simulate();
+
+    /**
+     * Simulate data
+     */
+     protected abstract void simulate();
 
 
     public final Airline createAirline() {
@@ -44,12 +53,11 @@ public abstract class AbstractSimulator {
     }
 
 
-    public final Location createLocation() {
+    public final Location createLocation(Airport airport) {
         Location location = new Location();
         location.setStreet(faker.address().streetAddress());
         location.setCountry(faker.address().country());
         location.setCity(faker.address().cityName());
-        Airport airport = createAirport();
         location.setAirport(airport);
         return location;
     }
@@ -74,7 +82,7 @@ public abstract class AbstractSimulator {
     }
 
     public final String generatePassportNumber() {
-        return faker.bothify("?" + "#".repeat(7), true);
+        return faker.bothify("?" + "#".repeat(8), true);
     }
 
 
@@ -92,7 +100,27 @@ public abstract class AbstractSimulator {
         return flight;
     }
 
-    public final String generateFlightNumber(Flight flight) {
+    public final Reservation createReservation(){
+        Reservation reservation= new Reservation();
+        reservation.setCreatedAt(LocalDateTime.now());
+        reservation.setSentAt(LocalDateTime.now());
+        reservation.setFlight(createFlight());
+        reservation.setPassenger(createPassenger(new Passenger()));
+        return reservation;
+    }
+
+    public final Payment createPayment(){
+        Payment payment= new Payment();
+        payment.setCreatedAt(LocalDateTime.now());
+        payment.setAmount((float) faker.number().randomDouble(2,300,500));
+        payment.setMethod("");
+        payment.setReservation(createReservation());
+        payment.setSentAt(LocalDateTime.now());
+        payment.setStatus(Payment.Status.SUCCESS);
+        return payment;
+    }
+
+    private String generateFlightNumber(Flight flight) {
         String[] data = flight.getAirline().getName().split(" ");
         return String.valueOf(data[0].charAt(0)) + data[1].charAt(0) + faker.number().randomNumber(4,
                 false);

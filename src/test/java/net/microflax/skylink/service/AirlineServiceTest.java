@@ -6,6 +6,7 @@ import com.github.javafaker.PhoneNumber;
 import net.microflax.skylink.airline.Airline;
 import net.microflax.skylink.airline.AirlineRepository;
 import net.microflax.skylink.airline.AirlineService;
+import net.microflax.skylink.airline.AirlineSimulator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -18,19 +19,14 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 class AirlineServiceTest {
 
-    @Mock
-    private Faker faker;
-
-    @Mock
-    private PhoneNumber phoneNumber;
-
-    @Mock
-    private Country country;
 
     private Airline airline;
 
     @Mock
     private AirlineRepository airlineRepository;
+
+    @Mock
+    private AirlineSimulator airlineSimulator;
 
     @InjectMocks
     private AirlineService airlineService;
@@ -38,12 +34,13 @@ class AirlineServiceTest {
     @BeforeEach
     void setUp() {
         airline = new Airline();
+        when(airlineRepository.save(airline)).thenReturn(airline);
     }
 
 
     @Test
-    void generate() {
-        airlineService.generate();
-        verify(airlineRepository,times(6)).save(airline);
+    void persist(){
+        airlineService.persistAirline(airline);
+        verify(airlineRepository).save(airline);
     }
 }

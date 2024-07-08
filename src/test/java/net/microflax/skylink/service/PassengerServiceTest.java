@@ -9,6 +9,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.time.LocalDateTime;
+
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -24,16 +26,7 @@ class PassengerServiceTest {
     private Passport passport;
 
     @Mock
-    private Faker faker;
-
-    @Mock
-    private Name name;
-
-    @Mock
-    private Internet internet;
-
-    @Mock
-    private DateAndTime dateAndTime;
+    private PassengerSimulator passengerSimulator;
 
 
     @InjectMocks
@@ -43,14 +36,17 @@ class PassengerServiceTest {
     void setUp() {
         passenger = new Passenger();
         passport = new Passport();
+        passport.setPassenger(passenger);
+        when(passengerRepository.save(passenger)).thenReturn(passenger);
+        when(passportRepository.save(passport)).thenReturn(passport);
     }
 
 
     @Test
-    void generate() {
-        passengerService.generate();
-        verify(passengerRepository,times(6)).save(passenger);
-        verify(passportRepository,times(6)).save(passport);
+    void persist() {
+        passengerService.persistPassenger(passenger, "2017-06-01");
+        verify(passengerRepository).save(passenger);
+        verify(passportRepository).save(passport);
     }
 
     @Test

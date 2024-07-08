@@ -15,7 +15,8 @@ public class AirportSimulator extends AbstractSimulator {
 
     @Override
     protected void simulate() {
-        airportRepository.save(createAirport());
-        locationRepository.save(createLocation());
+        Airport airport = createAirport();
+        airportRepository.save(airport);
+        locationRepository.save(createLocation(airport));
     }
 }

@@ -5,18 +5,15 @@ import com.github.javafaker.Country;
 import com.github.javafaker.DateAndTime;
 import com.github.javafaker.Faker;
 
-public abstract class AbstractService<E> {
+public abstract class AbstractService {
 
     private final Faker faker = new Faker();
     private final Aviation aviation = faker.aviation();
     private final Country country = faker.country();
     private final DateAndTime dateAndTime = getFaker().date();
-    protected static final int NUMBER_OF_ENTITIES_TO_PERSIST = 6;
+    private static final int NUMBER_OF_ENTITIES_TO_PERSIST = 6;
 
-    /**
-     * Persist an entity to the database
-     */
-    public abstract void persist(E entity);
+
 
     /**
      * Generate entities to display in the UI
