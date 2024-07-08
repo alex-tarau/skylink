@@ -22,9 +22,9 @@ public abstract class AbstractSimulator {
     /**
      * Run the simulator
      */
-    public void run(){
-        int i=0;
-        while (i < NUMBER_OF_ENTITIES_TO_PERSIST){
+    public void run() {
+        int i = 0;
+        while (i < NUMBER_OF_ENTITIES_TO_PERSIST) {
             simulate();
             i++;
         }
@@ -33,7 +33,7 @@ public abstract class AbstractSimulator {
     /**
      * Simulate data
      */
-     protected abstract void simulate();
+    protected abstract void simulate();
 
 
     public final Airline createAirline() {
@@ -100,20 +100,19 @@ public abstract class AbstractSimulator {
         return flight;
     }
 
-    public final Reservation createReservation(){
-        Reservation reservation= new Reservation();
+    public final Reservation createReservation() {
+        Reservation reservation = new Reservation();
         reservation.setCreatedAt(LocalDateTime.now());
-        reservation.setSentAt(LocalDateTime.now());
         reservation.setFlight(createFlight());
         reservation.setPassenger(createPassenger(new Passenger()));
         return reservation;
     }
 
-    public final Payment createPayment(){
-        Payment payment= new Payment();
+    public final Payment createPayment() {
+        Payment payment = new Payment();
         payment.setCreatedAt(LocalDateTime.now());
-        payment.setAmount((float) faker.number().randomDouble(2,300,500));
-        payment.setMethod("");
+        payment.setAmount((float) faker.number().randomDouble(2, 300, 500));
+        payment.setMethod(Payment.Method.CREDIT);
         payment.setReservation(createReservation());
         payment.setSentAt(LocalDateTime.now());
         payment.setStatus(Payment.Status.SUCCESS);

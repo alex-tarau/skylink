@@ -21,7 +21,8 @@ public class AirportService extends AbstractService {
 
     /**
      * Persist the airport with its location in the database
-     * @param airport the airport
+     *
+     * @param airport  the airport
      * @param location the location
      */
     public void persist(Airport airport, Location location) {

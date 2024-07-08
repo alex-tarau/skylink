@@ -28,16 +28,16 @@ public class Flight {
     @JoinColumn(name = "airline_id")
     private Airline airline;
 
-    @Column(name = "flight_number",unique = true, nullable = false)
+    @Column(name = "flight_number", unique = true, nullable = false)
     private String flightNumber;
 
-    @Column(name = "departure",nullable = false)
+    @Column(name = "departure", nullable = false)
     private LocalDateTime departure;
 
-    @Column(name = "arrival",nullable = false)
+    @Column(name = "arrival", nullable = false)
     private LocalDateTime arrival;
 
-    @Column(name = "available_seats",nullable = false)
+    @Column(name = "available_seats", nullable = false)
     private int availableSeats;
 
     public int getId() {

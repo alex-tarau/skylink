@@ -14,7 +14,6 @@ public abstract class AbstractService {
     private static final int NUMBER_OF_ENTITIES_TO_PERSIST = 6;
 
 
-
     /**
      * Generate entities to display in the UI
      */

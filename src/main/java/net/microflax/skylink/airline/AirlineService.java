@@ -16,6 +16,7 @@ public class AirlineService extends AbstractService {
 
     /**
      * Persist the airline in the database
+     *
      * @param airline the airline
      */
     public void persistAirline(Airline airline) {
@@ -26,7 +27,6 @@ public class AirlineService extends AbstractService {
     public void generate() {
         airlineSimulator.run();
     }
-
 
 
 }

@@ -39,7 +39,7 @@ class AirlineServiceTest {
 
 
     @Test
-    void persist(){
+    void persist() {
         airlineService.persistAirline(airline);
         verify(airlineRepository).save(airline);
     }

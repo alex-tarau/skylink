@@ -37,7 +37,7 @@ public class Passport {
     @Column(name = "expiration_date", nullable = false)
     private LocalDateTime expirationDate;
 
-    @Column(name = "passport_number", nullable = false,length = 9)
+    @Column(name = "passport_number", nullable = false, length = 9)
     private String passport_number;
 
     public int getId() {

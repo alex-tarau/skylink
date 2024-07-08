@@ -14,12 +14,14 @@ import net.microflax.skylink.flight.Flight;
 import net.microflax.skylink.flight.FlightRepository;
 import net.microflax.skylink.flight.FlightService;
 import net.microflax.skylink.airport.LocationRepository;
+import net.microflax.skylink.flight.FlightSimulator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import static org.mockito.Mockito.*;
 
@@ -30,52 +32,34 @@ class FlightServiceTest {
     private FlightRepository flightRepository;
 
     @Mock
-    private AirportRepository airportRepository;
+    private FlightSimulator flightSimulator;
 
-    @Mock
-    private LocationRepository locationRepository;
-
-    @Mock
-    private Faker faker;
-
-    @Mock
-    private Address address;
-
-    @Mock
-    private AirportService airportService;
-
-    @Mock
-    private AirlineRepository airlineRepository;
-
-    @Mock
-    private PhoneNumber phoneNumber;
-
-    @Mock
-    private AirlineService airlineService;
-
-    private Airport airport;
+    private Airport orginAirport;
+    private Airport destinationAirport;
     private Airline airline;
     private Flight flight;
-
-    @Mock
-    private Number number;
 
     @InjectMocks
     private FlightService flightService;
 
     @BeforeEach
     void setUp() {
-        airport = new Airport();
+        orginAirport = new Airport();
+        orginAirport.setName("Newark International Airport");
+        destinationAirport= new Airport();
+        destinationAirport.setName("Munich International Airport");
         airline = new Airline();
         airline.setName("Air Canada");
         flight = new Flight();
-        //when(airportService.createAirport()).thenReturn(airport);
-        //when(airlineService.createAirline()).thenReturn(airline);
+        flight.setOriginAirport(orginAirport);
+        flight.setDestinationAirport(destinationAirport);
+        flight.setAirline(airline);
+        when(flightRepository.save(flight)).thenReturn(flight);
     }
 
     @Test
-    void generate() {
-        flightService.generate();
-        verify(flightRepository,times(6)).save(flight);
+    void persist() {
+        flightService.persistFlight(flight);
+        verify(flightRepository).save(flight);
     }
 }

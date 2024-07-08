@@ -32,9 +32,9 @@ class AirportServiceTest {
     private AirportService airportService;
 
     @BeforeEach
-    void setUp(){
-        airport= new Airport();
-        location= new Location();
+    void setUp() {
+        airport = new Airport();
+        location = new Location();
         location.setAirport(airport);
         when(airportRepository.save(airport)).thenReturn(airport);
         when(locationRepository.save(location)).thenReturn(location);
@@ -42,8 +42,8 @@ class AirportServiceTest {
 
 
     @Test
-    void persist(){
-        airportService.persist(airport,location);
+    void persist() {
+        airportService.persist(airport, location);
         verify(airportRepository).save(airport);
         verify(locationRepository).save(location);
     }

@@ -20,7 +20,7 @@ public class Payment {
 
     @Column(name = "method", nullable = false)
     @Enumerated(EnumType.STRING)
-    private String method;
+    private Method method;
 
     @Column(name = "amount", nullable = false, precision = 2)
     private float amount;
@@ -46,44 +46,12 @@ public class Payment {
         this.id = id;
     }
 
-    public Reservation getReservation() {
-        return reservation;
+    public LocalDateTime getModifiedAt() {
+        return modifiedAt;
     }
 
-    public void setReservation(Reservation reservation) {
-        this.reservation = reservation;
-    }
-
-    public String getMethod() {
-        return method;
-    }
-
-    public void setMethod(String method) {
-        this.method = method;
-    }
-
-    public float getAmount() {
-        return amount;
-    }
-
-    public void setAmount(float amount) {
-        this.amount = amount;
-    }
-
-    public Status getStatus() {
-        return status;
-    }
-
-    public void setStatus(Status status) {
-        this.status = status;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
+    public void setModifiedAt(LocalDateTime modifiedAt) {
+        this.modifiedAt = modifiedAt;
     }
 
     public LocalDateTime getSentAt() {
@@ -94,12 +62,44 @@ public class Payment {
         this.sentAt = sentAt;
     }
 
-    public LocalDateTime getModifiedAt() {
-        return modifiedAt;
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
     }
 
-    public void setModifiedAt(LocalDateTime modifiedAt) {
-        this.modifiedAt = modifiedAt;
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    public float getAmount() {
+        return amount;
+    }
+
+    public void setAmount(float amount) {
+        this.amount = amount;
+    }
+
+    public Method getMethod() {
+        return method;
+    }
+
+    public void setMethod(Method method) {
+        this.method = method;
+    }
+
+    public Reservation getReservation() {
+        return reservation;
+    }
+
+    public void setReservation(Reservation reservation) {
+        this.reservation = reservation;
     }
 
     @Override
@@ -118,10 +118,6 @@ public class Payment {
 
     public enum Status {
         /**
-         * The payment process has started but is not complete
-         */
-        OPEN,
-        /**
          * The payment has been created in the system and is ready for processing
          */
         PENDING,
@@ -133,10 +129,6 @@ public class Payment {
          * The payment fail
          */
         FAIL,
-        /**
-         * The payment is canceled
-         */
-        CANCEL
     }
 
     public enum Method {
@@ -155,6 +147,6 @@ public class Payment {
         /**
          * payment with Paypal
          */
-        PAY_PAL,
+        PAYPAL,
     }
 }

@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 @Transactional
-public interface PassengerRepository extends JpaRepository<Passenger,Integer> {
+public interface PassengerRepository extends JpaRepository<Passenger, Integer> {
 }

@@ -69,7 +69,7 @@ create table payment (
     reservation_id int not null,
     method ENUM('CREDIT','DEBIT','MASTER','PAYPAL') not null,
     amount decimal(10, 2) not null,
-    status Enum('OPEN','PENDING','SUCCESS','FAIL','CANCEL') not null,
+    status Enum('PENDING','SUCCESS','FAIL') not null,
     created_at datetime not null,
     sent_at datetime,
     modified_at datetime,

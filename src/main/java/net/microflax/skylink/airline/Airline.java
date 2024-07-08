@@ -16,10 +16,10 @@ public class Airline {
     @Column(name = "name", nullable = false, unique = true, length = 100)
     private String name;
 
-    @Column(name = "contact_number",nullable = false,length = 20)
+    @Column(name = "contact_number", nullable = false, length = 20)
     private String contactNumber;
 
-    @Column(name = "operating_region",nullable = false,length = 100)
+    @Column(name = "operating_region", nullable = false, length = 100)
     private String operatingRegion;
 
     public int getId() {

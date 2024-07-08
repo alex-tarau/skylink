@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 @Transactional
-public interface LocationRepository extends JpaRepository<Location,Integer> {
+public interface LocationRepository extends JpaRepository<Location, Integer> {
 }
