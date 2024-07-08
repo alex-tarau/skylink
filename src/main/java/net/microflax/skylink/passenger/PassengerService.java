@@ -10,6 +10,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 import java.util.Random;
 import java.util.random.RandomGenerator;
 
@@ -27,6 +29,7 @@ public class PassengerService extends AbstractService {
 
     /**
      * Persist the passenger into the database
+     *
      * @param passenger the passenger
      * @param birthDate the date of birth of the passenger in the yyyy-MM-dd format
      */
@@ -54,11 +57,12 @@ public class PassengerService extends AbstractService {
      * @param id the id of the passport
      */
     public void renewPassport(int id) {
-        Passport newPassport = passportRepository.findById(id).orElseThrow();
-        if (Math.abs(LocalDateTime.now().getYear() - newPassport.getCreatedAt().getYear()) > 15) {
-            newPassport.setModifiedAt(LocalDateTime.now());
-            newPassport.setExpirationDate(newPassport.getModifiedAt().plusYears(10));
-            passportRepository.save(newPassport);
+        Optional<Passport> newPassport = passportRepository.findById(id);
+        if (newPassport.isEmpty()) throw new NoSuchElementException("The passport was not found in the database");
+        if (Math.abs(LocalDateTime.now().getYear() - newPassport.get().getCreatedAt().getYear()) <= 15) {
+            newPassport.get().setModifiedAt(LocalDateTime.now());
+            newPassport.get().setExpirationDate(newPassport.get().getModifiedAt().plusYears(10));
+            passportRepository.save(newPassport.get());
         } else {
             throw new UnsupportedOperationException("Passport can not be renew because it was issue more than 15 " +
                     "years ago");
