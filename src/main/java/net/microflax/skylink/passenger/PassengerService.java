@@ -71,8 +71,8 @@ public class PassengerService extends AbstractService {
 
 
     private String generatePassportNumber() {
-        return RandomStringUtils.random(1, true, false) + RandomStringUtils.random(8, false
-                , true).toUpperCase();
+        return RandomStringUtils.random(1, true, false).toUpperCase() +
+                RandomStringUtils.random(8, false, true).toUpperCase();
     }
 
 }

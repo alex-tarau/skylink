@@ -1,7 +1,11 @@
-package net.microflax.skylink.reservation;
+package net.microflax.skylink.service;
 
 import net.microflax.skylink.flight.Flight;
 import net.microflax.skylink.passenger.Passenger;
+import net.microflax.skylink.reservation.Reservation;
+import net.microflax.skylink.reservation.ReservationRepository;
+import net.microflax.skylink.reservation.ReservationService;
+import net.microflax.skylink.reservation.ReservationSimulator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -9,7 +13,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 

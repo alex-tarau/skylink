@@ -30,12 +30,13 @@ public class PaymentService extends AbstractService {
 
     /**
      * Update the status of the payment
+     *
      * @param id the id of the payment
      */
     public void updateStatus(int id) {
         Optional<Payment> newPayment = paymentRepository.findById(id);
         if (newPayment.isEmpty()) throw new NoSuchElementException("There is no payment transaction in database");
-        if (newPayment.get().getSentAt()==null) newPayment.get().setStatus(Payment.Status.FAIL);
+        if (newPayment.get().getSentAt() == null) newPayment.get().setStatus(Payment.Status.FAIL);
         newPayment.get().setStatus(Payment.Status.SUCCESS);
         paymentRepository.save(newPayment.get());
     }
