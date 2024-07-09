@@ -1,6 +1,6 @@
 package net.microflax.skylink;
 
-import com.github.javafaker.*;
+import net.datafaker.Faker;
 import net.microflax.skylink.airline.Airline;
 import net.microflax.skylink.airport.Airport;
 import net.microflax.skylink.airport.Location;
@@ -39,16 +39,15 @@ public abstract class AbstractSimulator {
     public final Airline createAirline() {
         Airline airline = new Airline();
         airline.setContactNumber(faker.phoneNumber().phoneNumber());
-        String countryName = faker.country().name();
-        airline.setName("Air " + countryName);
-        airline.setOperatingRegion(countryName);
+        airline.setName(faker.aviation().airline());
+        airline.setOperatingRegion(faker.country().name());
         return airline;
     }
 
     public final Airport createAirport() {
         Airport airport = new Airport();
         airport.setAirportCode(faker.aviation().airport().substring(0, 2));
-        airport.setName(faker.country().name() + "airport");
+        airport.setName(faker.aviation().airportName());
         return airport;
     }
 
@@ -75,7 +74,7 @@ public abstract class AbstractSimulator {
         passport.setCreatedAt(LocalDateTime.now());
         passport.setFirstName(passenger.getFirstName());
         passport.setLastName(passenger.getLastName());
-        passport.setBirthDate(faker.date().birthday().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+        passport.setBirthDate(faker.timeAndDate().birthday());
         passport.setPassport_number(generatePassportNumber());
         passport.setExpirationDate(passport.getCreatedAt().plusYears(10));
         return passport;
@@ -88,11 +87,11 @@ public abstract class AbstractSimulator {
 
     public final Flight createFlight() {
         Flight flight = new Flight();
-        flight.setArrival(faker.date().past(10, TimeUnit.DAYS).toInstant().atZone(ZoneId.systemDefault()).
+        flight.setArrival(faker.timeAndDate().past(10, TimeUnit.DAYS).atZone(ZoneId.systemDefault()).
                 toLocalDateTime());
-        flight.setDeparture(faker.date().future(1, TimeUnit.DAYS).toInstant().atZone(ZoneId.systemDefault()).
+        flight.setDeparture(faker.timeAndDate().future(1, TimeUnit.DAYS).atZone(ZoneId.systemDefault()).
                 toLocalDateTime());
-        flight.setAvailableSeats((int) faker.number().randomNumber(3, true));
+        flight.setAvailableSeats(faker.number().numberBetween(200,851));
         flight.setOriginAirport(createAirport());
         flight.setDestinationAirport(createAirport());
         flight.setAirline(createAirline());

@@ -1,6 +1,5 @@
 package net.microflax.skylink.service;
 
-import com.github.javafaker.*;
 import net.microflax.skylink.passenger.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

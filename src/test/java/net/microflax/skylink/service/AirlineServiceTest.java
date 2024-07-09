@@ -1,8 +1,5 @@
 package net.microflax.skylink.service;
 
-import com.github.javafaker.Country;
-import com.github.javafaker.Faker;
-import com.github.javafaker.PhoneNumber;
 import net.microflax.skylink.airline.Airline;
 import net.microflax.skylink.airline.AirlineRepository;
 import net.microflax.skylink.airline.AirlineService;

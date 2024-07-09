@@ -1,6 +1,5 @@
 package net.microflax.skylink.service;
 
-import com.github.javafaker.*;
 import net.microflax.skylink.airport.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

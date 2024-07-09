@@ -17,6 +17,10 @@ public class PaymentService extends AbstractService {
     @Autowired
     private PaymentSimulator paymentSimulator;
 
+    /**
+     * Persist the payment into the database
+     * @param payment the payment
+     */
     public void persistPayment(Payment payment) {
         payment.setStatus(Payment.Status.PENDING);
         payment.setCreatedAt(LocalDateTime.now());

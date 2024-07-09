@@ -1,6 +1,5 @@
 package net.microflax.skylink.passenger;
 
-import com.github.javafaker.*;
 import net.microflax.skylink.AbstractService;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,12 +7,8 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
 import java.util.NoSuchElementException;
 import java.util.Optional;
-import java.util.Random;
-import java.util.random.RandomGenerator;
 
 @Service
 public class PassengerService extends AbstractService {
@@ -28,10 +23,10 @@ public class PassengerService extends AbstractService {
     private PassengerSimulator passengerSimulator;
 
     /**
-     * Persist the passenger into the database
+     * Persist the passenger with its date of birth into the database
      *
      * @param passenger the passenger
-     * @param birthDate the date of birth of the passenger in the yyyy-MM-dd format
+     * @param birthDate the date of birth of the passenger
      */
     public void persistPassenger(Passenger passenger, String birthDate) {
         passengerRepository.save(passenger);

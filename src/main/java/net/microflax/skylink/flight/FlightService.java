@@ -1,6 +1,5 @@
 package net.microflax.skylink.flight;
 
-import com.github.javafaker.Number;
 import net.microflax.skylink.AbstractService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

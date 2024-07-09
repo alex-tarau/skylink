@@ -1,6 +1,5 @@
 package net.microflax.skylink.airport;
 
-import com.github.javafaker.Address;
 import net.microflax.skylink.AbstractService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

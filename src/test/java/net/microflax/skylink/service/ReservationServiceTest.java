@@ -50,13 +50,13 @@ class ReservationServiceTest {
         reservation = new Reservation();
         reservation.setPassenger(passenger);
         reservation.setFlight(flight);
+        when(reservationRepository.findById(anyInt())).thenReturn(Optional.of(reservation));
+        when(flightRepository.save(flight)).thenReturn(flight);
+        when(reservationRepository.save(reservation)).thenReturn(reservation);
     }
 
     @Test
     void persist() {
-        when(reservationRepository.findById(anyInt())).thenReturn(Optional.of(reservation));
-        when(flightRepository.save(flight)).thenReturn(flight);
-        when(reservationRepository.save(reservation)).thenReturn(reservation);
         reservationService.persistReservation(reservation);
         verify(flightRepository).save(flight);
         verify(reservationRepository).save(reservation);
