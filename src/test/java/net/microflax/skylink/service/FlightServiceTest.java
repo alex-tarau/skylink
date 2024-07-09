@@ -23,6 +23,8 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -54,6 +56,7 @@ class FlightServiceTest {
         flight.setOriginAirport(orginAirport);
         flight.setDestinationAirport(destinationAirport);
         flight.setAirline(airline);
+        flight.setAvailableSeats(ThreadLocalRandom.current().nextInt(200,851));
         when(flightRepository.save(flight)).thenReturn(flight);
     }
 

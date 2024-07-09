@@ -24,7 +24,6 @@ public class FlightService extends AbstractService {
      */
     public void persistFlight(Flight flight) {
         flight.setFlightNumber(generateFlightNumber(flight));
-        flight.setAvailableSeats(ThreadLocalRandom.current().nextInt(200, 851));
         flightRepository.save(flight);
     }
 
