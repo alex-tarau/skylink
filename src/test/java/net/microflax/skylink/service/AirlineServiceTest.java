@@ -1,9 +1,10 @@
 package net.microflax.skylink.service;
 
+import net.datafaker.Faker;
 import net.microflax.skylink.airline.Airline;
 import net.microflax.skylink.airline.AirlineRepository;
 import net.microflax.skylink.airline.AirlineService;
-import net.microflax.skylink.airline.AirlineSimulator;
+import net.microflax.skylink.simulator.AirlineSimulator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -22,8 +23,6 @@ class AirlineServiceTest {
     @Mock
     private AirlineRepository airlineRepository;
 
-    @Mock
-    private AirlineSimulator airlineSimulator;
 
     @InjectMocks
     private AirlineService airlineService;

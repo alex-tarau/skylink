@@ -1,11 +1,15 @@
 package net.microflax.skylink.airline;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Objects;
 
 @Entity
 @Table(name = "airline")
+@Getter
+@Setter
 public class Airline {
 
     @Id
@@ -21,38 +25,6 @@ public class Airline {
 
     @Column(name = "operating_region", nullable = false, length = 100)
     private String operatingRegion;
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getContactNumber() {
-        return contactNumber;
-    }
-
-    public void setContactNumber(String contactNumber) {
-        this.contactNumber = contactNumber;
-    }
-
-    public String getOperatingRegion() {
-        return operatingRegion;
-    }
-
-    public void setOperatingRegion(String operatingRegion) {
-        this.operatingRegion = operatingRegion;
-    }
 
     @Override
     public boolean equals(Object o) {

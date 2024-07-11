@@ -1,39 +1,23 @@
 package net.microflax.skylink.airport;
 
 import net.microflax.skylink.AbstractService;
+import net.microflax.skylink.simulator.AirportSimulator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class AirportService extends AbstractService {
 
-
     @Autowired
     private AirportRepository airportRepository;
-
-    @Autowired
-    private LocationRepository locationRepository;
-
-    @Autowired
-    private AirportSimulator airportSimulator;
-
 
     /**
      * Persist the airport with its location in the database
      *
-     * @param airport  the airport
-     * @param location the location
+     * @param airport the airport
      */
-    public void persist(Airport airport, Location location) {
+    public void persist(Airport airport) {
         airportRepository.save(airport);
-        location.setAirport(airport);
-        locationRepository.save(location);
     }
-
-    @Override
-    public void generate() {
-        airportSimulator.run();
-    }
-
 
 }

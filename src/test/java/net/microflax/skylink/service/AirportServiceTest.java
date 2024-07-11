@@ -1,6 +1,7 @@
 package net.microflax.skylink.service;
 
 import net.microflax.skylink.airport.*;
+import net.microflax.skylink.simulator.AirportSimulator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -16,16 +17,9 @@ class AirportServiceTest {
 
 
     private Airport airport;
-    private Location location;
 
     @Mock
     private AirportRepository airportRepository;
-
-    @Mock
-    private LocationRepository locationRepository;
-
-    @Mock
-    private AirportSimulator airportSimulator;
 
     @InjectMocks
     private AirportService airportService;
@@ -33,17 +27,13 @@ class AirportServiceTest {
     @BeforeEach
     void setUp() {
         airport = new Airport();
-        location = new Location();
-        location.setAirport(airport);
         when(airportRepository.save(airport)).thenReturn(airport);
-        when(locationRepository.save(location)).thenReturn(location);
     }
 
 
     @Test
     void persist() {
-        airportService.persist(airport, location);
+        airportService.persist(airport);
         verify(airportRepository).save(airport);
-        verify(locationRepository).save(location);
     }
 }

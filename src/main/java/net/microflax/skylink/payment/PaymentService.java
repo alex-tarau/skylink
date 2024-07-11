@@ -1,6 +1,7 @@
 package net.microflax.skylink.payment;
 
 import net.microflax.skylink.AbstractService;
+import net.microflax.skylink.simulator.PaymentSimulator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,9 +15,6 @@ public class PaymentService extends AbstractService {
     @Autowired
     private PaymentRepository paymentRepository;
 
-    @Autowired
-    private PaymentSimulator paymentSimulator;
-
     /**
      * Persist the payment into the database
      * @param payment the payment
@@ -25,11 +23,6 @@ public class PaymentService extends AbstractService {
         payment.setStatus(Payment.Status.PENDING);
         payment.setCreatedAt(LocalDateTime.now());
         paymentRepository.save(payment);
-    }
-
-    @Override
-    public void generate() {
-        paymentSimulator.run();
     }
 
     /**

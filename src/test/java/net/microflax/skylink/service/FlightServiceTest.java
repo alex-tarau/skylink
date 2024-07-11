@@ -5,7 +5,7 @@ import net.microflax.skylink.airport.Airport;
 import net.microflax.skylink.flight.Flight;
 import net.microflax.skylink.flight.FlightRepository;
 import net.microflax.skylink.flight.FlightService;
-import net.microflax.skylink.flight.FlightSimulator;
+import net.microflax.skylink.simulator.FlightSimulator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -22,9 +22,6 @@ class FlightServiceTest {
 
     @Mock
     private FlightRepository flightRepository;
-
-    @Mock
-    private FlightSimulator flightSimulator;
 
     private Airport orginAirport;
     private Airport destinationAirport;

@@ -10,9 +10,6 @@ public class AirlineService extends AbstractService {
     @Autowired
     private AirlineRepository airlineRepository;
 
-    @Autowired
-    private AirlineSimulator airlineSimulator;
-
     /**
      * Persist the airline in the database
      *
@@ -21,11 +18,5 @@ public class AirlineService extends AbstractService {
     public void persistAirline(Airline airline) {
         airlineRepository.save(airline);
     }
-
-    @Override
-    public void generate() {
-        airlineSimulator.run();
-    }
-
 
 }

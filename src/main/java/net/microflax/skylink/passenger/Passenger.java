@@ -1,11 +1,17 @@
 package net.microflax.skylink.passenger;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
 @Table(name = "passenger")
+@Getter
+@Setter
 public class Passenger {
 
     @Id
@@ -22,37 +28,17 @@ public class Passenger {
     @Column(name = "email", nullable = false, length = 100)
     private String email;
 
-    public int getId() {
-        return id;
-    }
+    @Column(name = "birth_date", nullable = false)
+    private LocalDate birthDate;
 
-    public void setId(int id) {
-        this.id = id;
-    }
+    @Column(name = "created_at", nullable = false)
+    private LocalDateTime createdAt;
 
-    public String getFirstName() {
-        return firstName;
-    }
+    @Column(name = "modified_at")
+    private LocalDateTime modifiedAt;
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
+    @Column(name = "passport_number", nullable = false, length = 9)
+    private String passport_number;
 
     @Override
     public boolean equals(Object o) {

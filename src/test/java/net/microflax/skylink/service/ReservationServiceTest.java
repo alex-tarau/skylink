@@ -6,7 +6,7 @@ import net.microflax.skylink.passenger.Passenger;
 import net.microflax.skylink.reservation.Reservation;
 import net.microflax.skylink.reservation.ReservationRepository;
 import net.microflax.skylink.reservation.ReservationService;
-import net.microflax.skylink.reservation.ReservationSimulator;
+import net.microflax.skylink.simulator.ReservationSimulator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -15,9 +15,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
-import java.util.concurrent.ThreadLocalRandom;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -30,9 +28,6 @@ class ReservationServiceTest {
 
     @Mock
     private ReservationRepository reservationRepository;
-
-    @Mock
-    private ReservationSimulator reservationSimulator;
 
     private Flight flight;
     private Passenger passenger;

@@ -1,6 +1,7 @@
 package net.microflax.skylink.service;
 
 import net.microflax.skylink.passenger.*;
+import net.microflax.skylink.simulator.PassengerSimulator;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,11 +24,7 @@ class PassengerServiceTest {
     @Mock
     private PassengerRepository passengerRepository;
 
-    @Mock
-    private PassportRepository passportRepository;
-
     private Passenger passenger;
-    private Passport passport;
 
     @Mock
     private PassengerSimulator passengerSimulator;
@@ -39,11 +36,7 @@ class PassengerServiceTest {
     @BeforeEach
     void setUp() {
         passenger = new Passenger();
-        passport = new Passport();
-        passport.setPassenger(passenger);
-        passport.setCreatedAt(LocalDateTime.now());
         when(passengerRepository.save(passenger)).thenReturn(passenger);
-        when(passportRepository.save(passport)).thenReturn(passport);
     }
 
 
@@ -51,22 +44,5 @@ class PassengerServiceTest {
     void persist() {
         passengerService.persistPassenger(passenger, "2017-06-01");
         verify(passengerRepository).save(passenger);
-        verify(passportRepository).save(passport);
-    }
-
-    @Test
-    @MockitoSettings(strictness = Strictness.LENIENT)
-    void renewPassportPersistInTheDataBase() {
-        when(passportRepository.findById(anyInt())).thenReturn(Optional.of(passport));
-        passengerService.renewPassport(1);
-        verify(passportRepository).save(passport);
-    }
-
-
-    @Test
-    @MockitoSettings(strictness = Strictness.LENIENT)
-    void renewPassportNotPersistInTheDataBase() {
-        when(passportRepository.findById(anyInt())).thenReturn(Optional.empty());
-        Assertions.assertThrows(NoSuchElementException.class,()->passengerService.renewPassport(0));
     }
 }

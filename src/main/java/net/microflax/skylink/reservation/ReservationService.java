@@ -3,6 +3,7 @@ package net.microflax.skylink.reservation;
 import net.microflax.skylink.AbstractService;
 import net.microflax.skylink.flight.Flight;
 import net.microflax.skylink.flight.FlightRepository;
+import net.microflax.skylink.simulator.ReservationSimulator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,8 +20,6 @@ public class ReservationService extends AbstractService {
     @Autowired
     private ReservationRepository reservationRepository;
 
-    @Autowired
-    private ReservationSimulator reservationSimulator;
 
     public void persistReservation(Reservation reservation) {
         reservation.setCreatedAt(LocalDateTime.now());
@@ -28,17 +27,12 @@ public class ReservationService extends AbstractService {
         reservationRepository.save(reservation);
     }
 
-    @Override
-    public void generate() {
-        reservationSimulator.run();
-    }
-
     /**
      * Update the number of available seats in the flight
      *
      * @param id the id of the reservation
      */
-    public void updateAvailableSeats(int id) {
+    private void updateAvailableSeats(int id) {
         Optional<Reservation> reservation = reservationRepository.findById(id);
         if (reservation.isEmpty()) throw new NoSuchElementException("The reservation is not in the database");
         Flight flight = reservation.get().getFlight();

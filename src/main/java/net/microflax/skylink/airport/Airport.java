@@ -1,11 +1,15 @@
 package net.microflax.skylink.airport;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Objects;
 
 @Entity
 @Table(name = "airport")
+@Getter
+@Setter
 public class Airport {
 
     @Id
@@ -19,31 +23,14 @@ public class Airport {
     @Column(name = "name", unique = true, nullable = false, length = 100)
     private String name;
 
+    @Column(name = "street", nullable = false, length = 100)
+    private String street;
 
-    public int getId() {
-        return id;
-    }
+    @Column(name = "city", nullable = false, length = 100)
+    private String city;
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getAirportCode() {
-        return airportCode;
-    }
-
-    public void setAirportCode(String airportCode) {
-        this.airportCode = airportCode;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
+    @Column(name = "country", nullable = false, length = 100)
+    private String country;
 
     @Override
     public boolean equals(Object o) {

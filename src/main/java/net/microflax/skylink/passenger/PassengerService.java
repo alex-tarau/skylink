@@ -7,8 +7,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.NoSuchElementException;
-import java.util.Optional;
 
 @Service
 public class PassengerService extends AbstractService {
@@ -16,52 +14,17 @@ public class PassengerService extends AbstractService {
     @Autowired
     private PassengerRepository passengerRepository;
 
-    @Autowired
-    private PassportRepository passportRepository;
-
-    @Autowired
-    private PassengerSimulator passengerSimulator;
-
     /**
      * Persist the passenger with its date of birth into the database
      *
      * @param passenger the passenger
      * @param birthDate the date of birth of the passenger
      */
-    public void persistPassenger(Passenger passenger, String birthDate) {
+    public void persistPassenger(Passenger passenger,String birthDate) {
+        passenger.setPassport_number(generatePassportNumber());
+        passenger.setCreatedAt(LocalDateTime.now());
+        passenger.setBirthDate(LocalDate.parse(birthDate));
         passengerRepository.save(passenger);
-        Passport passport = new Passport();
-        passport.setPassenger(passenger);
-        passport.setCreatedAt(LocalDateTime.now());
-        passport.setExpirationDate(passport.getCreatedAt().plusYears(10));
-        passport.setFirstName(passenger.getFirstName());
-        passport.setLastName(passenger.getLastName());
-        passport.setBirthDate(LocalDate.parse(birthDate));
-        passport.setPassport_number(generatePassportNumber());
-        passportRepository.save(passport);
-    }
-
-    @Override
-    public void generate() {
-        passengerSimulator.run();
-    }
-
-    /**
-     * Renew the passport
-     *
-     * @param id the id of the passport
-     */
-    public void renewPassport(int id) {
-        Optional<Passport> newPassport = passportRepository.findById(id);
-        if (newPassport.isEmpty()) throw new NoSuchElementException("The passport was not found in the database");
-        if (Math.abs(LocalDateTime.now().getYear() - newPassport.get().getCreatedAt().getYear()) <= 15) {
-            newPassport.get().setModifiedAt(LocalDateTime.now());
-            newPassport.get().setExpirationDate(newPassport.get().getModifiedAt().plusYears(10));
-            passportRepository.save(newPassport.get());
-        } else {
-            throw new UnsupportedOperationException("Passport can not be renew because it was issue more than 15 " +
-                    "years ago");
-        }
     }
 
 

@@ -1,12 +1,16 @@
 package net.microflax.skylink.payment;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 import net.microflax.skylink.reservation.Reservation;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "payment")
+@Getter
+@Setter
 public class Payment {
 
     @Id
@@ -37,70 +41,6 @@ public class Payment {
 
     @Column(name = "modified_at")
     private LocalDateTime modifiedAt;
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public LocalDateTime getModifiedAt() {
-        return modifiedAt;
-    }
-
-    public void setModifiedAt(LocalDateTime modifiedAt) {
-        this.modifiedAt = modifiedAt;
-    }
-
-    public LocalDateTime getSentAt() {
-        return sentAt;
-    }
-
-    public void setSentAt(LocalDateTime sentAt) {
-        this.sentAt = sentAt;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public Status getStatus() {
-        return status;
-    }
-
-    public void setStatus(Status status) {
-        this.status = status;
-    }
-
-    public float getAmount() {
-        return amount;
-    }
-
-    public void setAmount(float amount) {
-        this.amount = amount;
-    }
-
-    public Method getMethod() {
-        return method;
-    }
-
-    public void setMethod(Method method) {
-        this.method = method;
-    }
-
-    public Reservation getReservation() {
-        return reservation;
-    }
-
-    public void setReservation(Reservation reservation) {
-        this.reservation = reservation;
-    }
 
     @Override
     public String toString() {
@@ -133,17 +73,17 @@ public class Payment {
 
     public enum Method {
         /**
-         * payment with credit card
+         * payment with Visa card
          */
-        CREDIT,
+        VISA,
         /**
-         * payment with debit card
+         * payment with Master card
          */
-        DEBIT,
+        MASTER_CARD,
         /**
-         * payment with credit card
+         * payment with Amex card
          */
-        MASTER,
+        AMEX,
         /**
          * payment with Paypal
          */
