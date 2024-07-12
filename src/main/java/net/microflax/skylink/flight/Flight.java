@@ -9,10 +9,10 @@ import net.microflax.skylink.airport.Airport;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-@Entity
-@Table(name = "flight")
 @Getter
 @Setter
+@Entity
+@Table(name = "flight")
 public class Flight {
 
     @Id
@@ -35,11 +35,17 @@ public class Flight {
     @Column(name = "flight_number", unique = true, nullable = false)
     private String flightNumber;
 
-    @Column(name = "departure_at", nullable = false)
-    private LocalDateTime departure;
+    @Column(name = "created_at", nullable = false)
+    private LocalDateTime createdAt;
+
+    @Column(name = "modified_at")
+    private LocalDateTime modifiedAt;
 
     @Column(name = "arrival_at", nullable = false)
     private LocalDateTime arrival;
+
+    @Column(name = "departure_at", nullable = false)
+    private LocalDateTime departure;
 
     @Column(name = "available_seats", nullable = false)
     private int availableSeats;

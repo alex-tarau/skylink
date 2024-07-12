@@ -29,46 +29,33 @@ public class SimulatorService implements InitializingBean {
     @Autowired
     private PassengerSimulator passengerSimulator;
 
+    @Autowired
+    private ReservationSimulator reservationSimulator;
+
     @Override
     public void afterPropertiesSet() {
-        initializeAirports();
-        initializeAirlines();
-        initializePassengers();
-        initializeFlights();
-    }
-
-    private void initializeAirports() {
-        SimulationTask<Airport> airportSimulationTask = new SimulationTask<>(airportSimulator);
-        int i = 0;
-        while (i < simulatorProperties.getNumberOfAirports()) {
-            airportSimulationTask.run();
-            i++;
+        simulatorProperties.setEnabled(true);
+        if (simulatorProperties.isEnabled()) {
+            initializeSimulator(airlineSimulator, simulatorProperties.getNumberOfEntities());
+            initializeSimulator(airportSimulator, simulatorProperties.getNumberOfAirports());
+            initializeSimulator(passengerSimulator, simulatorProperties.getNumberOfEntities());
+            initializeSimulator(flightSimulator, simulatorProperties.getNumberOfEntities());
+            initializeSimulator(reservationSimulator, simulatorProperties.getNumberOfEntities());
+            initializeSimulator(paymentSimulator, simulatorProperties.getNumberOfEntities());
         }
     }
 
-    private void initializeAirlines() {
-        SimulationTask<Airline> airlineSimulationTask = new SimulationTask<>(airlineSimulator);
+    /**
+     * Initialize the simulators
+     *
+     * @param abstractSimulator a simulator to simulate entities
+     * @param numberOfEntities  the number of entities to persist in the database
+     */
+    private void initializeSimulator(AbstractSimulator<?> abstractSimulator, int numberOfEntities) {
+        SimulationTask<?> simulationTask = new SimulationTask<>(abstractSimulator);
         int i = 0;
-        while (i < simulatorProperties.getNumberOfEntities()) {
-            airlineSimulationTask.run();
-            i++;
-        }
-    }
-
-    private void initializePassengers() {
-        SimulationTask<Passenger> passengerSimulationTask = new SimulationTask<>(passengerSimulator);
-        int i = 0;
-        while (i < simulatorProperties.getNumberOfEntities()) {
-            passengerSimulationTask.run();
-            i++;
-        }
-    }
-
-    private void initializeFlights() {
-        SimulationTask<Flight> flightSimulationTask = new SimulationTask<>(flightSimulator);
-        int i = 0;
-        while (i < simulatorProperties.getNumberOfEntities()) {
-            flightSimulationTask.run();
+        while (i < numberOfEntities) {
+            simulationTask.run();
             i++;
         }
     }

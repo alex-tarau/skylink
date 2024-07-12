@@ -1,12 +1,16 @@
 package net.microflax.skylink.reservation;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 import net.microflax.skylink.flight.Flight;
 import net.microflax.skylink.passenger.Passenger;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+@Getter
+@Setter
 @Entity
 @Table(name = "reservation")
 public class Reservation {
@@ -29,46 +33,6 @@ public class Reservation {
 
     @Column(name = "modified_at")
     private LocalDateTime modifiedAt;
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public Flight getFlight() {
-        return flight;
-    }
-
-    public void setFlight(Flight flight) {
-        this.flight = flight;
-    }
-
-    public Passenger getPassenger() {
-        return passenger;
-    }
-
-    public void setPassenger(Passenger passenger) {
-        this.passenger = passenger;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public LocalDateTime getModifiedAt() {
-        return modifiedAt;
-    }
-
-    public void setModifiedAt(LocalDateTime modifiedAt) {
-        this.modifiedAt = modifiedAt;
-    }
 
     @Override
     public boolean equals(Object o) {

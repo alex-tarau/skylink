@@ -4,6 +4,8 @@ import net.microflax.skylink.AbstractService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+
 @Service
 public class FlightService extends AbstractService {
 
@@ -17,6 +19,7 @@ public class FlightService extends AbstractService {
      * @param flight the flight
      */
     public void persistFlight(Flight flight) {
+        flight.setCreatedAt(LocalDateTime.now());
         flightRepository.save(flight);
     }
 

@@ -13,6 +13,6 @@ public class SimulatorProperties {
 
     private boolean enabled;
     private Duration interval = Duration.ofSeconds(20);
-    public int numberOfAirports = 12;
+    private int numberOfAirports = 12;
     private int numberOfEntities = 6;
 }

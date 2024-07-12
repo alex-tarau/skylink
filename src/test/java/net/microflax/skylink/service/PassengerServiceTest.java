@@ -26,10 +26,6 @@ class PassengerServiceTest {
 
     private Passenger passenger;
 
-    @Mock
-    private PassengerSimulator passengerSimulator;
-
-
     @InjectMocks
     private PassengerService passengerService;
 

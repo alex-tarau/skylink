@@ -8,10 +8,10 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-@Entity
-@Table(name = "passenger")
 @Getter
 @Setter
+@Entity
+@Table(name = "passenger")
 public class Passenger {
 
     @Id

@@ -6,10 +6,10 @@ import lombok.Setter;
 
 import java.util.Objects;
 
-@Entity
-@Table(name = "airport")
 @Getter
 @Setter
+@Entity
+@Table(name = "airport")
 public class Airport {
 
     @Id

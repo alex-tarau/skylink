@@ -7,10 +7,10 @@ import net.microflax.skylink.reservation.Reservation;
 
 import java.time.LocalDateTime;
 
-@Entity
-@Table(name = "payment")
 @Getter
 @Setter
+@Entity
+@Table(name = "payment")
 public class Payment {
 
     @Id
