@@ -34,7 +34,6 @@ public class SimulatorService implements InitializingBean {
 
     @Override
     public void afterPropertiesSet() {
-        simulatorProperties.setEnabled(true);
         if (simulatorProperties.isEnabled()) {
             initializeSimulator(airlineSimulator, simulatorProperties.getNumberOfEntities());
             initializeSimulator(airportSimulator, simulatorProperties.getNumberOfAirports());
@@ -46,7 +45,7 @@ public class SimulatorService implements InitializingBean {
     }
 
     /**
-     * Initialize the simulators
+     * Initialize a simulator
      *
      * @param abstractSimulator a simulator to simulate entities
      * @param numberOfEntities  the number of entities to persist in the database
