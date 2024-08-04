@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<navigations xmlns="https://net.microfalx/xsd/navigation-1.0.xsd">
+    <menu id="left">
+        <item id="airline" text="Airlines" action="/system/airline" parent="system" icon="fa-solid fa-circle-nodes"/>
+        <item id="airport" text="Airport" action="/system/airport" parent="system" icon="fa-solid fa-circle-nodes"/>
+        <item id="flight" text="Flights" action="/system/flight" parent="system" icon="fa-solid fa-circle-nodes"/>
+        <item id="payment" text="Payment" action="/system/payment" parent="system" icon="fa-solid fa-circle-nodes"/>
+        <item id="reservation" text="Reservations" action="/system/reservation" parent="system" icon="fa-solid fa-circle-nodes"/>
+    </menu>
+</navigations>

@@ -18,7 +18,7 @@
     <nav class="navbar navbar-expand-xl">
         <div class="container">
             <!-- Logo START -->
-            <img class="light-mode-item navbar-brand-item" src="static/images/skylink_logo.jpg" alt="Skylink">
+            <img class="navbar-brand-item" src="#" alt="Skylink">
             <!-- Logo END -->
             <!-- Responsive navbar toggler -->
             <button class="navbar-toggler ms-auto mx-3 me-xl-0 p-0 p-sm-1" type="button" data-bs-toggle="collapse"
@@ -30,6 +30,7 @@
 					<span></span>
 				</span>
             </button>
+
             <!-- Main navbar START -->
             <div class="navbar-collapse collapse" id="navbarCollapse">
                 <!-- Nav traveler menu START -->
@@ -76,6 +77,7 @@
                                     <li><a class="dropdown-item" href="flight-booking.html">Flight Booking</a></li>
                                 </ul>
                             </li>
+
                             <!-- Dropdown submenu -->
                             <li class="dropdown-submenu dropend">
                                 <a class="dropdown-item dropdown-toggle" href="#">Directory</a>
@@ -259,6 +261,7 @@
                 </li>
             </ul>
             <!-- Navbar right side END -->
+
         </div>
     </nav>
     <!-- Logo Nav END -->
@@ -274,8 +277,7 @@
         <div class="container">
             <!-- Background image -->
             <div class="rounded-3 p-3 p-sm-5"
-                 style="background-image: url(assets/images/bg/01.jpg); background-position: center center;
-                 background-repeat: no-repeat; background-size: cover;">
+                 style="background-image: url(static/images/background.jpg); background-position: center center; background-repeat: no-repeat; background-size: cover;">
                 <!-- Banner title -->
                 <div class="row">
                     <div class="col-md-10 mx-auto text-center">
@@ -309,7 +311,7 @@
                         <!-- Ticket class -->
                         <div class="col-lg-3 ms-auto">
                             <div class="form-control-bg-light form-fs-md">
-                                <select class="form-select js-choice">
+                                <select class="form-select">
                                     <option value="">Select Class</option>
                                     <option>Economy</option>
                                     <option>Premium Economy</option>
@@ -322,7 +324,7 @@
                         <!-- Ticket Travelers -->
                         <div class="col-lg-3 ms-auto">
                             <div class="form-control-bg-light form-fs-md">
-                                <select class="form-select js-choice">
+                                <select class="form-select">
                                     <option value="">Select Travelers</option>
                                     <option>1</option>
                                     <option>2</option>
@@ -350,6 +352,12 @@
                                                 <option>West Virginia, Paris</option>
                                             </select>
                                         </div>
+
+                                        <!-- Auto fill button -->
+                                        <div class="btn-flip-icon mt-3 mt-md-0">
+                                            <button class="btn btn-white shadow btn-round mb-0"><i
+                                                    class="fa-solid fa-right-left"></i></button>
+                                        </div>
                                     </div>
 
                                     <!-- Going To -->
@@ -368,16 +376,16 @@
 
                                     <!-- Departure -->
                                     <div class="col-lg-4">
-                                        <div class="form-border-transparent form-fs-lg bg-light rounded-3 h-100 p-3" >
+                                        <div class="form-border-transparent form-fs-lg bg-light rounded-3 h-100 p-3">
                                             <label class="mb-1"><i class="bi bi-calendar me-2"></i>Departure</label>
-                                            <input type="text" class="form-control flatpickr" data-date-format="d M Y"
+                                            <input type="text" class="form-control" data-date-format="d M Y"
                                                    placeholder="Select date">
                                         </div>
                                     </div>
 
                                     <div class="col-12 text-end pt-0">
-                                        <a class="btn btn-primary mb-n4" href="#">Find ticket <i
-                                                class="bi bi-arrow-right ps-3"></i></a>
+                                        <a class="btn btn-primary mb-n4" href="flight-list.html">Find ticket
+                                            <i class="bi bi-arrow-right ps-3"></i></a>
                                     </div>
                                 </div>
                             </div>
@@ -387,24 +395,27 @@
                             <div class="tab-pane fade" id="pills-round-trip" role="tabpanel"
                                  aria-labelledby="pills-round-trip-tab">
                                 <div class="row g-4">
+
                                     <!-- Leaving From -->
                                     <div class="col-md-6 col-xl-3 position-relative">
                                         <div class="form-border-transparent form-fs-lg bg-light rounded-3 h-100 p-3">
                                             <!-- Input field -->
                                             <label class="mb-1"><i class="bi bi-geo-alt me-2"></i>From</label>
-                                            <select class="form-select" data-search-enabled="true">
+                                            <select class="form-select js-choice" data-search-enabled="true">
                                                 <option value="">Select location</option>
                                                 <option>San Jacinto, USA</option>
                                                 <option>North Dakota, Canada</option>
                                                 <option>West Virginia, Paris</option>
                                             </select>
                                         </div>
+
                                         <!-- Auto fill button -->
                                         <div class="btn-flip-icon mt-3 mt-md-0">
                                             <button class="btn btn-white shadow btn-round mb-0"><i
                                                     class="fa-solid fa-right-left"></i></button>
                                         </div>
                                     </div>
+
                                     <!-- Going To -->
                                     <div class="col-md-6 col-xl-3">
                                         <div class="form-border-transparent form-fs-lg bg-light rounded-3 h-100 p-3">
@@ -423,7 +434,7 @@
                                     <div class="col-md-6 col-xl-3">
                                         <div class="form-border-transparent form-fs-lg bg-light rounded-3 h-100 p-3">
                                             <label class="mb-1"><i class="bi bi-calendar me-2"></i>Departure</label>
-                                            <input type="text" class="form-control flatpickr" data-date-format="d M Y"
+                                            <input type="text" class="form-control" data-date-format="d M Y"
                                                    placeholder="Select date">
                                         </div>
                                     </div>
@@ -432,7 +443,7 @@
                                     <div class="col-md-6 col-xl-3">
                                         <div class="form-border-transparent form-fs-lg bg-light rounded-3 h-100 p-3">
                                             <label class="mb-1"><i class="bi bi-calendar me-2"></i>Return</label>
-                                            <input type="text" class="form-control flatpickr" data-date-format="d M Y"
+                                            <input type="text" class="form-control" data-date-format="d M Y"
                                                    placeholder="Select date">
                                         </div>
                                     </div>
