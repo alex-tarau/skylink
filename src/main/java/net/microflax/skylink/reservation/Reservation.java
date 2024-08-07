@@ -3,36 +3,50 @@ package net.microflax.skylink.reservation;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
+import net.microfalx.bootstrap.dataset.annotation.Component;
+import net.microfalx.bootstrap.dataset.annotation.Filterable;
+import net.microfalx.bootstrap.jdbc.entity.TimestampAware;
+import net.microfalx.lang.annotation.Description;
+import net.microfalx.lang.annotation.Position;
+import net.microfalx.lang.annotation.Visible;
+import net.microfalx.lang.annotation.Width;
 import net.microflax.skylink.flight.Flight;
 import net.microflax.skylink.passenger.Passenger;
 
-import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Getter
 @Setter
+@ToString(callSuper = true)
 @Entity
 @Table(name = "reservation")
-public class Reservation {
+public class Reservation extends TimestampAware {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
+    @Position(1)
+    @Visible(false)
     private int id;
 
     @ManyToOne
     @JoinColumn(name = "flight_id")
+    @Position(2)
     private Flight flight;
 
     @ManyToOne
     @JoinColumn(name = "passenger_id")
+    @Position(3)
     private Passenger passenger;
 
-    @Column(name = "created_at", nullable = false)
-    private LocalDateTime createdAt;
-
-    @Column(name = "modified_at")
-    private LocalDateTime modifiedAt;
+    @Column(name = "description")
+    @Position(1000)
+    @Component(Component.Type.TEXT_AREA)
+    @Description("A description for a {name}")
+    @Width("300px")
+    @Filterable()
+    private String description;
 
     @Override
     public boolean equals(Object o) {
@@ -44,16 +58,5 @@ public class Reservation {
     @Override
     public int hashCode() {
         return Objects.hashCode(id);
-    }
-
-    @Override
-    public String toString() {
-        return "Reservation{" +
-                "id=" + id +
-                ", flight=" + flight +
-                ", passenger=" + passenger +
-                ", createdAt=" + createdAt +
-                ", modifiedAt=" + modifiedAt +
-                '}';
     }
 }
