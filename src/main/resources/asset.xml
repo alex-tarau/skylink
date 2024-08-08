@@ -7,6 +7,7 @@
 
         <asset path="ceres.js" type="script"/>
         <asset path="ceres.css" type="stylesheet"/>
+        <asset path="ceres_addon.css" type="stylesheet"/>
     </asset-bundle>
 
 </assets>
