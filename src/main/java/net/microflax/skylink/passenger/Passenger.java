@@ -19,7 +19,7 @@ import java.util.Objects;
 @Setter
 @ToString(callSuper = true)
 @Entity
-@Table(name = "passenger")
+@Table(name = "skylink_passenger")
 public class Passenger extends TimestampAware {
 
     @Id

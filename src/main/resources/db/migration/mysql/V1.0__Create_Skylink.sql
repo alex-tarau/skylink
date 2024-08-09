@@ -1,4 +1,4 @@
-create table airport (
+create table skylink_airport (
     id int primary key auto_increment,
     code varchar(3) not null,
     name varchar(100) unique not null,
@@ -8,7 +8,7 @@ create table airport (
     description varchar(1000)
 );
 
-create table airline (
+create table skylink_airline (
     id int primary key auto_increment,
     name varchar(100) unique not null,
     contact_number varchar(20) not null,
@@ -16,7 +16,7 @@ create table airline (
     description varchar(1000)
 );
 
-create table flight (
+create table skylink_flight (
     id int primary key auto_increment,
     origin_airport_id int not null,
     destination_airport_id int not null,
@@ -27,12 +27,12 @@ create table flight (
     arrival_at datetime not null,
     departure_at datetime not null,
     available_seats int not null,
-    constraint fk$origin_airport$id foreign key (origin_airport_id) references airport (id),
-    constraint fk$destination_airport$id foreign key (destination_airport_id) references airport (id),
-    constraint fk$airline$id foreign key (airline_id) references airline (id)
+    constraint fk$origin_airport$id foreign key (origin_airport_id) references skylink_airport (id),
+    constraint fk$destination_airport$id foreign key (destination_airport_id) references skylink_airport (id),
+    constraint fk$airline$id foreign key (airline_id) references skylink_airline (id)
 );
 
-create table passenger (
+create table skylink_passenger (
     id int primary key auto_increment,
     first_name varchar(50) not null,
     last_name varchar(50) not null,
@@ -45,18 +45,18 @@ create table passenger (
 );
 
 
-create table reservation (
+create table skylink_reservation (
     id int primary key auto_increment,
     flight_id int not null,
     passenger_id int not null,
     created_at datetime not null,
     modified_at datetime,
     description varchar(1000),
-    constraint fk$flight$id foreign key (flight_id) references flight (id),
-    constraint fk$passenger_reservation$id foreign key (passenger_id) references passenger (id)
+    constraint fk$flight$id foreign key (flight_id) references skylink_flight (id),
+    constraint fk$passenger_reservation$id foreign key (passenger_id) references skylink_passenger (id)
 );
 
-create table payment (
+create table skylink_payment (
     id int primary key auto_increment,
     reservation_id int not null,
     method ENUM('VISA','MASTER_CARD','AMEX','PAYPAL') not null,
@@ -66,5 +66,5 @@ create table payment (
     sent_at datetime,
     modified_at datetime,
     description varchar(1000),
-    constraint fk$reservation$id foreign key (reservation_id) references reservation (id)
+    constraint fk$reservation$id foreign key (reservation_id) references skylink_reservation (id)
 );

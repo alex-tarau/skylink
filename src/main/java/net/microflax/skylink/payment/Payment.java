@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
 @Setter
 @ToString(callSuper = true)
 @Entity
-@Table(name = "payment")
+@Table(name = "skylink_payment")
 public class Payment {
 
     @Id

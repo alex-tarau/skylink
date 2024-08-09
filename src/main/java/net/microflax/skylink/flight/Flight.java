@@ -17,7 +17,7 @@ import java.util.Objects;
 @Setter
 @ToString(callSuper = true)
 @Entity
-@Table(name = "flight")
+@Table(name = "skylink_flight")
 public class Flight extends TimestampAware {
 
     @Id

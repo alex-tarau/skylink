@@ -13,7 +13,7 @@ import net.microfalx.lang.annotation.Position;
 @Setter
 @ToString(callSuper = true)
 @Entity
-@Table(name = "airline")
+@Table(name = "skylink_airline")
 public class Airline extends NamedIdentityAware<Integer> {
 
     @Column(name = "contact_number", nullable = false, length = 20)
