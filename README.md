@@ -1,9 +1,7 @@
 # Skylink
 
----
 ## Introduction
 
----
 A flight reservation system to display all available flights
 for passengers to make reservations. 
 Once a flight reservation is completed, 
