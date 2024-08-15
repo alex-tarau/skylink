@@ -5,6 +5,8 @@ create table skylink_airport (
     street varchar(100) not null,
     city varchar(100) not null,
     country varchar(100) not null,
+    created_at datetime not null,
+    modified_at datetime,
     description varchar(1000)
 );
 
@@ -13,6 +15,8 @@ create table skylink_airline (
     name varchar(100) unique not null,
     contact_number varchar(20) not null,
     operating_region varchar(100) not null,
+    created_at datetime not null,
+    modified_at datetime,
     description varchar(1000)
 );
 

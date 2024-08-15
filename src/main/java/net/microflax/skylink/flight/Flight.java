@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import net.microfalx.bootstrap.jdbc.entity.TimestampAware;
+import net.microfalx.lang.annotation.Description;
 import net.microfalx.lang.annotation.Position;
 import net.microfalx.lang.annotation.Visible;
 import net.microflax.skylink.airline.Airline;
@@ -29,32 +30,39 @@ public class Flight extends TimestampAware {
 
     @ManyToOne
     @JoinColumn(name = "origin_airport_id")
+    @Description("The airport that the flight is leaving from")
     @Position(2)
     private Airport originAirport;
 
     @ManyToOne
     @JoinColumn(name = "destination_airport_id")
+    @Description("The airport that the flight is arriving to")
     @Position(3)
     private Airport destinationAirport;
 
     @ManyToOne
     @JoinColumn(name = "airline_id")
+    @Description("The airline")
     @Position(4)
     private Airline airline;
 
     @Column(name = "flight_number", unique = true, nullable = false)
+    @Description("Unique identifier for each flight")
     @Position(5)
     private String flightNumber;
 
     @Column(name = "arrival_at", nullable = false)
+    @Description("The time that the flight will arrive")
     @Position(600)
     private LocalDateTime arrival;
 
     @Column(name = "departure_at", nullable = false)
+    @Description("The time that the flight will depart")
     @Position(601)
     private LocalDateTime departure;
 
     @Column(name = "available_seats", nullable = false)
+    @Description("The number of seats available for passengers")
     @Position(700)
     private int availableSeats;
 

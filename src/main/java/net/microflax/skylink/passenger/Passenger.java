@@ -30,22 +30,27 @@ public class Passenger extends TimestampAware {
     private int id;
 
     @Column(name = "first_name", nullable = false, length = 50)
+    @Description("The first name")
     @Position(5)
     private String firstName;
 
     @Column(name = "last_name", nullable = false, length = 50)
+    @Description("The last name")
     @Position(6)
     private String lastName;
 
     @Column(name = "email", nullable = false, length = 100)
+    @Description("The email")
     @Position(10)
     private String email;
 
     @Column(name = "birth_date", nullable = false)
+    @Description("The birth date")
     @Position(15)
     private LocalDate birthDate;
 
     @Column(name = "passport_number", nullable = false, length = 9)
+    @Description("The unique, identifying number that is on a passport")
     @Position(600)
     private String passport_number;
 

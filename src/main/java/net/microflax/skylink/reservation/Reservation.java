@@ -32,11 +32,13 @@ public class Reservation extends TimestampAware {
 
     @ManyToOne
     @JoinColumn(name = "flight_id")
+    @Description("The flight the passenger will make a reservation")
     @Position(2)
     private Flight flight;
 
     @ManyToOne
     @JoinColumn(name = "passenger_id")
+    @Description("The passenger that will make a flight reservation")
     @Position(3)
     private Passenger passenger;
 

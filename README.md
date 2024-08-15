@@ -1,22 +1,15 @@
 # Skylink
-
 ## Introduction
-
 A flight reservation system to display all available flights
 for passengers to make reservations. 
 Once a flight reservation is completed, 
 then proceed to make a payment transaction to purchase 
 the reservation.
 ## Getting Started
-
----
 ## Build & Run
-
----
 The project requires Java 17 to develop and run and uses 
 Spring Boot 3.X. The latest version can be downloaded from
 https://adoptium.net/
-
 Once it is installed, check the version from the shell:
 ```
 java --version
@@ -45,14 +38,11 @@ using Apache Maven
 ### Tests
 `mvn clean test` can be used to compile and run tests only.
 ### Database
-
----
 This project uses MySQL for the data store. 
 The database needs to be provided as an external dependency.
 Run the following statements (under root user) to create 
 an empty database and a user for application access 
 (change the database & user if desired):
-
 ```
 CREATE USER 'skylink'@'%' IDENTIFIED BY 'skylink123'; 
 CREATE DATABASE skylink CHARACTER SET utf8 COLLATE utf8_bin; 
@@ -61,13 +51,8 @@ GRANT SELECT ON mysql.* TO skylink;
 FLUSH PRIVILEGES; 
 ```
 ### Search Engine
-
----
 This project uses Apache Lucene as a search engine.
-
 ### Configuration
-
----
 Under application.properties the database name or the database user/password can be changed.
 
 

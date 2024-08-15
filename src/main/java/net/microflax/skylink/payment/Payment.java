@@ -1,16 +1,18 @@
 package net.microflax.skylink.payment;
 
+import jakarta.persistence.Id;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import net.microfalx.bootstrap.dataset.annotation.Component;
 import net.microfalx.bootstrap.dataset.annotation.Filterable;
-import net.microfalx.lang.annotation.Description;
-import net.microfalx.lang.annotation.Position;
-import net.microfalx.lang.annotation.Visible;
-import net.microfalx.lang.annotation.Width;
+import net.microfalx.bootstrap.dataset.annotation.OrderBy;
+import net.microfalx.lang.annotation.*;
 import net.microflax.skylink.reservation.Reservation;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.LocalDateTime;
 
@@ -30,33 +32,48 @@ public class Payment {
 
     @OneToOne
     @JoinColumn(name = "reservation_id")
+    @Description("The flight reservation the passenger will purchase")
     @Position(2)
     private Reservation reservation;
 
     @Column(name = "method", nullable = false)
     @Enumerated(EnumType.STRING)
+    @Description("The payment transaction the passenger will use")
     @Position(3)
     private Method method;
 
     @Column(name = "amount", nullable = false, precision = 2)
+    @Description("The total amount the passenger will pay for the flight reservation")
     @Position(4)
     private float amount;
 
     @Column(name = "status", nullable = false)
     @Enumerated(EnumType.STRING)
+    @Description("The status of the payment transaction")
     @Position(5)
     private Status status;
 
-    @Column(name = "created_at", nullable = false)
-    @Position(100)
+    @Column(name = "created_at", nullable = false, updatable = false)
+    @NotNull
+    @Position(500)
+    @Visible(modes = {Visible.Mode.BROWSE, Visible.Mode.VIEW})
+    @Description("The timestamp when the {name} was created")
+    @net.microfalx.bootstrap.dataset.annotation.OrderBy(OrderBy.Direction.DESC)
+    @CreatedDate
+    @CreatedAt
     private LocalDateTime createdAt;
 
     @Column(name = "sent_at")
+    @Description("The timestamp when the {name} was sent")
     @Position(101)
     private LocalDateTime sentAt;
 
     @Column(name = "modified_at")
-    @Position(102)
+    @Position(501)
+    @Visible(modes = {Visible.Mode.BROWSE, Visible.Mode.VIEW})
+    @Description("The timestamp when the {name} was last time modified")
+    @LastModifiedDate
+    @ModifiedAt
     private LocalDateTime modifiedAt;
 
     @Column(name = "description")

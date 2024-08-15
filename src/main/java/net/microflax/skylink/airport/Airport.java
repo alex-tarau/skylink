@@ -6,7 +6,8 @@ import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import net.microfalx.bootstrap.jdbc.entity.NamedIdentityAware;
+import net.microfalx.bootstrap.jdbc.entity.NamedAndTimestampedIdentityAware;
+import net.microfalx.lang.annotation.Description;
 import net.microfalx.lang.annotation.Position;
 
 @Getter
@@ -14,21 +15,25 @@ import net.microfalx.lang.annotation.Position;
 @ToString(callSuper = true)
 @Entity
 @Table(name = "skylink_airport")
-public class Airport extends NamedIdentityAware<Integer> {
+public class Airport extends NamedAndTimestampedIdentityAware<Integer> {
 
     @Column(name = "code", nullable = false, length = 3)
+    @Description("The IATA airport code use to identify the airport")
     @Position(2)
     private String airportCode;
 
     @Column(name = "street", nullable = false, length = 100)
+    @Description("The street that the airport is located on")
     @Position(6)
     private String street;
 
     @Column(name = "city", nullable = false, length = 100)
+    @Description("The city that the airport is located on")
     @Position(7)
     private String city;
 
     @Column(name = "country", nullable = false, length = 100)
+    @Description("The country that the airport is located on")
     @Position(8)
     private String country;
 }
