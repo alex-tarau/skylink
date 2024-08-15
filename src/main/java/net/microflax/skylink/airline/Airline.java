@@ -18,7 +18,7 @@ import net.microfalx.lang.annotation.Position;
 public class Airline extends NamedAndTimestampedIdentityAware<Integer> {
 
     @Column(name = "contact_number", nullable = false, length = 20)
-    @Description("The phone number for the airline")
+    @Description("The airline's phone number")
     @Position(10)
     private String contactNumber;
 
