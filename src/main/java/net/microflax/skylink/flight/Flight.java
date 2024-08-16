@@ -9,6 +9,7 @@ import net.microfalx.lang.annotation.Description;
 import net.microfalx.lang.annotation.Position;
 import net.microfalx.lang.annotation.Visible;
 import net.microflax.skylink.airline.Airline;
+import net.microflax.skylink.airplane.Airplane;
 import net.microflax.skylink.airport.Airport;
 
 import java.time.LocalDateTime;
@@ -29,26 +30,32 @@ public class Flight extends TimestampAware {
     private int id;
 
     @ManyToOne
+    @JoinColumn(name = "airplane_id")
+    @Description("The airplane")
+    @Position(2)
+    private Airplane airplane;
+
+    @ManyToOne
     @JoinColumn(name = "origin_airport_id")
     @Description("The airport that the flight is leaving from")
-    @Position(2)
+    @Position(3)
     private Airport originAirport;
 
     @ManyToOne
     @JoinColumn(name = "destination_airport_id")
     @Description("The airport that the flight is arriving to")
-    @Position(3)
+    @Position(4)
     private Airport destinationAirport;
 
     @ManyToOne
     @JoinColumn(name = "airline_id")
     @Description("The airline")
-    @Position(4)
+    @Position(5)
     private Airline airline;
 
     @Column(name = "flight_number", unique = true, nullable = false)
     @Description("Unique identifier for each flight")
-    @Position(5)
+    @Position(6)
     private String flightNumber;
 
     @Column(name = "arrival_at", nullable = false)
@@ -60,11 +67,6 @@ public class Flight extends TimestampAware {
     @Description("The time that the flight will depart")
     @Position(601)
     private LocalDateTime departure;
-
-    @Column(name = "available_seats", nullable = false)
-    @Description("The number of seats available for passengers")
-    @Position(700)
-    private int availableSeats;
 
     @Override
     public boolean equals(Object o) {

@@ -5,18 +5,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class AirlineService extends AbstractService {
+public class AirlineService extends AbstractService<Airline> {
 
     @Autowired
     private AirlineRepository airlineRepository;
 
-    /**
-     * Persist the airline in the database
-     *
-     * @param airline the airline
-     */
-    public void persistAirline(Airline airline) {
-        airlineRepository.save(airline);
-    }
-
+    @Override
+    public void persist(Airline airline) {airlineRepository.save(airline);}
 }

@@ -20,8 +20,25 @@ create table skylink_airline (
     description varchar(1000)
 );
 
+create table skylink_airplane(
+   id int primary key auto_increment,
+   serial_number varchar(10) unique not null,
+   manufacturer varchar(50) not null,
+   model varchar(50) not null,
+   model_year int not null,
+   economy_seats int not null,
+   economy_plus_seats int not null,
+   business_seats int not null,
+   first_class_seats int not null,
+   deliver_date date not null,
+   created_at datetime not null,
+   modified_at datetime,
+   description varchar(1000)
+);
+
 create table skylink_flight (
     id int primary key auto_increment,
+    airplane_id int not null,
     origin_airport_id int not null,
     destination_airport_id int not null,
     airline_id int not null,
@@ -30,7 +47,7 @@ create table skylink_flight (
     modified_at datetime,
     arrival_at datetime not null,
     departure_at datetime not null,
-    available_seats int not null,
+    constraint fk$airplane$id foreign key (airplane_id) references skylink_airplane (id),
     constraint fk$origin_airport$id foreign key (origin_airport_id) references skylink_airport (id),
     constraint fk$destination_airport$id foreign key (destination_airport_id) references skylink_airport (id),
     constraint fk$airline$id foreign key (airline_id) references skylink_airline (id)
