@@ -2,6 +2,7 @@ package net.microflax.skylink.simulator;
 
 import net.microflax.skylink.airline.Airline;
 import net.microflax.skylink.airline.AirlineRepository;
+import net.microflax.skylink.airplane.Airplane;
 import net.microflax.skylink.airport.Airport;
 import net.microflax.skylink.airport.AirportRepository;
 import net.microflax.skylink.flight.Flight;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
 import java.util.concurrent.TimeUnit;
 
 @Component
@@ -53,7 +55,6 @@ public class ReservationSimulator extends AbstractSimulator<Reservation> {
     private Flight createFlight() {
         Flight flight = new Flight();
         flight.setCreatedAt(LocalDateTime.now());
-        flight.setAvailableSeats(getFaker().number().numberBetween(200, 851));
         flight.setFlightNumber(getFaker().bothify("?" + "#".repeat(8), true));
         flight.setArrival(getFaker().timeAndDate().past(10, TimeUnit.DAYS).atZone(ZoneId.systemDefault()).
                 toLocalDateTime());
@@ -62,6 +63,7 @@ public class ReservationSimulator extends AbstractSimulator<Reservation> {
         flight.setOriginAirport(createAirport());
         flight.setDestinationAirport(createAirport());
         flight.setAirline(createAirline());
+        flight.setAirplane(createAirplane());
         flightRepository.save(flight);
         return flight;
     }
@@ -96,5 +98,18 @@ public class ReservationSimulator extends AbstractSimulator<Reservation> {
         airline.setName(getFaker().aviation().airline());
         airlineRepository.save(airline);
         return airline;
+    }
+
+    private Airplane createAirplane(){
+        Airplane airplane= new Airplane();
+        airplane.setSerialNumber(getFaker().idNumber().valid());
+        airplane.setManufacturer(getFaker().company().name());
+        airplane.setModel(getFaker().aviation().airplane());
+        airplane.setModelYear((int) getFaker().time().past(20, ChronoUnit.YEARS));
+        airplane.setEconomySeats(getFaker().number().numberBetween(200, 851));
+        airplane.setEconomyPlusSeats(getFaker().number().numberBetween(200, 851));
+        airplane.setBusinessSeats(getFaker().number().numberBetween(200, 851));
+        airplane.setFirstClassSeats(getFaker().number().numberBetween(200, 851));
+        return airplane;
     }
 }

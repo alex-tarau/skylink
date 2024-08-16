@@ -2,16 +2,17 @@ package net.microflax.skylink.simulator;
 
 import net.microflax.skylink.airline.Airline;
 import net.microflax.skylink.airline.AirlineRepository;
+import net.microflax.skylink.airplane.Airplane;
 import net.microflax.skylink.airport.Airport;
 import net.microflax.skylink.airport.AirportRepository;
 import net.microflax.skylink.flight.Flight;
 import net.microflax.skylink.flight.FlightRepository;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -32,11 +33,11 @@ public class FlightSimulator extends AbstractSimulator<Flight> {
     protected Flight simulate() {
         Flight flight = new Flight();
         flight.setCreatedAt(LocalDateTime.now());
+        flight.setAirplane(createAirplane());
         flight.setArrival(getFaker().timeAndDate().past(10, TimeUnit.DAYS).atZone(ZoneId.systemDefault()).
                 toLocalDateTime());
         flight.setDeparture(getFaker().timeAndDate().future(1, TimeUnit.DAYS).atZone(ZoneId.systemDefault()).
                 toLocalDateTime());
-        flight.setAvailableSeats(getFaker().number().numberBetween(200, 851));
         flight.setOriginAirport(createAirport());
         flight.setDestinationAirport(createAirport());
         flight.setAirline(createAirline());
@@ -67,6 +68,19 @@ public class FlightSimulator extends AbstractSimulator<Flight> {
         airport.setCountry(getFaker().country().name());
         airportRepository.save(airport);
         return airport;
+    }
+
+    private Airplane createAirplane(){
+        Airplane airplane= new Airplane();
+        airplane.setSerialNumber(getFaker().idNumber().valid());
+        airplane.setManufacturer(getFaker().company().name());
+        airplane.setModel(getFaker().aviation().airplane());
+        airplane.setModelYear((int) getFaker().time().past(20, ChronoUnit.YEARS));
+        airplane.setEconomySeats(getFaker().number().numberBetween(200, 851));
+        airplane.setEconomyPlusSeats(getFaker().number().numberBetween(200, 851));
+        airplane.setBusinessSeats(getFaker().number().numberBetween(200, 851));
+        airplane.setFirstClassSeats(getFaker().number().numberBetween(200, 851));
+        return airplane;
     }
 
     private String generateFlightNumber(String airline) {

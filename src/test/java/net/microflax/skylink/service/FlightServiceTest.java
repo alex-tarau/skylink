@@ -5,7 +5,6 @@ import net.microflax.skylink.airport.Airport;
 import net.microflax.skylink.flight.Flight;
 import net.microflax.skylink.flight.FlightRepository;
 import net.microflax.skylink.flight.FlightService;
-import net.microflax.skylink.simulator.FlightSimulator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -13,9 +12,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.concurrent.ThreadLocalRandom;
-
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class FlightServiceTest {
@@ -43,13 +41,12 @@ class FlightServiceTest {
         flight.setOriginAirport(orginAirport);
         flight.setDestinationAirport(destinationAirport);
         flight.setAirline(airline);
-        flight.setAvailableSeats(ThreadLocalRandom.current().nextInt(200,851));
         when(flightRepository.save(flight)).thenReturn(flight);
     }
 
     @Test
     void persist() {
-        flightService.persistFlight(flight);
+        flightService.persist(flight);
         verify(flightRepository).save(flight);
     }
 }

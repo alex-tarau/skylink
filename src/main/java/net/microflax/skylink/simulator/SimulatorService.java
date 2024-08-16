@@ -1,9 +1,5 @@
 package net.microflax.skylink.simulator;
 
-import net.microflax.skylink.airline.Airline;
-import net.microflax.skylink.airport.Airport;
-import net.microflax.skylink.flight.Flight;
-import net.microflax.skylink.passenger.Passenger;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,6 +20,9 @@ public class SimulatorService implements InitializingBean {
     private AirlineSimulator airlineSimulator;
 
     @Autowired
+    private AirplaneSimulator airplaneSimulator;
+
+    @Autowired
     private PaymentSimulator paymentSimulator;
 
     @Autowired
@@ -37,6 +36,7 @@ public class SimulatorService implements InitializingBean {
         if (simulatorProperties.isEnabled()) {
             initializeSimulator(airlineSimulator, simulatorProperties.getNumberOfEntities());
             initializeSimulator(airportSimulator, simulatorProperties.getNumberOfAirports());
+            initializeSimulator(airplaneSimulator, simulatorProperties.getNumberOfEntities());
             initializeSimulator(passengerSimulator, simulatorProperties.getNumberOfEntities());
             initializeSimulator(flightSimulator, simulatorProperties.getNumberOfEntities());
             initializeSimulator(reservationSimulator, simulatorProperties.getNumberOfEntities());

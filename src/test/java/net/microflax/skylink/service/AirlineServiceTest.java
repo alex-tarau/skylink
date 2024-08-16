@@ -1,10 +1,8 @@
 package net.microflax.skylink.service;
 
-import net.datafaker.Faker;
 import net.microflax.skylink.airline.Airline;
 import net.microflax.skylink.airline.AirlineRepository;
 import net.microflax.skylink.airline.AirlineService;
-import net.microflax.skylink.simulator.AirlineSimulator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -12,7 +10,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class AirlineServiceTest {
@@ -36,7 +35,7 @@ class AirlineServiceTest {
 
     @Test
     void persist() {
-        airlineService.persistAirline(airline);
+        airlineService.persist(airline);
         verify(airlineRepository).save(airline);
     }
 }
