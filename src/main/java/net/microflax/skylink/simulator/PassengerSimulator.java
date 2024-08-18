@@ -5,7 +5,6 @@ import net.microflax.skylink.passenger.PassengerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Component
@@ -23,7 +22,7 @@ public class PassengerSimulator extends AbstractSimulator<Passenger> {
         passenger.setEmail(getFaker().internet().emailAddress());
         passenger.setCreatedAt(LocalDateTime.now());
         passenger.setBirthDate(getFaker().timeAndDate().birthday());
-        passenger.setPassport_number(getFaker().bothify("?" + "#".repeat(8), true));
+        passenger.setPassport_number(getFaker().passport().valid());
         return passenger;
     }
 

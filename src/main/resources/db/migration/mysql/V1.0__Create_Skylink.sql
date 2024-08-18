@@ -22,6 +22,7 @@ create table skylink_airline (
 
 create table skylink_airplane(
    id int primary key auto_increment,
+   name varchar(100) unique not null,
    serial_number varchar(10) unique not null,
    manufacturer varchar(50) not null,
    model varchar(50) not null,
@@ -42,7 +43,7 @@ create table skylink_flight (
     origin_airport_id int not null,
     destination_airport_id int not null,
     airline_id int not null,
-    flight_number varchar(20) unique not null,
+    name varchar(20) unique not null,
     created_at datetime not null,
     modified_at datetime,
     arrival_at datetime not null,

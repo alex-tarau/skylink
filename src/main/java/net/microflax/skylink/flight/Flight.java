@@ -1,13 +1,13 @@
 package net.microflax.skylink.flight;
 
+import jakarta.persistence.Id;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import net.microfalx.bootstrap.jdbc.entity.TimestampAware;
-import net.microfalx.lang.annotation.Description;
-import net.microfalx.lang.annotation.Position;
-import net.microfalx.lang.annotation.Visible;
+import net.microfalx.lang.annotation.*;
 import net.microflax.skylink.airline.Airline;
 import net.microflax.skylink.airplane.Airplane;
 import net.microflax.skylink.airport.Airport;
@@ -29,34 +29,37 @@ public class Flight extends TimestampAware {
     @Visible(false)
     private int id;
 
+    @Column(name = "name", unique = true, nullable = false, length = 20)
+    @NotBlank
+    @Name
+    @Position(2)
+    @Description("The flight number for a {name}, which is to uniquely identify the flight")
+    @Width("200px")
+    private String name;
+
     @ManyToOne
     @JoinColumn(name = "airplane_id")
     @Description("The airplane")
-    @Position(2)
+    @Position(3)
     private Airplane airplane;
 
     @ManyToOne
     @JoinColumn(name = "origin_airport_id")
     @Description("The airport that the flight is leaving from")
-    @Position(3)
+    @Position(4)
     private Airport originAirport;
 
     @ManyToOne
     @JoinColumn(name = "destination_airport_id")
     @Description("The airport that the flight is arriving to")
-    @Position(4)
+    @Position(5)
     private Airport destinationAirport;
 
     @ManyToOne
     @JoinColumn(name = "airline_id")
     @Description("The airline")
-    @Position(5)
-    private Airline airline;
-
-    @Column(name = "flight_number", unique = true, nullable = false)
-    @Description("Unique identifier for each flight")
     @Position(6)
-    private String flightNumber;
+    private Airline airline;
 
     @Column(name = "arrival_at", nullable = false)
     @Description("The time that the flight will arrive")

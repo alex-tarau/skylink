@@ -16,6 +16,7 @@ import net.microflax.skylink.reservation.ReservationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
@@ -65,7 +66,7 @@ public class PaymentSimulator extends AbstractSimulator<Payment> {
     private Flight createFlight() {
         Flight flight = new Flight();
         flight.setCreatedAt(LocalDateTime.now());
-        flight.setFlightNumber(getFaker().bothify("?" + "#".repeat(8), true));
+        flight.setName(getFaker().aviation().flight());
         flight.setArrival(getFaker().timeAndDate().past(10, TimeUnit.DAYS).atZone(ZoneId.systemDefault()).
                 toLocalDateTime());
         flight.setDeparture(getFaker().timeAndDate().future(10, TimeUnit.DAYS).atZone(ZoneId.systemDefault())
@@ -81,7 +82,7 @@ public class PaymentSimulator extends AbstractSimulator<Payment> {
     private Passenger createPassenger() {
         Passenger passenger = new Passenger();
         passenger.setBirthDate(getFaker().timeAndDate().birthday());
-        passenger.setPassport_number(getFaker().bothify("?" + "#".repeat(8), true));
+        passenger.setPassport_number(getFaker().passport().valid());
         passenger.setEmail(getFaker().internet().emailAddress());
         passenger.setFirstName(getFaker().name().firstName());
         passenger.setLastName(getFaker().name().lastName());
@@ -113,7 +114,8 @@ public class PaymentSimulator extends AbstractSimulator<Payment> {
     private Airplane createAirplane() {
         Airplane airplane = new Airplane();
         airplane.setSerialNumber(getFaker().idNumber().valid());
-        airplane.setManufacturer(getFaker().company().name());
+        airplane.setManufacturer(getFaker().aviation().manufacturer());
+        airplane.setDeliveryDate(LocalDate.now());
         airplane.setModel(getFaker().aviation().airplane());
         airplane.setModelYear((int) getFaker().time().past(20, ChronoUnit.YEARS));
         airplane.setEconomySeats(getFaker().number().numberBetween(200, 851));

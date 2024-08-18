@@ -10,11 +10,10 @@ import net.microflax.skylink.flight.FlightRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
-import java.util.Arrays;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 @Component
@@ -41,7 +40,7 @@ public class FlightSimulator extends AbstractSimulator<Flight> {
         flight.setOriginAirport(createAirport());
         flight.setDestinationAirport(createAirport());
         flight.setAirline(createAirline());
-        flight.setFlightNumber(generateFlightNumber(flight.getAirline().getName()));
+        flight.setName(getFaker().aviation().flight());
         return flight;
     }
 
@@ -72,8 +71,10 @@ public class FlightSimulator extends AbstractSimulator<Flight> {
 
     private Airplane createAirplane(){
         Airplane airplane= new Airplane();
+        airplane.setName(getFaker().aviation().airplane());
         airplane.setSerialNumber(getFaker().idNumber().valid());
-        airplane.setManufacturer(getFaker().company().name());
+        airplane.setDeliveryDate(LocalDate.now());
+        airplane.setManufacturer(getFaker().aviation().manufacturer());
         airplane.setModel(getFaker().aviation().airplane());
         airplane.setModelYear((int) getFaker().time().past(20, ChronoUnit.YEARS));
         airplane.setEconomySeats(getFaker().number().numberBetween(200, 851));
@@ -81,14 +82,5 @@ public class FlightSimulator extends AbstractSimulator<Flight> {
         airplane.setBusinessSeats(getFaker().number().numberBetween(200, 851));
         airplane.setFirstClassSeats(getFaker().number().numberBetween(200, 851));
         return airplane;
-    }
-
-    private String generateFlightNumber(String airline) {
-        long digits = getFaker().number().randomNumber(4, false);
-        airline = airline.toUpperCase();
-        List<String> data = Arrays.asList(airline.split(" "));
-        if (data.size()==1) return data.get(0);
-        data.removeIf(String::isEmpty);
-        return data.get(0).charAt(0) + String.valueOf(data.get(1).charAt(0)) + digits;
     }
 }

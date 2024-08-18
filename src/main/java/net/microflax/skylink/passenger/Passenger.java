@@ -1,5 +1,6 @@
 package net.microflax.skylink.passenger;
 
+import jakarta.persistence.Id;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -7,10 +8,7 @@ import lombok.ToString;
 import net.microfalx.bootstrap.dataset.annotation.Component;
 import net.microfalx.bootstrap.dataset.annotation.Filterable;
 import net.microfalx.bootstrap.jdbc.entity.TimestampAware;
-import net.microfalx.lang.annotation.Description;
-import net.microfalx.lang.annotation.Position;
-import net.microfalx.lang.annotation.Visible;
-import net.microfalx.lang.annotation.Width;
+import net.microfalx.lang.annotation.*;
 
 import java.time.LocalDate;
 import java.util.Objects;
@@ -30,11 +28,13 @@ public class Passenger extends TimestampAware {
     private int id;
 
     @Column(name = "first_name", nullable = false, length = 50)
+    @Name
     @Description("The first name")
     @Position(5)
     private String firstName;
 
     @Column(name = "last_name", nullable = false, length = 50)
+    @Name
     @Description("The last name")
     @Position(6)
     private String lastName;

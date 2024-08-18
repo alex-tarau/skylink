@@ -5,6 +5,7 @@ import net.microflax.skylink.airplane.AirplaneRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
 @Component
@@ -16,6 +17,8 @@ public class AirplaneSimulator extends AbstractSimulator<Airplane> {
     @Override
     protected Airplane simulate() {
         Airplane airplane= new Airplane();
+        airplane.setName(getFaker().aviation().airplane());
+        airplane.setDeliveryDate(LocalDate.now());
         airplane.setSerialNumber(getFaker().idNumber().valid());
         airplane.setManufacturer(getFaker().company().name());
         airplane.setModel(getFaker().aviation().airplane());
