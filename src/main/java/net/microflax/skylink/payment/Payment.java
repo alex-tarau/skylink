@@ -1,89 +1,50 @@
 package net.microflax.skylink.payment;
 
-import jakarta.persistence.Id;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import net.microfalx.bootstrap.dataset.annotation.Component;
-import net.microfalx.bootstrap.dataset.annotation.Filterable;
-import net.microfalx.bootstrap.dataset.annotation.OrderBy;
-import net.microfalx.lang.annotation.*;
+import net.microfalx.bootstrap.jdbc.entity.NamedAndTimestampedIdentityAware;
+import net.microfalx.lang.annotation.Description;
+import net.microfalx.lang.annotation.Position;
 import net.microflax.skylink.reservation.Reservation;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.LocalDateTime;
-import java.util.Objects;
 
 @Getter
 @Setter
 @ToString(callSuper = true)
 @Entity
 @Table(name = "skylink_payment")
-public class Payment {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    @Position(1)
-    @Visible(false)
-    private int id;
+public class Payment extends NamedAndTimestampedIdentityAware<Integer> {
 
     @OneToOne
     @JoinColumn(name = "reservation_id")
     @Description("The flight reservation the passenger will purchase")
-    @Position(2)
+    @Position(6)
     private Reservation reservation;
 
     @Column(name = "method", nullable = false)
     @Enumerated(EnumType.STRING)
     @Description("The payment transaction the passenger will use")
-    @Position(3)
+    @Position(10)
     private Method method;
 
     @Column(name = "amount", nullable = false, precision = 2)
     @Description("The total amount the passenger will pay for the flight reservation")
-    @Position(4)
+    @Position(15)
     private float amount;
 
     @Column(name = "status", nullable = false)
     @Enumerated(EnumType.STRING)
     @Description("The status of the payment transaction")
-    @Position(5)
+    @Position(20)
     private Status status;
-
-    @Column(name = "created_at", nullable = false, updatable = false)
-    @NotNull
-    @Position(500)
-    @Visible(modes = {Visible.Mode.BROWSE, Visible.Mode.VIEW})
-    @Description("The timestamp when the {name} was created")
-    @net.microfalx.bootstrap.dataset.annotation.OrderBy(OrderBy.Direction.DESC)
-    @CreatedDate
-    @CreatedAt
-    private LocalDateTime createdAt;
 
     @Column(name = "sent_at")
     @Description("The timestamp when the {name} was sent")
-    @Position(101)
+    @Position(502)
     private LocalDateTime sentAt;
-
-    @Column(name = "modified_at")
-    @Position(501)
-    @Visible(modes = {Visible.Mode.BROWSE, Visible.Mode.VIEW})
-    @Description("The timestamp when the {name} was last time modified")
-    @LastModifiedDate
-    @ModifiedAt
-    private LocalDateTime modifiedAt;
-
-    @Column(name = "description")
-    @Position(1000)
-    @Component(Component.Type.TEXT_AREA)
-    @Description("A description for a {name}")
-    @Width("300px")
-    @Filterable()
-    private String description;
 
     public enum Status {
         /**
@@ -117,17 +78,5 @@ public class Payment {
          * payment with Paypal
          */
         PAYPAL,
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Payment payment)) return false;
-        return id == payment.id;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(id);
     }
 }

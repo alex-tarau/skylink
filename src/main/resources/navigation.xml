@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <navigations xmlns="https://net.microfalx/xsd/navigation-1.0.xsd">
     <menu id="primary">
-        <item id="airline" text="Airlines" action="/system/airline" parent="system" icon="fa-solid fa-plane"/>
+        <item id="airline" text="Airlines" action="/system/airline" parent="system" icon="fa-solid fa-warehouse"/>
         <item id="airport" text="Airports" action="/system/airport" parent="system" icon="fa-solid fa-tower-observation"/>
         <item id="airplane" text="Airplanes" action="/system/airplane" parent="system" icon="fa-solid fa-plane"/>
         <item id="flight" text="Flights" action="/system/flight" parent="system" icon="fa-solid fa-plane-departure"/>

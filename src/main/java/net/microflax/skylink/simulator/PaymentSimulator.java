@@ -19,12 +19,11 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.time.temporal.ChronoUnit;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 
 @Component
 public class PaymentSimulator extends AbstractSimulator<Payment> {
-
 
     @Autowired
     private AirlineRepository airlineRepository;
@@ -49,6 +48,7 @@ public class PaymentSimulator extends AbstractSimulator<Payment> {
     protected Payment simulate() {
         Payment payment = new Payment();
         payment.setCreatedAt(LocalDateTime.now());
+        payment.setName("");
         payment.setAmount((float) getFaker().number().randomDouble(2, 300, 500));
         payment.setMethod(Payment.Method.VISA);
         payment.setReservation(createReservation());
@@ -113,11 +113,11 @@ public class PaymentSimulator extends AbstractSimulator<Payment> {
 
     private Airplane createAirplane() {
         Airplane airplane = new Airplane();
-        airplane.setSerialNumber(getFaker().idNumber().valid());
+        airplane.setSerialNumber(getFaker().idNumber().valid().substring(0,10));
         airplane.setManufacturer(getFaker().aviation().manufacturer());
         airplane.setDeliveryDate(LocalDate.now());
         airplane.setModel(getFaker().aviation().airplane());
-        airplane.setModelYear((int) getFaker().time().past(20, ChronoUnit.YEARS));
+        airplane.setModelYear(ThreadLocalRandom.current().nextInt(2_000,2_024));
         airplane.setEconomySeats(getFaker().number().numberBetween(200, 851));
         airplane.setEconomyPlusSeats(getFaker().number().numberBetween(200, 851));
         airplane.setBusinessSeats(getFaker().number().numberBetween(200, 851));
@@ -130,6 +130,7 @@ public class PaymentSimulator extends AbstractSimulator<Payment> {
         reservation.setCreatedAt(LocalDateTime.now());
         reservation.setFlight(createFlight());
         reservation.setPassenger(createPassenger());
+        reservation.setSeatNumber("");
         reservation.setSeat(Reservation.Seat.ECONOMY);
         reservationRepository.save(reservation);
         return reservation;

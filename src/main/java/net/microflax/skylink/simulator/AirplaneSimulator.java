@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
+import java.util.concurrent.ThreadLocalRandom;
 
 @Component
 public class AirplaneSimulator extends AbstractSimulator<Airplane> {
@@ -19,10 +19,10 @@ public class AirplaneSimulator extends AbstractSimulator<Airplane> {
         Airplane airplane= new Airplane();
         airplane.setName(getFaker().aviation().airplane());
         airplane.setDeliveryDate(LocalDate.now());
-        airplane.setSerialNumber(getFaker().idNumber().valid());
+        airplane.setSerialNumber(getFaker().idNumber().valid().substring(0,10));
         airplane.setManufacturer(getFaker().company().name());
         airplane.setModel(getFaker().aviation().airplane());
-        airplane.setModelYear((int) getFaker().time().past(20, ChronoUnit.YEARS));
+        airplane.setModelYear(ThreadLocalRandom.current().nextInt(2000,2024));
         airplane.setEconomySeats(getFaker().number().numberBetween(200, 851));
         airplane.setEconomyPlusSeats(getFaker().number().numberBetween(200, 851));
         airplane.setBusinessSeats(getFaker().number().numberBetween(200, 851));

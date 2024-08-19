@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.time.temporal.ChronoUnit;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 
 @Component
@@ -104,11 +104,11 @@ public class ReservationSimulator extends AbstractSimulator<Reservation> {
 
     private Airplane createAirplane(){
         Airplane airplane= new Airplane();
-        airplane.setSerialNumber(getFaker().idNumber().valid());
+        airplane.setSerialNumber(getFaker().idNumber().valid().substring(0,10));
         airplane.setManufacturer(getFaker().company().name());
         airplane.setDeliveryDate(LocalDate.now());
         airplane.setModel(getFaker().aviation().airplane());
-        airplane.setModelYear((int) getFaker().time().past(20, ChronoUnit.YEARS));
+        airplane.setModelYear(ThreadLocalRandom.current().nextInt(2000,2024));
         airplane.setEconomySeats(getFaker().number().numberBetween(200, 851));
         airplane.setEconomyPlusSeats(getFaker().number().numberBetween(200, 851));
         airplane.setBusinessSeats(getFaker().number().numberBetween(200, 851));

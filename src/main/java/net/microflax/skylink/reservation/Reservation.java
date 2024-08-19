@@ -38,7 +38,7 @@ public class Reservation extends NamedAndTimestampedIdentityAware<Integer> {
     @Column(name = "seat_number", unique = true, nullable = false, length = 3)
     @Description("The unique identifier for the airplane seat that the passenger selected on the flight")
     @Position(21)
-    private int seatNumber;
+    private String seatNumber;
 
     public enum Seat {
         /**

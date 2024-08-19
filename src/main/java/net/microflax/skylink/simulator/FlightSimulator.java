@@ -3,6 +3,7 @@ package net.microflax.skylink.simulator;
 import net.microflax.skylink.airline.Airline;
 import net.microflax.skylink.airline.AirlineRepository;
 import net.microflax.skylink.airplane.Airplane;
+import net.microflax.skylink.airplane.AirplaneRepository;
 import net.microflax.skylink.airport.Airport;
 import net.microflax.skylink.airport.AirportRepository;
 import net.microflax.skylink.flight.Flight;
@@ -13,7 +14,7 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.time.temporal.ChronoUnit;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 
 @Component
@@ -24,6 +25,9 @@ public class FlightSimulator extends AbstractSimulator<Flight> {
 
     @Autowired
     private AirportRepository airportRepository;
+
+    @Autowired
+    private AirplaneRepository airplaneRepository;
 
     @Autowired
     private FlightRepository flightRepository;
@@ -72,15 +76,16 @@ public class FlightSimulator extends AbstractSimulator<Flight> {
     private Airplane createAirplane(){
         Airplane airplane= new Airplane();
         airplane.setName(getFaker().aviation().airplane());
-        airplane.setSerialNumber(getFaker().idNumber().valid());
+        airplane.setSerialNumber(getFaker().idNumber().valid().substring(0,10));
         airplane.setDeliveryDate(LocalDate.now());
         airplane.setManufacturer(getFaker().aviation().manufacturer());
         airplane.setModel(getFaker().aviation().airplane());
-        airplane.setModelYear((int) getFaker().time().past(20, ChronoUnit.YEARS));
+        airplane.setModelYear(ThreadLocalRandom.current().nextInt(2000,2024));
         airplane.setEconomySeats(getFaker().number().numberBetween(200, 851));
         airplane.setEconomyPlusSeats(getFaker().number().numberBetween(200, 851));
         airplane.setBusinessSeats(getFaker().number().numberBetween(200, 851));
         airplane.setFirstClassSeats(getFaker().number().numberBetween(200, 851));
+        airplaneRepository.save(airplane);
         return airplane;
     }
 }

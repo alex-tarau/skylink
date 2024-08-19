@@ -83,13 +83,14 @@ create table skylink_reservation (
 
 create table skylink_payment (
     id int primary key auto_increment,
+    name varchar(100) not null,
     reservation_id int not null,
     method ENUM('VISA','MASTER_CARD','AMEX','PAYPAL') not null,
     amount decimal(10, 2) not null,
     status Enum('PENDING','SUCCESS','FAIL') not null,
     created_at datetime not null,
-    sent_at datetime,
     modified_at datetime,
+    sent_at datetime,
     description varchar(1000),
     constraint fk$reservation$id foreign key (reservation_id) references skylink_reservation (id)
 );
