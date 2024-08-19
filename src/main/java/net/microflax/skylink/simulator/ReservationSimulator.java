@@ -45,6 +45,7 @@ public class ReservationSimulator extends AbstractSimulator<Reservation> {
         reservation.setCreatedAt(LocalDateTime.now());
         reservation.setPassenger(createPassenger());
         reservation.setFlight(createFlight());
+        reservation.setSeat(Reservation.Seat.ECONOMY);
         return reservation;
     }
 

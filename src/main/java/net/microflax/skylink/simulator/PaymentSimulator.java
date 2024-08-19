@@ -130,6 +130,7 @@ public class PaymentSimulator extends AbstractSimulator<Payment> {
         reservation.setCreatedAt(LocalDateTime.now());
         reservation.setFlight(createFlight());
         reservation.setPassenger(createPassenger());
+        reservation.setSeat(Reservation.Seat.ECONOMY);
         reservationRepository.save(reservation);
         return reservation;
     }

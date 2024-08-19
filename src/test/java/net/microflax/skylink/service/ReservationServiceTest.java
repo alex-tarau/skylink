@@ -1,5 +1,7 @@
 package net.microflax.skylink.service;
 
+import net.microflax.skylink.airplane.Airplane;
+import net.microflax.skylink.airplane.AirplaneRepository;
 import net.microflax.skylink.flight.Flight;
 import net.microflax.skylink.passenger.Passenger;
 import net.microflax.skylink.reservation.Reservation;
@@ -12,6 +14,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -19,8 +25,12 @@ import static org.mockito.Mockito.when;
 class ReservationServiceTest {
 
     @Mock
+    private AirplaneRepository airplaneRepository;
+
+    @Mock
     private ReservationRepository reservationRepository;
 
+    private Airplane airplane;
     private Flight flight;
     private Passenger passenger;
     private Reservation reservation;
@@ -31,17 +41,25 @@ class ReservationServiceTest {
     @BeforeEach
     void setUp() {
         flight = new Flight();
-        flight.setId(1);
+        airplane= new Airplane();
+        airplane.setEconomySeats(100);
+        flight.setAirplane(airplane);
         passenger = new Passenger();
         reservation = new Reservation();
+        reservation.setId(1);
         reservation.setPassenger(passenger);
         reservation.setFlight(flight);
+        reservation.setSeat(Reservation.Seat.ECONOMY);
+        when(reservationRepository.findById(anyInt())).thenReturn(Optional.of(reservation));
+        when(airplaneRepository.save(airplane)).thenReturn(airplane);
         when(reservationRepository.save(reservation)).thenReturn(reservation);
     }
 
     @Test
     void persist() {
         reservationService.persist(reservation);
+        assertEquals(99,reservationRepository.findById(1).get().getFlight().getAirplane().getEconomySeats());
+        verify(airplaneRepository).save(airplane);
         verify(reservationRepository).save(reservation);
     }
 }

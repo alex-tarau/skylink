@@ -69,8 +69,11 @@ create table skylink_passenger (
 
 create table skylink_reservation (
     id int primary key auto_increment,
+    name varchar(100) unique not null,
     flight_id int not null,
     passenger_id int not null,
+    seat ENUM('ECONOMY','ECONOMY_PLUS','BUSINESS','FIRST_CLASS'),
+    seat_number varchar(3) unique not null,
     created_at datetime not null,
     modified_at datetime,
     description varchar(1000),
