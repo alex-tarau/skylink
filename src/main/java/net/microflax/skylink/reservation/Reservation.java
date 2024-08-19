@@ -24,7 +24,7 @@ public class Reservation extends NamedAndTimestampedIdentityAware<Integer> {
     private Flight flight;
 
     @ManyToOne
-    @JoinColumn(name = "passenger_id")
+    @JoinColumn(name = "passenger_id",nullable = false)
     @Description("The passenger that will make a flight reservation")
     @Position(15)
     private Passenger passenger;

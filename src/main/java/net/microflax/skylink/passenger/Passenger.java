@@ -11,6 +11,8 @@ import net.microfalx.bootstrap.jdbc.entity.TimestampAware;
 import net.microfalx.lang.annotation.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Getter
@@ -49,6 +51,12 @@ public class Passenger extends TimestampAware {
     @Position(15)
     private LocalDate birthDate;
 
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "children_passengers_id")
+    @Description("the children of the passenger")
+    @Position(20)
+    private List<Passenger> childPassengers;
+
     @Column(name = "passport_number", nullable = false, length = 9)
     @Description("The unique, identifying number that is on a passport")
     @Position(600)
@@ -61,6 +69,12 @@ public class Passenger extends TimestampAware {
     @Width("300px")
     @Filterable()
     private String description;
+
+
+    public void addChildPassenger(Passenger childPassenger) {
+        if (childPassengers == null) childPassengers = new ArrayList<>();
+        childPassengers.add(childPassenger);
+    }
 
     @Override
     public boolean equals(Object o) {

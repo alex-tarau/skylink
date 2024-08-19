@@ -38,25 +38,25 @@ public class Flight extends TimestampAware {
     private String name;
 
     @ManyToOne
-    @JoinColumn(name = "airplane_id")
+    @JoinColumn(name = "airplane_id",nullable = false)
     @Description("The airplane")
     @Position(3)
     private Airplane airplane;
 
     @ManyToOne
-    @JoinColumn(name = "origin_airport_id")
+    @JoinColumn(name = "origin_airport_id",nullable = false)
     @Description("The airport that the flight is leaving from")
     @Position(4)
     private Airport originAirport;
 
     @ManyToOne
-    @JoinColumn(name = "destination_airport_id")
+    @JoinColumn(name = "destination_airport_id",nullable = false)
     @Description("The airport that the flight is arriving to")
     @Position(5)
     private Airport destinationAirport;
 
     @ManyToOne
-    @JoinColumn(name = "airline_id")
+    @JoinColumn(name = "airline_id",nullable = false)
     @Description("The airline")
     @Position(6)
     private Airline airline;

@@ -60,12 +60,13 @@ create table skylink_passenger (
     last_name varchar(50) not null,
     email varchar(100) not null,
     birth_date date not null,
+    children_passengers_id int,
     created_at datetime not null,
     modified_at datetime,
     passport_number varchar(9) not null,
-    description varchar(1000)
+    description varchar(1000),
+    constraint fk$child_passengers$id foreign key (children_passengers_id) references skylink_passenger (id)
 );
-
 
 create table skylink_reservation (
     id int primary key auto_increment,
