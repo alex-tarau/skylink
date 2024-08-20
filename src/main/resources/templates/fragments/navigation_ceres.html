@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:component="https://net.microfalx/component">
+
+<div th:fragment="search" class="d-flex align-items-center my-2 me-4 me-lg-6" data-kt-search-keypress="true" data-kt-search-min-length="2" data-kt-search-enter="enter" data-kt-search-layout="menu" data-kt-menu-trigger="auto" data-kt-menu-permanent="true" data-kt-menu-placement="bottom-end">
+	<form class="search w-100 position-relative" autocomplete="off" th:attr="onsubmit='Application.Search.query(); return false'">
+		<div class="input-group">
+			<button th:unless="${#lists.isEmpty(queryHistory)}" class="btn btn-sm btn-outline-secondary dropdown-toggle btn-search" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-clock-rotate-left"></i></button>
+			<ul class="dropdown-menu">
+				<li th:each="queryItem : ${queryHistory}">
+					<a class="dropdown-item" href="#" th:text="${queryItem}" th:attr="onclick='Application.Search.click(this); return false'">Action</a>
+				</li>
+			</ul>
+			<input type="text" class="form-control" id="search" name="search" th:value="${query}" component:tooltip="${#dataset.getSearchTooltip()}" placeholder="Search..."
+				   component:tooltip-placement="right" component:tooltip-delay="[2000, 2000]" style="width:400px"/>
+			<button class="btn btn-sm btn-outline-secondary btn-search" type="button" th:onclick="Application.Search.clear()"><i class="fa-solid fa-xmark"></i></button>
+		</div>
+	</form>
+</div>
+
+<div th:fragment="ajax" class="d-flex align-items-center ms-1 ms-lg-3">
+	<div class="spinner-border text-secondary" role="status" style="display: none" id="ajax">
+		<span class="visually-hidden">Loading...</span>
+	</div>
+</div>
+
+<div th:fragment="help" class="d-flex align-items-center ms-1 ms-lg-3">
+	<div class="cursor-pointer symbol symbol-30px symbol-md-40px">
+		<a href="#" th:attr="onclick=|Help.open('Help','home')|" component:tooltip-text="Opens the documentation for the application">
+			<i class="fa-solid fa-circle-question text-success help-icon help-icon-main"></i>
+		</a>
+	</div>
+</div>
+
+<div  th:fragment="user" class="d-flex align-items-center ms-1 ms-lg-3">
+	<div class="cursor-pointer symbol symbol-30px symbol-md-40px fs-5" data-kt-menu-trigger="click" data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">
+		<img th:src="${#security.imageUrl}" />
+	</div>
+	<div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg menu-state-primary fw-bold py-4 fs-6 w-275px" data-kt-menu="true">
+		<div class="menu-item px-3">
+			<div class="menu-content d-flex align-items-center px-3">
+				<div class="symbol symbol-50px me-5">
+					<img  th:src="${#security.imageUrl}" />
+				</div>
+				<div class="d-flex flex-column">
+					<div class="fw-bolder d-flex align-items-center fs-5" th:text="${#security.getName()}">
+					</div>
+					<a href="#" class="fw-bold text-muted text-hover-primary fs-7" th:text="${#security.getEmail()}"></a>
+				</div>
+			</div>
+		</div>
+		<div class="separator my-2"></div>
+		<div class="menu-item px-5">
+			<a href="/user/settings" class="menu-link px-5">Settings</a>
+			<a href="/user/messages" class="menu-link px-5">Messages</a>
+			<a href="/user/profile" class="menu-link px-5">Profile</a>
+		</div>
+		<div th:if="${#security.isAuthenticated()}">
+			<div class="separator my-2"></div>
+			<div class="menu-item px-5">
+				<a href="/logout" class="menu-link px-5">Sign Out</a>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div th:fragment="menu-item" th:if="${#security.hasRole(item)}" class="menu-item">
+	<a class="menu-link py-3" th:href="@{${item.action}}">
+		<span class="menu-icon"><i th:class="${item.icon}"></i></span>
+		<span class="menu-title" th:text="${item.text}"></span>
+	</a>
+</div>
+
+<div th:fragment="menu-ln" th:if="${#security.hasRole(item)}" data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="right-start" class="menu-item menu-lg-down-accordion me-lg-1">
+	<span class="menu-link py-3">
+		<span class="menu-icon"><i th:class="${item.icon}"></i></span>
+		<span class="menu-title" th:text="${item.text}"></span>
+		<span class="menu-arrow "></span>
+	</span>
+	<div class="menu-sub menu-sub-lg-down-accordion menu-sub-lg-dropdown menu-rounded-0 py-lg-4 w-lg-225px">
+		<div th:each="item : ${#component.getChildren(item)}" th:remove="tag">
+			<div th:replace="~{ this :: (${#component.isContainer(item)} ? 'menu-ln' : 'menu-item') }"></div>
+		</div>
+	</div>
+
+</div>
+
+<div th:fragment="menu-l1" th:if="${#security.hasRole(item)}" data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start" class="menu-item menu-lg-down-accordion me-lg-1">
+	<span class="menu-link py-3">
+		<span class="menu-icon"><i th:class="${item.icon}"></i></span>
+		<span class="menu-title" th:text="${item.text}"></span>
+		<span class="menu-arrow d-lg-none"></span>
+	</span>
+	<div class="menu-sub menu-sub-lg-down-accordion menu-sub-lg-dropdown menu-rounded-0 py-lg-4 w-lg-225px">
+		<div th:each="item : ${#component.getChildren(item)}" th:remove="tag">
+			<div th:replace="~{ this :: (${#component.isContainer(item)} ? 'menu-ln' : 'menu-item') }"></div>
+		</div>
+	</div>
+
+</div>
+
+<!-- The primary navigation, most of the time on the left side of the page -->
+
+<div th:fragment="primary" class="header-menu align-items-stretch" data-kt-drawer="true"
+     data-kt-drawer-name="header-menu" data-kt-drawer-activate="{default: true, lg: false}"
+     data-kt-drawer-overlay="true"
+     data-kt-drawer-width="{default:'200px', '300px': '250px'}"
+     data-kt-drawer-direction="start" data-kt-drawer-toggle="#kt_header_menu_mobile_toggle"
+     data-kt-swapper="true" data-kt-swapper-mode="prepend"
+     data-kt-swapper-parent="{default: '#kt_body', lg: '#kt_header_nav'}">
+    <div th:with="menu = ${#navigation.get('primary')}" class="menu menu-lg-rounded menu-column menu-lg-row menu-state-bg menu-title-gray-700
+                                    menu-state-icon-primary menu-state-bullet-primary menu-arrow-gray-400 fw-bold my-5 my-lg-0 align-items-stretch"
+         data-kt-menu="true">
+		<div th:each="item : ${#component.getChildren(menu)}" th:remove="tag">
+			<div th:replace="~{ this :: (${#component.isContainer(item)} ? 'menu-l1' : 'menu-item') }"></div>
+		</div>
+    </div>
+</div>
+
+<!-- The secondary navigation, most of the time on the top of the page -->
+
+<nav class="app-header navbar navbar-expand bg-body" th:fragment="secondary">
+    <p>Render "secondary" navigation</p>
+</nav>
+
+<!-- The tertiary navigation, most of the time is not present but if exists is somewhere near the secondary navigation -->
+
+<nav class="app-header navbar navbar-expand bg-body" th:fragment="tertiary">
+    <p>Render "tertiary" navigation</p>
+</nav>
+
+</html>

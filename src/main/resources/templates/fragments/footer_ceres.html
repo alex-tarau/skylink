@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<!-- The application footer which includes, the application name & url and the scroll-up button-->
+
+<div th:fragment="footer-full" class="footer py-4 d-flex flex-lg-column">
+    <button type="button" class="btn btn-secondary btn-floating btn-lg" id="btn-back-to-top"><i class="fas fa-arrow-up"></i></button>
+    <div class="container-xxl d-flex flex-column flex-md-row align-items-center justify-content-between">
+        <div class="text-dark order-2 order-md-1">
+            <span class="text-muted fw-bold me-1">Copyright © 2024</span>
+            <a th:href="${#application.url}" target="_blank" class="text-gray-800 text-hover-primary" th:text="${#application.owner}"></a>
+            <span>. All rights reserved.</span>
+        </div>
+    </div>
+</div>
+
+<!-- The application footer with only the scroll-up button -->
+
+<div th:fragment="footer-no-message" class="footer py-4 d-flex flex-lg-column">
+    <button type="button" class="btn btn-secondary btn-floating btn-lg" id="btn-back-to-top"><i class="fas fa-arrow-up"></i></button>
+</div>
+
+</body>
+</html>

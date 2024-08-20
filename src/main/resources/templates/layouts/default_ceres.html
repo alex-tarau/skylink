@@ -1,0 +1,51 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head th:replace="~{fragments/page :: header}">
+<body id="kt_body"  class="header-fixed header-tablet-and-mobile-fixed toolbar-enabled">
+<div class="d-flex flex-column flex-root">
+    <div class="page d-flex flex-row flex-column-fluid">
+        <div class="wrapper d-flex flex-column flex-row-fluid" id="kt_wrapper">
+            <div id="kt_header" class="header align-items-stretch" data-kt-sticky="true" data-kt-sticky-name="header"
+                 data-kt-sticky-offset="{default: '200px', lg: '300px'}">
+                <div class="container-xxl d-flex align-items-center">
+                    <div class="header-logo me-5 me-md-10 flex-grow-1 flex-lg-grow-0">
+                        <a href="#">
+                            <img th:src="@{|/asset/image/${#application.logo}|}" class="h-50px h-lg-50px logo-default"/>
+                            <img th:src="@{|/asset/image/${#application.logo}|}" class="h-50px h-lg-50px logo-sticky"/>
+                        </a>
+                    </div>
+                    <div class="d-flex align-items-stretch justify-content-between flex-lg-grow-1">
+                        <div class="d-flex align-items-stretch" id="kt_header_nav">
+							<div th:replace="~{fragments/navigation :: primary}"/>
+                        </div>
+                        <div class="d-flex align-items-stretch flex-shrink-0">
+                            <div class="topbar d-flex align-items-stretch flex-shrink-0">
+                                <div th:replace="~{fragments/navigation :: ajax}"/>
+                                <div th:replace="~{fragments/navigation :: user}"/>
+                                <div th:replace="~{fragments/navigation :: help}"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="toolbar py-5" id="kt_toolbar">
+                <div id="kt_toolbar_container" class="container-xxl d-flex flex-stack flex-wrap">
+                    <div class="d-flex">
+                        <h3 class="text-white fw-bolder fs-2qx me-5" th:text="${#page.title}"></h3>
+                        <div><span th:replace="~{ fragments/page :: help}"></span></div>
+                    </div>
+                    <div class="d-flex align-items-center flex-wrap py-2">
+                        <div th:replace="~{fragments/navigation :: search}"/>
+                    </div>
+                </div>
+            </div>
+            <div id="kt_content_container" class="d-flex flex-column-fluid align-items-start container-xxl">
+                <div layout:fragment="content" class="content flex-row-fluid" id="kt_content">
+                </div>
+            </div>
+            <div th:replace="~{fragments/footer :: footer-full}"/>
+        </div>
+    </div>
+    <div th:replace="~{fragments/page :: code}"/></div>
+</body>
+</html>

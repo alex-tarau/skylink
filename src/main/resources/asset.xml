@@ -1,13 +1,4 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <assets xmlns="https://net.microfalx/xsd/asset-1.0.xsd">
 
-    <!-- Ceres Theme  -->
-    <asset-bundle id="ceres" path="ceres" version="4.0.0" name="ceres" theme="ceres">
-        <depends-on-asset-bundle>bootstrap</depends-on-asset-bundle>
-
-        <asset path="ceres.js" type="script"/>
-        <asset path="ceres.css" type="stylesheet"/>
-        <asset path="ceres_addon.css" type="stylesheet"/>
-    </asset-bundle>
-
 </assets>
