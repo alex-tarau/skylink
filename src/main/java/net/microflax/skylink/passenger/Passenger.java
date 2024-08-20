@@ -9,11 +9,13 @@ import net.microfalx.bootstrap.dataset.annotation.Component;
 import net.microfalx.bootstrap.dataset.annotation.Filterable;
 import net.microfalx.bootstrap.jdbc.entity.TimestampAware;
 import net.microfalx.lang.annotation.*;
+import net.microflax.skylink.review.Review;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -55,12 +57,18 @@ public class Passenger extends TimestampAware {
     @JoinColumn(name = "children_passengers_id")
     @Description("the children of the passenger")
     @Position(20)
-    private List<Passenger> childPassengers;
+    private Set<Passenger> childPassengers;
 
     @Column(name = "passport_number", nullable = false, length = 9)
     @Description("The unique, identifying number that is on a passport")
     @Position(600)
     private String passport_number;
+
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "passenger_id")
+    @Position(900)
+    @Description("All of the reviews the passenger created")
+    private List<Review> passengerReviews;
 
     @Column(name = "description")
     @Position(1000)
@@ -72,7 +80,7 @@ public class Passenger extends TimestampAware {
 
 
     public void addChildPassenger(Passenger childPassenger) {
-        if (childPassengers == null) childPassengers = new ArrayList<>();
+        if (childPassengers == null) childPassengers = new HashSet<>();
         childPassengers.add(childPassenger);
     }
 

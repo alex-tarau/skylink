@@ -11,8 +11,11 @@ import net.microfalx.lang.annotation.*;
 import net.microflax.skylink.airline.Airline;
 import net.microflax.skylink.airplane.Airplane;
 import net.microflax.skylink.airport.Airport;
+import net.microflax.skylink.review.Review;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Getter
@@ -38,25 +41,25 @@ public class Flight extends TimestampAware {
     private String name;
 
     @ManyToOne
-    @JoinColumn(name = "airplane_id",nullable = false)
+    @JoinColumn(name = "airplane_id", nullable = false)
     @Description("The airplane")
     @Position(3)
     private Airplane airplane;
 
     @ManyToOne
-    @JoinColumn(name = "origin_airport_id",nullable = false)
+    @JoinColumn(name = "origin_airport_id", nullable = false)
     @Description("The airport that the flight is leaving from")
     @Position(4)
     private Airport originAirport;
 
     @ManyToOne
-    @JoinColumn(name = "destination_airport_id",nullable = false)
+    @JoinColumn(name = "destination_airport_id", nullable = false)
     @Description("The airport that the flight is arriving to")
     @Position(5)
     private Airport destinationAirport;
 
     @ManyToOne
-    @JoinColumn(name = "airline_id",nullable = false)
+    @JoinColumn(name = "airline_id", nullable = false)
     @Description("The airline")
     @Position(6)
     private Airline airline;
@@ -70,6 +73,17 @@ public class Flight extends TimestampAware {
     @Description("The time that the flight will depart")
     @Position(601)
     private LocalDateTime departure;
+
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "flight_id")
+    @Position(900)
+    @Description("All of the reviews for the flight")
+    private List<Review> flightReviews;
+
+    public void addFlightReview(Review review) {
+        if (flightReviews == null) flightReviews = new ArrayList<>();
+        flightReviews.add(review);
+    }
 
     @Override
     public boolean equals(Object o) {

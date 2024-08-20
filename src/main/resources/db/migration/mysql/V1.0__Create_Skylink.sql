@@ -54,6 +54,7 @@ create table skylink_flight (
     constraint fk$airline$id foreign key (airline_id) references skylink_airline (id)
 );
 
+
 create table skylink_passenger (
     id int primary key auto_increment,
     first_name varchar(50) not null,
@@ -66,6 +67,23 @@ create table skylink_passenger (
     passport_number varchar(9) not null,
     description varchar(1000),
     constraint fk$child_passengers$id foreign key (children_passengers_id) references skylink_passenger (id)
+);
+
+create table skylink_review (
+    id int primary key auto_increment,
+    name varchar(100) not null,
+    passenger_id int not null,
+    airline_id int,
+    airport_id int,
+    flight_id int,
+    rating tinyint not null,
+    created_at datetime not null,
+    modified_at datetime,
+    description varchar(1000),
+    constraint fk$passenger_review$id foreign key (passenger_id) references skylink_passenger (id),
+    constraint fk$airline_review$id foreign key (airline_id) references skylink_airline (id),
+    constraint fk$airport_review$id foreign key (airport_id) references skylink_airport (id),
+    constraint fk$flight_review$id foreign key (flight_id) references skylink_flight (id)
 );
 
 create table skylink_reservation (

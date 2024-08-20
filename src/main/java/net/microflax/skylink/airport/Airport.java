@@ -1,14 +1,16 @@
 package net.microflax.skylink.airport;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import net.microfalx.bootstrap.jdbc.entity.NamedAndTimestampedIdentityAware;
 import net.microfalx.lang.annotation.Description;
 import net.microfalx.lang.annotation.Position;
+import net.microflax.skylink.review.Review;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -36,4 +38,15 @@ public class Airport extends NamedAndTimestampedIdentityAware<Integer> {
     @Description("The country that the airport is located on")
     @Position(8)
     private String country;
+
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "airport_id")
+    @Position(10)
+    @Description("All of the reviews for the airport")
+    private List<Review> airportReviews;
+
+    public void addAirportReview(Review review) {
+        if (airportReviews == null) airportReviews = new ArrayList<>();
+        airportReviews.add(review);
+    }
 }

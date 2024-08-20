@@ -8,5 +8,6 @@
         <item id="passenger" text="Passengers" action="/system/passenger" parent="system" icon="fa-solid fa-user"/>
         <item id="payment" text="Payments" action="/system/payment" parent="system" icon="fa-regular fa-credit-card"/>
         <item id="reservation" text="Reservations" action="/system/reservation" parent="system" icon="fa-solid fa-ticket"/>
+        <item id="review" text="Reviews" action="/system/review" parent="system" icon="fa-solid fa-star"/>
     </menu>
 </navigations>
