@@ -14,9 +14,11 @@ import net.microflax.skylink.reservation.ReservationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.EnumSet;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 
@@ -58,6 +60,7 @@ public class ReservationSimulator extends AbstractSimulator<Reservation> {
         Flight flight = new Flight();
         flight.setCreatedAt(LocalDateTime.now());
         flight.setName(getFaker().aviation().flight());
+        flight.setDaysOfWeek(EnumSet.allOf(DayOfWeek.class));
         flight.setArrival(getFaker().timeAndDate().past(10, TimeUnit.DAYS).atZone(ZoneId.systemDefault()).
                 toLocalTime());
         flight.setDeparture(getFaker().timeAndDate().future(10, TimeUnit.DAYS).atZone(ZoneId.systemDefault())
