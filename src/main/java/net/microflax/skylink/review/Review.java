@@ -20,7 +20,7 @@ import net.microflax.skylink.passenger.Passenger;
 public class Review extends NamedAndTimestampedIdentityAware<Integer> {
 
     @OneToOne
-    @JoinColumn(name = "passenger_id")
+    @JoinColumn(name = "passenger_id",nullable = false)
     @Position(6)
     @Description("The passenger that created the review")
     private Passenger passenger;
@@ -43,8 +43,38 @@ public class Review extends NamedAndTimestampedIdentityAware<Integer> {
     @Description("The flight that receive a review from passengers")
     private Flight flight;
 
+    @Column(name = "status", nullable = false)
+    @Enumerated(EnumType.STRING)
+    @Position(10)
+    @Description("The review status")
+    private Status status;
+
     @Column(name = "rating", nullable = false)
     @Position(100)
     @Description("The rating")
     private short rating;
+
+    @Column(name = "helpful")
+    @Position(200)
+    @Description("The rating")
+    private Boolean helpful;
+
+    public enum Status {
+        /**
+         * The review process has not yet begun.
+         */
+        NOT_STARTED,
+        /**
+         * The review is currently underway.
+         */
+        IN_PROGRESS,
+        /**
+         * The review has been finished.
+         */
+        COMPLETED,
+        /**
+         * The review process is officially closed, with no further actions required
+         */
+        CLOSE
+    }
 }

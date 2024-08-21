@@ -78,7 +78,6 @@ public class Passenger extends TimestampAware {
     @Filterable()
     private String description;
 
-
     public void addChildPassenger(Passenger childPassenger) {
         if (childPassengers == null) childPassengers = new HashSet<>();
         childPassengers.add(childPassenger);

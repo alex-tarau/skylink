@@ -8,13 +8,16 @@ import lombok.Setter;
 import lombok.ToString;
 import net.microfalx.bootstrap.jdbc.entity.TimestampAware;
 import net.microfalx.lang.annotation.*;
+import net.microflax.skylink.DayOfWeekConverter;
 import net.microflax.skylink.airline.Airline;
 import net.microflax.skylink.airplane.Airplane;
 import net.microflax.skylink.airport.Airport;
 import net.microflax.skylink.review.Review;
 
+import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.EnumSet;
 import java.util.List;
 import java.util.Objects;
 
@@ -64,6 +67,18 @@ public class Flight extends TimestampAware {
     @Position(6)
     private Airline airline;
 
+    @Column(name = "status")
+    @Enumerated(EnumType.STRING)
+    @Position(10)
+    @Description("The flight status")
+    private Status status;
+
+    @Column(name = "days_of_week", nullable = false)
+    @Position(20)
+    @Description("The day of the week the flight is schedule")
+    @Convert(converter = DayOfWeekConverter.class)
+    private EnumSet<DayOfWeek> daysOfWeek;
+
     @Column(name = "arrival_at", nullable = false)
     @Description("The time that the flight will arrive")
     @Position(600)
@@ -83,6 +98,25 @@ public class Flight extends TimestampAware {
     public void addFlightReview(Review review) {
         if (flightReviews == null) flightReviews = new ArrayList<>();
         flightReviews.add(review);
+    }
+
+    public enum Status {
+        /**
+         * The flight is schedule to arrive at the origin airport on time.
+         */
+        ON_SCHEDULE,
+        /**
+         * The airplane is currently flying
+         */
+        IN_FLIGHT,
+        /**
+         * The flight arrive at the destination airport
+         */
+        ARRIVED,
+        /**
+         * The flight is delayed
+         */
+        DELAYED,
     }
 
     @Override

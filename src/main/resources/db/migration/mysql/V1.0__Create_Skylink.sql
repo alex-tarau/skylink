@@ -39,11 +39,13 @@ create table skylink_airplane(
 
 create table skylink_flight (
     id int primary key auto_increment,
+    name varchar(20) unique not null,
     airplane_id int not null,
     origin_airport_id int not null,
     destination_airport_id int not null,
     airline_id int not null,
-    name varchar(20) unique not null,
+    status enum('ON_SCHEDULE','IN_FLIGHT','ARRIVED','DELAYED') not null,
+    days_of_week varchar(100) not null,
     created_at datetime not null,
     modified_at datetime,
     arrival_at datetime not null,
@@ -53,7 +55,6 @@ create table skylink_flight (
     constraint fk$destination_airport$id foreign key (destination_airport_id) references skylink_airport (id),
     constraint fk$airline$id foreign key (airline_id) references skylink_airline (id)
 );
-
 
 create table skylink_passenger (
     id int primary key auto_increment,
@@ -76,7 +77,9 @@ create table skylink_review (
     airline_id int,
     airport_id int,
     flight_id int,
+    status enum('NOT_STARTED','IN_PROGRESS','COMPLETED','CLOSE') not null,
     rating tinyint not null,
+    helpful boolean,
     created_at datetime not null,
     modified_at datetime,
     description varchar(1000),
@@ -91,7 +94,7 @@ create table skylink_reservation (
     name varchar(100) unique not null,
     flight_id int not null,
     passenger_id int not null,
-    seat ENUM('ECONOMY','ECONOMY_PLUS','BUSINESS','FIRST_CLASS'),
+    seat enum('ECONOMY','ECONOMY_PLUS','BUSINESS','FIRST_CLASS') not null,
     seat_number varchar(3) unique not null,
     created_at datetime not null,
     modified_at datetime,
@@ -104,9 +107,9 @@ create table skylink_payment (
     id int primary key auto_increment,
     name varchar(100) not null,
     reservation_id int not null,
-    method ENUM('VISA','MASTER_CARD','AMEX','PAYPAL') not null,
+    method enum('VISA','MASTER_CARD','AMEX','PAYPAL') not null,
     amount decimal(10, 2) not null,
-    status Enum('PENDING','SUCCESS','FAIL') not null,
+    status enum('PENDING','SUCCESS','FAIL') not null,
     created_at datetime not null,
     modified_at datetime,
     sent_at datetime,

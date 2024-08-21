@@ -18,7 +18,7 @@ import net.microflax.skylink.passenger.Passenger;
 public class Reservation extends NamedAndTimestampedIdentityAware<Integer> {
 
     @ManyToOne
-    @JoinColumn(name = "flight_id")
+    @JoinColumn(name = "flight_id",nullable = false)
     @Description("The flight the passenger will make a reservation")
     @Position(10)
     private Flight flight;
