@@ -15,7 +15,7 @@ import net.microflax.skylink.airport.Airport;
 import net.microflax.skylink.review.Review;
 
 import java.time.DayOfWeek;
-import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
@@ -82,12 +82,12 @@ public class Flight extends TimestampAware {
     @Column(name = "arrival_at", nullable = false)
     @Description("The time that the flight will arrive")
     @Position(600)
-    private LocalDateTime arrival;
+    private LocalTime arrival;
 
     @Column(name = "departure_at", nullable = false)
     @Description("The time that the flight will depart")
     @Position(601)
-    private LocalDateTime departure;
+    private LocalTime departure;
 
     @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "flight_id")

@@ -39,9 +39,9 @@ public class FlightSimulator extends AbstractSimulator<Flight> {
         flight.setStatus(Flight.Status.ON_SCHEDULE);
         flight.setAirplane(createAirplane());
         flight.setArrival(getFaker().timeAndDate().past(10, TimeUnit.DAYS).atZone(ZoneId.systemDefault()).
-                toLocalDateTime());
+                toLocalTime());
         flight.setDeparture(getFaker().timeAndDate().future(1, TimeUnit.DAYS).atZone(ZoneId.systemDefault()).
-                toLocalDateTime());
+                toLocalTime());
         flight.setOriginAirport(createAirport());
         flight.setDestinationAirport(createAirport());
         flight.setAirline(createAirline());
