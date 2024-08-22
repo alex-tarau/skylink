@@ -19,7 +19,7 @@ import net.microflax.skylink.passenger.Passenger;
 @Table(name = "skylink_review")
 public class Review extends NamedAndTimestampedIdentityAware<Integer> {
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "passenger_id",nullable = false)
     @Position(6)
     @Description("The passenger that created the review")

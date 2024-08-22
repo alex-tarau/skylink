@@ -54,10 +54,10 @@ public class Passenger extends TimestampAware {
     private LocalDate birthDate;
 
     @OneToMany(fetch = FetchType.EAGER)
-    @JoinColumn(name = "children_passengers_id")
+    @JoinColumn(name = "parent_id")
     @Description("the children of the passenger")
     @Position(20)
-    private Set<Passenger> childPassengers;
+    private Set<Passenger> dependents;
 
     @Column(name = "passport_number", nullable = false, length = 9)
     @Description("The unique, identifying number that is on a passport")
@@ -79,8 +79,8 @@ public class Passenger extends TimestampAware {
     private String description;
 
     public void addChildPassenger(Passenger childPassenger) {
-        if (childPassengers == null) childPassengers = new HashSet<>();
-        childPassengers.add(childPassenger);
+        if (dependents == null) dependents = new HashSet<>();
+        dependents.add(childPassenger);
     }
 
     @Override
