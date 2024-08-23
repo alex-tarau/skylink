@@ -2,6 +2,7 @@ package net.microflax.skylink.passenger;
 
 import jakarta.persistence.Id;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -44,6 +45,7 @@ public class Passenger extends TimestampAware {
     private String lastName;
 
     @Column(name = "email", nullable = false, length = 100)
+    @Email(message = "Not a valid email address")
     @Description("The email")
     @Position(10)
     private String email;
