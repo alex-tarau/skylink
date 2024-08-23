@@ -8,6 +8,7 @@ import net.microfalx.bootstrap.jdbc.entity.NamedAndTimestampedIdentityAware;
 import net.microfalx.lang.annotation.Description;
 import net.microfalx.lang.annotation.Position;
 import net.microflax.skylink.reservation.Reservation;
+import org.hibernate.validator.constraints.CreditCardNumber;
 
 import java.time.LocalDateTime;
 
@@ -30,15 +31,21 @@ public class Payment extends NamedAndTimestampedIdentityAware<Integer> {
     @Position(10)
     private Method method;
 
+    @Column(name = "credit_card_number", unique = true, nullable = false, length = 20)
+    @CreditCardNumber(message = "Not a valid credit card number format")
+    @Description("The passenger's credit card number")
+    @Position(15)
+    private String creditCardNumber;
+
     @Column(name = "amount", nullable = false, precision = 2)
     @Description("The total amount the passenger will pay for the flight reservation")
-    @Position(15)
+    @Position(20)
     private float amount;
 
     @Column(name = "status", nullable = false)
     @Enumerated(EnumType.STRING)
     @Description("The status of the payment transaction")
-    @Position(20)
+    @Position(25)
     private Status status;
 
     @Column(name = "sent_at")

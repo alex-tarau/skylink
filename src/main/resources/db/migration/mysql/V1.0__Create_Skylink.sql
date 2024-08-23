@@ -108,6 +108,7 @@ create table skylink_payment (
     name varchar(100) not null,
     reservation_id int not null,
     method enum('VISA','MASTER_CARD','AMEX','PAYPAL') not null,
+    credit_card_number varchar(20) unique not null,
     amount decimal(10, 2) not null,
     status enum('PENDING','SUCCESS','FAIL') not null,
     created_at datetime not null,

@@ -56,6 +56,7 @@ public class PaymentSimulator extends AbstractSimulator<Payment> {
         payment.setReservation(createReservation());
         payment.setSentAt(LocalDateTime.now());
         payment.setStatus(Payment.Status.SUCCESS);
+        payment.setCreditCardNumber(getFaker().business().creditCardNumber());
         return payment;
     }
 
@@ -116,11 +117,11 @@ public class PaymentSimulator extends AbstractSimulator<Payment> {
 
     private Airplane createAirplane() {
         Airplane airplane = new Airplane();
-        airplane.setSerialNumber(getFaker().idNumber().valid().substring(0,10));
+        airplane.setSerialNumber(getFaker().idNumber().valid().substring(0, 10));
         airplane.setManufacturer(getFaker().aviation().manufacturer());
         airplane.setDeliveryDate(LocalDate.now());
         airplane.setModel(getFaker().aviation().airplane());
-        airplane.setModelYear(ThreadLocalRandom.current().nextInt(2_000,2_024));
+        airplane.setModelYear(ThreadLocalRandom.current().nextInt(2_000, 2_024));
         airplane.setEconomySeats(getFaker().number().numberBetween(200, 851));
         airplane.setEconomyPlusSeats(getFaker().number().numberBetween(200, 851));
         airplane.setBusinessSeats(getFaker().number().numberBetween(200, 851));
