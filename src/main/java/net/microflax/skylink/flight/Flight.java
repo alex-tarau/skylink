@@ -17,9 +17,8 @@ import net.microflax.skylink.review.Review;
 import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.EnumSet;
 import java.util.List;
-import java.util.Objects;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -56,7 +55,7 @@ public class Flight extends NamedAndTimestampedIdentityAware<Integer> {
     @Position(20)
     @Description("The day of the week the flight is schedule")
     @Convert(converter = DayOfWeekConverter.class)
-    private EnumSet<DayOfWeek> daysOfWeek;
+    private Set<DayOfWeek> daysOfWeek;
 
     @Column(name = "arrival_at", nullable = false)
     @Description("The time that the flight will arrive")
@@ -70,8 +69,7 @@ public class Flight extends NamedAndTimestampedIdentityAware<Integer> {
 
     @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "flight_id")
-    @Position(900)
-    @Description("All of the reviews for the flight")
+    @Visible(value = false)
     private List<Review> flightReviews;
 
     public void addFlightReview(Review review) {

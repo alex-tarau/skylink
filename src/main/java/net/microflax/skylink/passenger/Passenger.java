@@ -57,8 +57,7 @@ public class Passenger extends TimestampAware {
 
     @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "parent_id")
-    @Description("the children of the passenger")
-    @Position(20)
+    @Visible(value = false)
     private Set<Passenger> dependents;
 
     @Column(name = "passport_number", nullable = false, length = 9)
@@ -68,8 +67,7 @@ public class Passenger extends TimestampAware {
 
     @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "passenger_id")
-    @Position(900)
-    @Description("All of the reviews the passenger created")
+    @Visible(value = false)
     private List<Review> passengerReviews;
 
     @Column(name = "description")

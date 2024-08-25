@@ -7,6 +7,7 @@ import lombok.ToString;
 import net.microfalx.bootstrap.jdbc.entity.NamedAndTimestampedIdentityAware;
 import net.microfalx.lang.annotation.Description;
 import net.microfalx.lang.annotation.Position;
+import net.microfalx.lang.annotation.Visible;
 import net.microflax.skylink.review.Review;
 
 import java.util.ArrayList;
@@ -31,8 +32,7 @@ public class Airline extends NamedAndTimestampedIdentityAware<Integer> {
 
     @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "airline_id")
-    @Position(20)
-    @Description("All of the reviews of the airline")
+    @Visible(value = false)
     private List<Review> airlineReviews;
 
     public void addAirlineReview(Review review) {
