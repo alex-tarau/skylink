@@ -44,16 +44,28 @@ create table skylink_flight (
     origin_airport_id int not null,
     destination_airport_id int not null,
     airline_id int not null,
-    status enum('ON_SCHEDULE','IN_FLIGHT','ARRIVED','DELAYED') not null,
     days_of_week varchar(100) not null,
     created_at datetime not null,
     modified_at datetime,
     arrival_at time not null,
     departure_at time not null,
+    description varchar(1000),
     constraint fk$airplane$id foreign key (airplane_id) references skylink_airplane (id),
     constraint fk$origin_airport$id foreign key (origin_airport_id) references skylink_airport (id),
     constraint fk$destination_airport$id foreign key (destination_airport_id) references skylink_airport (id),
     constraint fk$airline$id foreign key (airline_id) references skylink_airline (id)
+);
+
+create table skylink_flight_status (
+    id int primary key auto_increment,
+    name varchar(20) unique not null,
+    flight_id int not null,
+    flight_date date not null,
+    status enum('ON_SCHEDULE','IN_FLIGHT','ARRIVED','DELAYED') not null,
+    created_at datetime not null,
+    modified_at datetime,
+    description varchar(1000),
+    constraint fk$flight$status foreign key (flight_id) references skylink_flight (id)
 );
 
 create table skylink_passenger (

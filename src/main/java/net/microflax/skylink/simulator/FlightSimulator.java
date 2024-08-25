@@ -38,7 +38,6 @@ public class FlightSimulator extends AbstractSimulator<Flight> {
     protected Flight simulate() {
         Flight flight = new Flight();
         flight.setCreatedAt(LocalDateTime.now());
-        flight.setStatus(Flight.Status.ON_SCHEDULE);
         flight.setAirplane(createAirplane());
         flight.setDaysOfWeek(EnumSet.allOf(DayOfWeek.class));
         flight.setArrival(getFaker().timeAndDate().past(10, TimeUnit.DAYS).atZone(ZoneId.systemDefault()).
