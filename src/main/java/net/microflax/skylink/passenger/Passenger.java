@@ -63,7 +63,12 @@ public class Passenger extends TimestampAware {
     @Column(name = "passport_number", nullable = false, length = 9)
     @Description("The unique, identifying number that is on a passport")
     @Position(600)
-    private String passport_number;
+    private String passportNumber;
+
+    @Column(name = "user_name", unique = true, length = 100)
+    @Position(700)
+    @Visible(value = false)
+    private String userName;
 
     @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "passenger_id")

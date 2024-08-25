@@ -1,7 +1,7 @@
 create table skylink_airport (
     id int primary key auto_increment,
-    code varchar(3) not null,
     name varchar(100) unique not null,
+    code varchar(3) not null,
     street varchar(100) not null,
     city varchar(100) not null,
     country varchar(100) not null,
@@ -23,10 +23,9 @@ create table skylink_airline (
 create table skylink_airplane(
    id int primary key auto_increment,
    name varchar(100) unique not null,
-   serial_number varchar(10) unique not null,
    manufacturer varchar(50) not null,
-   model varchar(50) not null,
    model_year int not null,
+   serial_number varchar(10) unique not null,
    economy_seats int not null,
    economy_plus_seats int not null,
    business_seats int not null,
@@ -78,6 +77,7 @@ create table skylink_passenger (
     created_at datetime not null,
     modified_at datetime,
     passport_number varchar(9) not null,
+    user_name varchar(100) unique,
     description varchar(1000),
     constraint fk$parent$id foreign key (parent_id) references skylink_passenger (id)
 );

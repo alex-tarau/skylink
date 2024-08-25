@@ -6,6 +6,7 @@ import lombok.Setter;
 import lombok.ToString;
 import net.microfalx.bootstrap.jdbc.entity.NamedAndTimestampedIdentityAware;
 import net.microfalx.lang.annotation.Description;
+import net.microfalx.lang.annotation.Label;
 import net.microfalx.lang.annotation.Position;
 import net.microfalx.lang.annotation.Visible;
 import net.microflax.skylink.DayOfWeekConverter;
@@ -35,12 +36,14 @@ public class Flight extends NamedAndTimestampedIdentityAware<Integer> {
 
     @ManyToOne
     @JoinColumn(name = "origin_airport_id", nullable = false)
+    @Label(value = "Origin", group = "Airports")
     @Description("The airport that the flight is leaving from")
     @Position(7)
     private Airport originAirport;
 
     @ManyToOne
     @JoinColumn(name = "destination_airport_id", nullable = false)
+    @Label(value = "Destination", group = "Airports")
     @Description("The airport that the flight is arriving to")
     @Position(8)
     private Airport destinationAirport;

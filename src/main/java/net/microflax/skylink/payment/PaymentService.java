@@ -15,7 +15,6 @@ public class PaymentService extends AbstractService<Payment> {
 
     @Override
     public void persist(Payment payment) {
-        payment.setStatus(Payment.Status.PENDING);
         paymentRepository.save(payment);
     }
 

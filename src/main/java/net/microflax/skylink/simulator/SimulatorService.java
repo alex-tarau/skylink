@@ -2,6 +2,9 @@ package net.microflax.skylink.simulator;
 
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.task.TaskExecutor;
+import org.springframework.scheduling.TaskScheduler;
+import org.springframework.scheduling.support.PeriodicTrigger;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -31,31 +34,26 @@ public class SimulatorService implements InitializingBean {
     @Autowired
     private ReservationSimulator reservationSimulator;
 
+    @Autowired
+    private TaskScheduler taskScheduler;
+
+    @Autowired
+    private TaskExecutor taskExecutor;
+
     @Override
     public void afterPropertiesSet() {
-        if (simulatorProperties.isEnabled()) {
-            initializeSimulator(airlineSimulator, simulatorProperties.getNumberOfEntities());
-            initializeSimulator(airportSimulator, simulatorProperties.getNumberOfAirports());
-            initializeSimulator(airplaneSimulator, simulatorProperties.getNumberOfEntities());
-            initializeSimulator(passengerSimulator, simulatorProperties.getNumberOfEntities());
-            initializeSimulator(flightSimulator, simulatorProperties.getNumberOfEntities());
-            initializeSimulator(reservationSimulator, simulatorProperties.getNumberOfEntities());
-            initializeSimulator(paymentSimulator, simulatorProperties.getNumberOfEntities());
-        }
+        initializeSchedulers();
     }
 
-    /**
-     * Initialize a simulator
-     *
-     * @param abstractSimulator a simulator to simulate entities
-     * @param numberOfEntities  the number of entities to persist in the database
-     */
-    private void initializeSimulator(AbstractSimulator<?> abstractSimulator, int numberOfEntities) {
-        SimulationTask<?> simulationTask = new SimulationTask<>(abstractSimulator);
-        int i = 0;
-        while (i < numberOfEntities) {
-            simulationTask.run();
-            i++;
-        }
+    private void initializeSchedulers() {
+        if (!simulatorProperties.isEnabled()) return;
+        taskExecutor.execute(new SimulationTask<>(airlineSimulator));
+        taskExecutor.execute(new SimulationTask<>(airportSimulator));
+        taskExecutor.execute(new SimulationTask<>(airplaneSimulator));
+        taskExecutor.execute(new SimulationTask<>(flightSimulator));
+
+        PeriodicTrigger trigger = new PeriodicTrigger(simulatorProperties.getInterval());
+        taskScheduler.schedule(new SimulationTask<>(passengerSimulator), trigger);
+        taskScheduler.schedule(new SimulationTask<>(reservationSimulator), trigger);
     }
 }

@@ -19,25 +19,20 @@ import java.time.LocalDate;
 @Table(name = "skylink_airplane")
 public class Airplane extends NamedAndTimestampedIdentityAware<Integer> {
 
-    @Column(name = "serial_number", unique = true, nullable = false, length = 10)
-    @Position(2)
-    @Description("To uniquely identify the airplane")
-    private String serialNumber;
-
     @Column(name = "manufacturer", nullable = false, length = 50)
     @Position(6)
     @Description("The company that build the airplane")
     private String manufacturer;
 
-    @Column(name = "model", nullable = false, length = 50)
+    @Column(name = "model_year", nullable = false)
     @Position(10)
     @Description("The model")
-    private String model;
-
-    @Column(name = "model_year", nullable = false)
-    @Position(15)
-    @Description("The model")
     private int modelYear;
+
+    @Column(name = "serial_number", unique = true, nullable = false, length = 10)
+    @Position(15)
+    @Description("To uniquely identify the airplane")
+    private String serialNumber;
 
     @Column(name = "economy_seats", nullable = false)
     @Position(20)

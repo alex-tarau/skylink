@@ -22,22 +22,22 @@ public class Airport extends NamedAndTimestampedIdentityAware<Integer> {
 
     @Column(name = "code", nullable = false, length = 3)
     @Description("The IATA airport code use to identify the airport")
-    @Position(2)
-    private String airportCode;
+    @Position(6)
+    private String code;
 
     @Column(name = "street", nullable = false, length = 100)
     @Description("The street that the airport is located on")
-    @Position(6)
+    @Position(7)
     private String street;
 
     @Column(name = "city", nullable = false, length = 100)
     @Description("The city that the airport is located on")
-    @Position(7)
+    @Position(8)
     private String city;
 
     @Column(name = "country", nullable = false, length = 100)
     @Description("The country that the airport is located on")
-    @Position(8)
+    @Position(9)
     private String country;
 
     @OneToMany(fetch = FetchType.EAGER)

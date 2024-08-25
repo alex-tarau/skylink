@@ -46,7 +46,7 @@ public class Payment extends NamedAndTimestampedIdentityAware<Integer> {
     @Enumerated(EnumType.STRING)
     @Description("The status of the payment transaction")
     @Position(25)
-    private Status status;
+    private Status status = Status.PENDING;
 
     @Column(name = "sent_at")
     @Description("The timestamp when the {name} was sent")
