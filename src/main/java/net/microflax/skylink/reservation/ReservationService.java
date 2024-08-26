@@ -39,12 +39,16 @@ public class ReservationService extends AbstractService<Reservation> {
             switch (seat) {
                 case ECONOMY:
                     airplane.setEconomySeats(airplane.getEconomySeats() - 1);
+                    break;
                 case ECONOMY_PLUS:
                     airplane.setEconomyPlusSeats(airplane.getEconomyPlusSeats() - 1);
+                    break;
                 case BUSINESS:
                     airplane.setBusinessSeats(airplane.getBusinessSeats() - 1);
+                    break;
                 case FIRST_CLASS:
                     airplane.setFirstClassSeats(airplane.getFirstClassSeats() - 1);
+                    break;
             }
             airplaneRepository.save(airplane);
         } else {

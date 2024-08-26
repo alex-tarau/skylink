@@ -56,15 +56,14 @@ create table skylink_flight (
 );
 
 create table skylink_flight_status (
-    id int primary key auto_increment,
-    name varchar(20) unique not null,
     flight_id int not null,
     flight_date date not null,
     status enum('ON_SCHEDULE','IN_FLIGHT','ARRIVED','DELAYED') not null,
     created_at datetime not null,
     modified_at datetime,
     description varchar(1000),
-    constraint fk$flight$status foreign key (flight_id) references skylink_flight (id)
+    primary key (flight_id,flight_date),
+    constraint fk$flight_status$flight_id foreign key (flight_id) references skylink_flight (id)
 );
 
 create table skylink_passenger (
@@ -79,7 +78,7 @@ create table skylink_passenger (
     passport_number varchar(9) not null,
     user_name varchar(100) unique,
     description varchar(1000),
-    constraint fk$parent$id foreign key (parent_id) references skylink_passenger (id)
+    constraint fk$skylink_passenger$parent foreign key (parent_id) references skylink_passenger (id)
 );
 
 create table skylink_review (

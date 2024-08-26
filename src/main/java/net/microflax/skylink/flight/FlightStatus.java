@@ -4,35 +4,52 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import net.microfalx.bootstrap.jdbc.entity.NamedAndTimestampedIdentityAware;
+import net.microfalx.bootstrap.dataset.annotation.Component;
+import net.microfalx.bootstrap.dataset.annotation.Filterable;
+import net.microfalx.bootstrap.jdbc.entity.TimestampAware;
 import net.microfalx.lang.annotation.Description;
 import net.microfalx.lang.annotation.Position;
+import net.microfalx.lang.annotation.Width;
 
+import java.io.Serializable;
 import java.time.LocalDate;
+
+import static net.microfalx.lang.ArgumentUtils.requireNonNull;
 
 @Getter
 @Setter
 @ToString(callSuper = true)
 @Entity
+@IdClass(FlightStatus.Id.class)
 @Table(name = "skylink_flight_status")
-public class FlightStatus extends NamedAndTimestampedIdentityAware<Integer> {
+public class FlightStatus extends TimestampAware {
 
+    @jakarta.persistence.Id
     @ManyToOne
-    @JoinColumn(name = "flight_id",nullable = false)
+    @JoinColumn(name = "flight_id", nullable = false)
     @Description("The flight the passenger will make a reservation")
-    @Position(10)
+    @Position(1)
     private Flight flight;
 
-    @Column(name = "flight_date",nullable = false)
+    @jakarta.persistence.Id
+    @Column(name = "flight_date", nullable = false)
     @Description("The date the flight is schedule")
-    @Position(15)
+    @Position(2)
     private LocalDate flightDate;
 
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
-    @Position(20)
+    @Position(3)
     @Description("The flight status")
     private Status status;
+
+    @Column(name = "description")
+    @Position(1000)
+    @Component(Component.Type.TEXT_AREA)
+    @Description("A description for a {name}")
+    @Width("300px")
+    @Filterable()
+    private String description;
 
     public enum Status {
         /**
@@ -51,5 +68,20 @@ public class FlightStatus extends NamedAndTimestampedIdentityAware<Integer> {
          * The flight is delayed
          */
         DELAYED,
+    }
+
+    @Getter
+    @ToString
+    public static class Id implements Serializable {
+
+        private Flight flight;
+        private LocalDate flightDate;
+
+        public Id(Flight flight, LocalDate flightDate) {
+            requireNonNull(flight);
+            requireNonNull(flightDate);
+            this.flight = flight;
+            this.flightDate = flightDate;
+        }
     }
 }
