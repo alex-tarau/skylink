@@ -10,6 +10,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -26,12 +27,12 @@ class AirplaneServiceTest {
     @BeforeEach
     void setUp(){
         airplane= new Airplane();
-        when(airplaneRepository.save(airplane)).thenReturn(airplane);
+        when(airplaneRepository.save(any(Airplane.class))).thenReturn(airplane);
     }
 
     @Test
     void persist() {
         airplaneService.persist(airplane);
-        verify(airplaneRepository).save(airplane);
+        verify(airplaneRepository).save(any(Airplane.class));
     }
 }

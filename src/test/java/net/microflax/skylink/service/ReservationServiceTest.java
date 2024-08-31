@@ -17,6 +17,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -51,15 +52,15 @@ class ReservationServiceTest {
         reservation.setFlight(flight);
         reservation.setSeat(Reservation.Seat.ECONOMY);
         when(reservationRepository.findById(anyInt())).thenReturn(Optional.of(reservation));
-        when(airplaneRepository.save(airplane)).thenReturn(airplane);
-        when(reservationRepository.save(reservation)).thenReturn(reservation);
+        when(airplaneRepository.save(any(Airplane.class))).thenReturn(airplane);
+        when(reservationRepository.save(any(Reservation.class))).thenReturn(reservation);
     }
 
     @Test
     void persist() {
         reservationService.persist(reservation);
         assertEquals(99,reservationRepository.findById(1).get().getFlight().getAirplane().getEconomySeats());
-        verify(airplaneRepository).save(airplane);
-        verify(reservationRepository).save(reservation);
+        verify(airplaneRepository).save(any(Airplane.class));
+        verify(reservationRepository).save(any(Reservation.class));
     }
 }

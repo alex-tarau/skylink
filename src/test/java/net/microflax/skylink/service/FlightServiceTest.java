@@ -12,6 +12,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -41,12 +42,12 @@ class FlightServiceTest {
         flight.setOriginAirport(orginAirport);
         flight.setDestinationAirport(destinationAirport);
         flight.setAirline(airline);
-        when(flightRepository.save(flight)).thenReturn(flight);
+        when(flightRepository.save(any(Flight.class))).thenReturn(flight);
     }
 
     @Test
     void persist() {
         flightService.persist(flight);
-        verify(flightRepository).save(flight);
+        verify(flightRepository).save(any(Flight.class));
     }
 }

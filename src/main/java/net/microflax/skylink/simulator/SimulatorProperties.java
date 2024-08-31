@@ -13,7 +13,7 @@ import static java.time.Duration.ofMinutes;
 @ConfigurationProperties("skylink.simulator")
 @Getter
 @Setter
-public class SimulatorProperties {
+class SimulatorProperties {
 
     private boolean enabled = false;
     private Duration interval = ofMinutes(1);

@@ -74,8 +74,8 @@ public class FlightStatus extends TimestampAware {
     @ToString
     public static class Id implements Serializable {
 
-        private Flight flight;
-        private LocalDate flightDate;
+        private final Flight flight;
+        private final LocalDate flightDate;
 
         public Id(Flight flight, LocalDate flightDate) {
             requireNonNull(flight);

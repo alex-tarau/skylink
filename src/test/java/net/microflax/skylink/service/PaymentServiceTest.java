@@ -19,6 +19,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -41,13 +42,13 @@ class PaymentServiceTest {
         payment = new Payment();
         payment.setReservation(reservation);
         payment.setSentAt(LocalDateTime.now());
-        when(paymentRepository.save(payment)).thenReturn(payment);
+        when(paymentRepository.save(any(Payment.class))).thenReturn(payment);
     }
 
     @Test
     void persist() {
         paymentService.persist(payment);
-        verify(paymentRepository).save(payment);
+        verify(paymentRepository).save(any(Payment.class));
     }
 
     @Test

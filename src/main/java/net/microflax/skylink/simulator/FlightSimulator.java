@@ -59,10 +59,17 @@ public class FlightSimulator extends AbstractSimulator<Flight> {
         flight.setName(faker.aviation().flight());
         flight.setAirline(airlineSimulator.next());
         flight.setAirplane(airplaneSimulator.next());
-        flight.setDaysOfWeek(EnumSet.allOf(DayOfWeek.class));
-        flight.setArrival(faker.timeAndDate().past(10, TimeUnit.DAYS).atZone(ZoneId.systemDefault()).
+        float value = random.nextFloat();
+        if (value < 0.3) {
+            flight.setDaysOfWeek(EnumSet.of(DayOfWeek.MONDAY, DayOfWeek.WEDNESDAY, DayOfWeek.FRIDAY));
+        } else if (value < 0.6) {
+            flight.setDaysOfWeek(EnumSet.of(DayOfWeek.TUESDAY, DayOfWeek.THURSDAY, DayOfWeek.SATURDAY));
+        } else {
+            flight.setDaysOfWeek(EnumSet.allOf(DayOfWeek.class));
+        }
+        flight.setArrival(faker.timeAndDate().past(3, TimeUnit.HOURS).atZone(ZoneId.systemDefault()).
                 toLocalTime());
-        flight.setDeparture(faker.timeAndDate().future(1, TimeUnit.DAYS).atZone(ZoneId.systemDefault()).
+        flight.setDeparture(faker.timeAndDate().future(2, TimeUnit.HOURS).atZone(ZoneId.systemDefault()).
                 toLocalTime());
         flight.setOriginAirport(airportSimulator.next());
         flight.setDestinationAirport(airportSimulator.next());

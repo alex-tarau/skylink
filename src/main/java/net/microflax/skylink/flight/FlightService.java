@@ -17,13 +17,16 @@ public class FlightService extends AbstractService<Flight> implements Initializi
     @Autowired
     private TaskScheduler taskScheduler;
 
+    @Autowired
+    private FlightScheduler flightScheduler;
+
     @Override
     public void persist(Flight flight) {
         flightRepository.save(flight);
     }
 
     @Override
-    public void afterPropertiesSet() throws Exception {
-        taskScheduler.scheduleAtFixedRate(new FlightScheduler(), Duration.ofMinutes(60));
+    public void afterPropertiesSet() {
+        taskScheduler.scheduleAtFixedRate(flightScheduler, Duration.ofMinutes(60));
     }
 }

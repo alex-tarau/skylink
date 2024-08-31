@@ -8,7 +8,7 @@ import org.springframework.scheduling.support.PeriodicTrigger;
 import org.springframework.stereotype.Service;
 
 @Service
-public class SimulatorService implements InitializingBean {
+class SimulatorService implements InitializingBean {
 
     @Autowired
     private SimulatorProperties simulatorProperties;

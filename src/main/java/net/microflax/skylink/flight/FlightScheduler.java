@@ -1,12 +1,14 @@
 package net.microflax.skylink.flight;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
-public class FlightScheduler implements Runnable {
+@Component
+class FlightScheduler implements Runnable {
 
     @Autowired
     private FlightRepository flightRepository;
@@ -32,8 +34,7 @@ public class FlightScheduler implements Runnable {
 
     private void validate(Flight flight, LocalDate date) {
         if (!flight.getDaysOfWeek().contains(date.getDayOfWeek())) return;
-        Optional<FlightStatus> optionalFlightStatus = flightStatusRepository.findByFlightAndFlightDate(
-                new FlightStatus.Id(flight, date));
+        Optional<FlightStatus> optionalFlightStatus = flightStatusRepository.findById(new FlightStatus.Id(flight, date));
         if (optionalFlightStatus.isPresent()) return;
         FlightStatus flightStatus = new FlightStatus();
         flightStatus.setFlight(flight);

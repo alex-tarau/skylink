@@ -34,10 +34,10 @@ class FlightSchedulerTest {
     @BeforeEach
     void setUp() {
         flight = new Flight();
-        flight.setDaysOfWeek(EnumSet.of(DayOfWeek.MONDAY));
+        flight.setDaysOfWeek(EnumSet.allOf(DayOfWeek.class));
         flightStatus = new FlightStatus();
         flightStatus.setFlight(flight);
-        flightStatus.setFlightDate(LocalDate.now().plusDays(1));
+        flightStatus.setFlightDate(LocalDate.now());
     }
 
     @Test
@@ -50,7 +50,7 @@ class FlightSchedulerTest {
     @Test
     void flightsAlreadyScheduleOnTime() {
         when(flightRepository.findAll()).thenReturn(Collections.singletonList(flight));
-        when(flightStatusRepository.findByFlightAndFlightDate(any(FlightStatus.Id.class))).thenReturn(Optional.of(flightStatus));
+        when(flightStatusRepository.findById(any(FlightStatus.Id.class))).thenReturn(Optional.of(flightStatus));
         flightScheduler.run();
         verify(flightStatusRepository, never()).save(any(FlightStatus.class));
     }
@@ -58,7 +58,7 @@ class FlightSchedulerTest {
     @Test
     void scheduleFlights() {
         when(flightRepository.findAll()).thenReturn(Collections.singletonList(flight));
-        when(flightStatusRepository.findByFlightAndFlightDate(any(FlightStatus.Id.class))).thenReturn(Optional.empty());
+        when(flightStatusRepository.findById(any(FlightStatus.Id.class))).thenReturn(Optional.empty());
         when(flightStatusRepository.save(any(FlightStatus.class))).thenReturn(flightStatus);
         flightScheduler.run();
         verify(flightStatusRepository,atLeastOnce()).save(any(FlightStatus.class));
