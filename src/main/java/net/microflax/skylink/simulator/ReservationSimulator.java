@@ -59,6 +59,7 @@ public class ReservationSimulator extends AbstractSimulator<Reservation> {
     @Override
     protected Reservation simulate() {
         Reservation reservation = new Reservation();
+        reservation.setName(faker.idNumber().valid());
         reservation.setPassenger(passengerSimulator.next());
         reservation.setFlight(flightSimulator.next());
         reservation.setSeat(Reservation.Seat.ECONOMY);
