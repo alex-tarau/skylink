@@ -12,19 +12,19 @@ import java.util.concurrent.ThreadLocalRandom;
  *
  * @param <T> the entity type
  */
-class SimulationTask<T> implements Runnable {
+class SimulationTask<T, ID> implements Runnable {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SimulationTask.class);
 
-    private final AbstractSimulator<T> simulator;
+    private final AbstractSimulator<T, ID> simulator;
 
-    SimulationTask(AbstractSimulator<T> simulator) {
+    SimulationTask(AbstractSimulator<T, ID> simulator) {
         this.simulator = simulator;
     }
 
     @Override
     public void run() {
-        int range = Math.min(1, (int) (simulator.getSimulationCountPerIteration() * 0.3));
+        int range = Math.max(1, (int) (simulator.getSimulationCountPerIteration() * 0.3));
         int count = simulator.getSimulationCountPerIteration() - (range / 2) + ThreadLocalRandom.current().nextInt(range);
         int maxCount = count * 5;
         while (count > 0 || maxCount-- > 0) {
@@ -33,7 +33,7 @@ class SimulationTask<T> implements Runnable {
                 count--;
             } catch (DataIntegrityViolationException e) {
                 // ignore and retry, up to a limit
-                LOGGER.info("Element already exists: {}", ExceptionUtils.getRootCauseMessage(e));
+                LOGGER.debug("Element already exists: {}", ExceptionUtils.getRootCauseMessage(e));
             }
         }
     }

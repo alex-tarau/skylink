@@ -3,13 +3,15 @@ package net.microflax.skylink.simulator;
 import net.microflax.skylink.passenger.Passenger;
 import net.microflax.skylink.passenger.PassengerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Component;
 
-import java.util.Collections;
 import java.util.List;
 
 @Component
-public class PassengerSimulator extends AbstractSimulator<Passenger> {
+public class PassengerSimulator extends AbstractSimulator<Passenger, Integer> {
 
     @Autowired
     private PassengerRepository passengerRepository;
@@ -17,17 +19,17 @@ public class PassengerSimulator extends AbstractSimulator<Passenger> {
     @Autowired
     private SimulatorProperties properties;
 
-    private volatile List<Passenger> cache = Collections.emptyList();
-
     @Override
-    protected int getElementCount() {
-        if (cache.isEmpty()) cache = passengerRepository.findAll();
-        return cache.size();
+    protected JpaRepository<Passenger, Integer> getRepository() {
+        return passengerRepository;
     }
 
     @Override
-    protected Passenger getNextCached() {
-        return cache.get(random.nextInt(cache.size()));
+    protected Passenger retriveElement() {
+        long count = passengerRepository.count();
+        Page<Passenger> page = passengerRepository.findAll(Pageable.ofSize(1).withPage(random.nextInt((int) count)));
+        List<Passenger> content = page.getContent();
+        return content.isEmpty() ? null : content.iterator().next();
     }
 
     @Override
@@ -46,9 +48,4 @@ public class PassengerSimulator extends AbstractSimulator<Passenger> {
         return passenger;
     }
 
-    @Override
-    protected void save(Passenger passenger) {
-        passengerRepository.save(passenger);
-        cache.add(passenger);
-    }
 }

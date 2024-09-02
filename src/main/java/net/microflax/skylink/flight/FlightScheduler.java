@@ -34,11 +34,11 @@ class FlightScheduler implements Runnable {
 
     private void validate(Flight flight, LocalDate date) {
         if (!flight.getDaysOfWeek().contains(date.getDayOfWeek())) return;
-        Optional<FlightStatus> optionalFlightStatus = flightStatusRepository.findById(new FlightStatus.Id(flight, date));
+        FlightStatus.Id id = new FlightStatus.Id(flight, date);
+        Optional<FlightStatus> optionalFlightStatus = flightStatusRepository.findById(id);
         if (optionalFlightStatus.isPresent()) return;
         FlightStatus flightStatus = new FlightStatus();
-        flightStatus.setFlight(flight);
-        flightStatus.setFlightDate(date);
+        flightStatus.setId(id);
         flightStatus.setStatus(FlightStatus.Status.ON_SCHEDULE);
         flightStatusRepository.save(flightStatus);
     }

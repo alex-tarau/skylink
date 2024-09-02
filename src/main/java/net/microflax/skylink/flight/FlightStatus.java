@@ -1,40 +1,39 @@
 package net.microflax.skylink.flight;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import net.microfalx.bootstrap.dataset.annotation.Component;
 import net.microfalx.bootstrap.dataset.annotation.Filterable;
 import net.microfalx.bootstrap.jdbc.entity.TimestampAware;
 import net.microfalx.lang.annotation.Description;
+import net.microfalx.lang.annotation.Name;
 import net.microfalx.lang.annotation.Position;
 import net.microfalx.lang.annotation.Width;
 
 import java.io.Serializable;
 import java.time.LocalDate;
 
-import static net.microfalx.lang.ArgumentUtils.requireNonNull;
-
+@Entity
+@Table(name = "skylink_flight_status")
 @Getter
 @Setter
 @ToString(callSuper = true)
-@Entity
-@IdClass(FlightStatus.Id.class)
-@Table(name = "skylink_flight_status")
 public class FlightStatus extends TimestampAware {
 
-    @jakarta.persistence.Id
+    @EmbeddedId
+    private Id id;
+
     @ManyToOne
-    @JoinColumn(name = "flight_id", nullable = false)
-    @Description("The flight the passenger will make a reservation")
+    @JoinColumn(name = "flight_id", nullable = false, insertable = false, updatable = false)
+    @Description("The flight for the schedule")
     @Position(1)
+    @Name
     private Flight flight;
 
-    @jakarta.persistence.Id
-    @Column(name = "flight_date", nullable = false)
+    @Column(name = "flight_date", nullable = false, insertable = false, updatable = false)
     @Description("The date the flight is schedule")
     @Position(2)
+    @Name
     private LocalDate flightDate;
 
     @Column(name = "status")
@@ -70,18 +69,19 @@ public class FlightStatus extends TimestampAware {
         DELAYED,
     }
 
-    @Getter
+    @Embeddable
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Data
     @ToString
     public static class Id implements Serializable {
 
-        private final Flight flight;
-        private final LocalDate flightDate;
+        @ManyToOne
+        @JoinColumn(name = "flight_id", nullable = false)
+        private Flight flight;
 
-        public Id(Flight flight, LocalDate flightDate) {
-            requireNonNull(flight);
-            requireNonNull(flightDate);
-            this.flight = flight;
-            this.flightDate = flightDate;
-        }
+        @Column(name = "flight_date", nullable = false)
+        private LocalDate flightDate;
+
     }
 }

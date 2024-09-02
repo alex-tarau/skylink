@@ -1,39 +1,19 @@
 package net.microflax.skylink.simulator;
 
-import net.microflax.skylink.airline.AirlineRepository;
-import net.microflax.skylink.airport.AirportRepository;
-import net.microflax.skylink.flight.FlightRepository;
-import net.microflax.skylink.passenger.PassengerRepository;
 import net.microflax.skylink.payment.Payment;
 import net.microflax.skylink.payment.PaymentRepository;
 import net.microflax.skylink.reservation.Reservation;
-import net.microflax.skylink.reservation.ReservationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 
 @Component
-public class PaymentSimulator extends AbstractSimulator<Payment> {
-
-    @Autowired
-    private AirlineRepository airlineRepository;
-
-    @Autowired
-    private AirportRepository airportRepository;
-
-    @Autowired
-    private FlightRepository flightRepository;
-
-    @Autowired
-    private PassengerRepository passengerRepository;
-
-    @Autowired
-    private ReservationRepository reservationRepository;
+public class PaymentSimulator extends AbstractSimulator<Payment, Integer> {
 
     @Autowired
     private PaymentRepository paymentRepository;
-
 
     @Autowired
     private SimulatorProperties properties;
@@ -41,12 +21,12 @@ public class PaymentSimulator extends AbstractSimulator<Payment> {
     private static final ThreadLocal<Reservation> RESERVATION = new ThreadLocal<>();
 
     @Override
-    protected int getElementCount() {
-        return (int) paymentRepository.count();
+    protected JpaRepository<Payment, Integer> getRepository() {
+        return paymentRepository;
     }
 
     @Override
-    protected Payment getNextCached() {
+    protected Payment retriveElement() {
         return null;
     }
 
@@ -69,8 +49,8 @@ public class PaymentSimulator extends AbstractSimulator<Payment> {
     }
 
     @Override
-    protected void save(Payment payment) {
-        paymentRepository.save(payment);
+    protected void postSave(Payment element) {
+        super.postSave(element);
         RESERVATION.remove();
     }
 

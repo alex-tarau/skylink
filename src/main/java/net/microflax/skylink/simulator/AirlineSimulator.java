@@ -3,13 +3,11 @@ package net.microflax.skylink.simulator;
 import net.microflax.skylink.airline.Airline;
 import net.microflax.skylink.airline.AirlineRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Component;
 
-import java.util.Collections;
-import java.util.List;
-
 @Component
-public class AirlineSimulator extends AbstractSimulator<Airline> {
+public class AirlineSimulator extends AbstractCacheSimulator<Airline, Integer> {
 
     @Autowired
     private AirlineRepository airlineRepository;
@@ -17,22 +15,14 @@ public class AirlineSimulator extends AbstractSimulator<Airline> {
     @Autowired
     private SimulatorProperties properties;
 
-    private volatile List<Airline> cache = Collections.emptyList();
-
     @Override
-    protected int getElementCount() {
-        if (cache.isEmpty()) cache = airlineRepository.findAll();
-        return cache.size();
+    protected JpaRepository<Airline, Integer> getRepository() {
+        return airlineRepository;
     }
 
     @Override
-    protected boolean shouldSimulate() {
+    protected boolean shouldCreate() {
         return getElementCount() < properties.getMaximumAirlineCount();
-    }
-
-    @Override
-    protected Airline getNextCached() {
-        return cache.get(random.nextInt(cache.size()));
     }
 
     @Override
@@ -49,9 +39,4 @@ public class AirlineSimulator extends AbstractSimulator<Airline> {
         return airline;
     }
 
-    @Override
-    protected void save(Airline airline) {
-        airlineRepository.save(airline);
-        cache.add(airline);
-    }
 }

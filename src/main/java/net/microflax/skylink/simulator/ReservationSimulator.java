@@ -5,6 +5,7 @@ import net.microflax.skylink.reservation.Reservation;
 import net.microflax.skylink.reservation.ReservationRepository;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
@@ -13,16 +14,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentSkipListSet;
 
 @Component
-public class ReservationSimulator extends AbstractSimulator<Reservation> {
-
-    @Autowired
-    private AirplaneSimulator airplaneSimulator;
-
-    @Autowired
-    private AirlineSimulator airlineSimulator;
-
-    @Autowired
-    private AirportSimulator airportSimulator;
+public class ReservationSimulator extends AbstractSimulator<Reservation, Integer> {
 
     @Autowired
     private FlightSimulator flightSimulator;
@@ -42,12 +34,12 @@ public class ReservationSimulator extends AbstractSimulator<Reservation> {
     private final Map<Flight, Map<Reservation.Seat, Set<String>>> allocatedSeat = new ConcurrentHashMap<>();
 
     @Override
-    protected int getElementCount() {
-        return (int) reservationRepository.count();
+    protected JpaRepository<Reservation, Integer> getRepository() {
+        return reservationRepository;
     }
 
     @Override
-    protected Reservation getNextCached() {
+    protected Reservation retriveElement() {
         return null;
     }
 
@@ -68,8 +60,8 @@ public class ReservationSimulator extends AbstractSimulator<Reservation> {
     }
 
     @Override
-    protected void save(Reservation reservation) {
-        reservationRepository.save(reservation);
+    protected void postSave(Reservation reservation) {
+        super.postSave(reservation);
         paymentSimulator.attachReservation(reservation);
         paymentSimulator.next();
     }

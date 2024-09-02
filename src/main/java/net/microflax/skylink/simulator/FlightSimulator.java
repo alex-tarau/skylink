@@ -3,17 +3,16 @@ package net.microflax.skylink.simulator;
 import net.microflax.skylink.flight.Flight;
 import net.microflax.skylink.flight.FlightRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Component;
 
 import java.time.DayOfWeek;
 import java.time.ZoneId;
-import java.util.Collections;
 import java.util.EnumSet;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 @Component
-public class FlightSimulator extends AbstractSimulator<Flight> {
+public class FlightSimulator extends AbstractCacheSimulator<Flight, Integer> {
 
     @Autowired
     private AirplaneSimulator airplaneSimulator;
@@ -30,22 +29,14 @@ public class FlightSimulator extends AbstractSimulator<Flight> {
     @Autowired
     private SimulatorProperties properties;
 
-    private volatile List<Flight> cache = Collections.emptyList();
-
     @Override
-    protected int getElementCount() {
-        if (cache.isEmpty()) cache = flightRepository.findAll();
-        return cache.size();
+    protected JpaRepository<Flight, Integer> getRepository() {
+        return flightRepository;
     }
 
     @Override
-    protected boolean shouldSimulate() {
+    protected boolean shouldCreate() {
         return getElementCount() < properties.getMaximumFlightCount();
-    }
-
-    @Override
-    protected Flight getNextCached() {
-        return cache.get(random.nextInt(cache.size()));
     }
 
     @Override
@@ -74,12 +65,6 @@ public class FlightSimulator extends AbstractSimulator<Flight> {
         flight.setOriginAirport(airportSimulator.next());
         flight.setDestinationAirport(airportSimulator.next());
         return flight;
-    }
-
-    @Override
-    protected void save(Flight flight) {
-        flightRepository.save(flight);
-        cache.add(flight);
     }
 
 }
