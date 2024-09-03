@@ -2,21 +2,18 @@ package net.microflax.skylink.payment;
 
 import net.microflax.skylink.AbstractService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
-public class PaymentService extends AbstractService<Payment> {
+public class PaymentService extends AbstractService<Payment,Integer> {
 
     @Autowired
     private PaymentRepository paymentRepository;
 
-    @Override
-    public void persist(Payment payment) {
-        paymentRepository.save(payment);
-    }
 
     /**
      * Update the status of the payment
@@ -31,4 +28,15 @@ public class PaymentService extends AbstractService<Payment> {
         paymentRepository.save(newPayment.get());
     }
 
+
+    @Override
+    protected JpaRepository<Payment, Integer> getRepository() {
+        return paymentRepository;
+    }
+
+    @Override
+    protected Payment preSave(Payment payment) {
+        // In the future, the payment might have additional attributes to populate before persist the airline entity
+        return null;
+    }
 }

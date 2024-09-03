@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.security.authentication.event.AuthenticationSuccessEvent;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,18 +21,12 @@ import static net.microfalx.lang.StringUtils.NA_STRING;
 import static net.microfalx.lang.StringUtils.defaultIfEmpty;
 
 @Service
-public class PassengerService extends AbstractService<Passenger> {
+public class PassengerService extends AbstractService<Passenger, Integer> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(PassengerService.class);
 
     @Autowired
     private PassengerRepository passengerRepository;
-
-    @Override
-    public void persist(Passenger passenger) {
-        passenger.setPassportNumber(generatePassportNumber());
-        passengerRepository.save(passenger);
-    }
 
     @EventListener
     public void onSuccess(AuthenticationSuccessEvent success) {
@@ -74,8 +69,20 @@ public class PassengerService extends AbstractService<Passenger> {
         }
     }
 
+    @Override
+    protected JpaRepository<Passenger, Integer> getRepository() {
+        return passengerRepository;
+    }
+
+    @Override
+    protected Passenger preSave(Passenger passenger) {
+        passenger.setPassportNumber(generatePassportNumber());
+        return passenger;
+    }
+
     private String generatePassportNumber() {
         return RandomStringUtils.random(1, true, false).toUpperCase() +
                 RandomStringUtils.random(8, false, true).toUpperCase();
     }
+
 }

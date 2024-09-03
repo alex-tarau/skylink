@@ -4,14 +4,14 @@ import net.microflax.skylink.AbstractService;
 import net.microflax.skylink.airplane.Airplane;
 import net.microflax.skylink.airplane.AirplaneRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
-public class ReservationService extends AbstractService<Reservation> {
+public class ReservationService extends AbstractService<Reservation,Integer> {
 
     @Autowired
     private AirplaneRepository airplaneRepository;
@@ -20,11 +20,16 @@ public class ReservationService extends AbstractService<Reservation> {
     private ReservationRepository reservationRepository;
 
     @Override
-    public void persist(Reservation reservation) {
-        reservation.setCreatedAt(LocalDateTime.now());
-        updateAvailableSeats(reservation.getId(), reservation.getSeat());
-        reservationRepository.save(reservation);
+    protected JpaRepository<Reservation, Integer> getRepository() {
+        return reservationRepository;
     }
+
+    @Override
+    protected Reservation preSave(Reservation reservation) {
+        updateAvailableSeats(reservation.getId(), reservation.getSeat());
+        return reservation;
+    }
+
 
     /**
      * Update the total number of seats for each seat category on the airplane
