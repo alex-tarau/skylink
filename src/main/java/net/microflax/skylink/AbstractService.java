@@ -14,8 +14,11 @@ public abstract class AbstractService<T, ID> {
      */
     public final void persist(T entity) {
         T preSaveEntity = preSave(entity);
-        if (preSaveEntity == null) getRepository().save(entity);
-        getRepository().save(preSaveEntity);
+        if (preSaveEntity == null) {
+            getRepository().save(entity);
+        }else {
+            getRepository().save(preSaveEntity);
+        }
     }
 
     /**
