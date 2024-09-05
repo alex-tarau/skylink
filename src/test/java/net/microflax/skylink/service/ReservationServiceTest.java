@@ -42,7 +42,7 @@ class ReservationServiceTest {
     @BeforeEach
     void setUp() {
         flight = new Flight();
-        airplane= new Airplane();
+        airplane = new Airplane();
         airplane.setEconomySeats(100);
         flight.setAirplane(airplane);
         passenger = new Passenger();
@@ -57,9 +57,9 @@ class ReservationServiceTest {
     }
 
     @Test
-    void persist() {
-        reservationService.persist(reservation);
-        assertEquals(99,reservationRepository.findById(1).get().getFlight().getAirplane().getEconomySeats());
+    void updateAvailableSeats() {
+        reservationService.updateAvailableSeats(1, Reservation.Seat.ECONOMY);
+        assertEquals(99, reservationRepository.findById(1).get().getFlight().getAirplane().getEconomySeats());
         verify(airplaneRepository).save(any(Airplane.class));
         verify(reservationRepository).save(any(Reservation.class));
     }

@@ -1,18 +1,15 @@
 package net.microflax.skylink.service;
 
-import net.microflax.skylink.passenger.Passenger;
 import net.microflax.skylink.passenger.PassengerRepository;
 import net.microflax.skylink.passenger.PassengerService;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @ExtendWith(MockitoExtension.class)
 class PassengerServiceTest {
@@ -20,21 +17,12 @@ class PassengerServiceTest {
     @Mock
     private PassengerRepository passengerRepository;
 
-    private Passenger passenger;
-
     @InjectMocks
     private PassengerService passengerService;
 
-    @BeforeEach
-    void setUp() {
-        passenger = new Passenger();
-        when(passengerRepository.save(any(Passenger.class))).thenReturn(passenger);
-    }
-
-
     @Test
     void persist() {
-        passengerService.persist(passenger);
-        verify(passengerRepository).save(any(Passenger.class));
+        assertTrue(Character.isAlphabetic(passengerService.generatePassportNumber().charAt(0)));
+        assertEquals(9, passengerService.generatePassportNumber().length());
     }
 }

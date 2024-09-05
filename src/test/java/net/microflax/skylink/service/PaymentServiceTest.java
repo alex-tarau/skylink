@@ -46,12 +46,6 @@ class PaymentServiceTest {
     }
 
     @Test
-    void persist() {
-        paymentService.persist(payment);
-        verify(paymentRepository).save(any(Payment.class));
-    }
-
-    @Test
     void successfulStatus() {
         when(paymentRepository.findById(anyInt())).thenReturn(Optional.of(payment));
         paymentService.updateStatus(1);

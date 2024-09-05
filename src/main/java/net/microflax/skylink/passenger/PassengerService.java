@@ -8,7 +8,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.security.authentication.event.AuthenticationSuccessEvent;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -69,18 +68,7 @@ public class PassengerService extends AbstractService<Passenger, Integer> {
         }
     }
 
-    @Override
-    protected JpaRepository<Passenger, Integer> getRepository() {
-        return passengerRepository;
-    }
-
-    @Override
-    protected Passenger preSave(Passenger passenger) {
-        passenger.setPassportNumber(generatePassportNumber());
-        return passenger;
-    }
-
-    private String generatePassportNumber() {
+    public String generatePassportNumber() {
         return RandomStringUtils.random(1, true, false).toUpperCase() +
                 RandomStringUtils.random(8, false, true).toUpperCase();
     }
