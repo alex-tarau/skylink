@@ -11,7 +11,7 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
-public class ReservationService extends AbstractService<Reservation, Integer> {
+public class ReservationService extends AbstractService{
 
     @Autowired
     private AirplaneRepository airplaneRepository;

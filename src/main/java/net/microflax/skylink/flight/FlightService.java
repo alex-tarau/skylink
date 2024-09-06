@@ -18,10 +18,10 @@ public class FlightService extends AbstractService<Flight,Integer> implements In
     private TaskScheduler taskScheduler;
 
     @Autowired
-    private FlightScheduler flightScheduler;
+    private FlightDetailScheduler flightDetailScheduler;
 
     @Override
     public void afterPropertiesSet() {
-        taskScheduler.scheduleAtFixedRate(flightScheduler, Duration.ofMinutes(60));
+        taskScheduler.scheduleAtFixedRate(flightDetailScheduler, Duration.ofMinutes(60));
     }
 }

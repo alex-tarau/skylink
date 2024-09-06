@@ -5,7 +5,7 @@
         <item id="airport" text="Airports" action="/system/airport" parent="system" icon="fa-solid fa-tower-observation"/>
         <item id="airplane" text="Airplanes" action="/system/airplane" parent="system" icon="fa-solid fa-plane"/>
         <item id="flight" text="Flights" action="/system/flight" parent="system" icon="fa-solid fa-plane-departure"/>
-        <item id="flight_status" text="Flight Statuses" action="/system/flight_status" parent="system" icon="fa-solid fa-plane-circle-check"/>
+        <item id="flight_status" text="Flight Details" action="/system/flight_detail" parent="system" icon="fa-solid fa-plane-circle-check"/>
         <item id="passenger" text="Passengers" action="/system/passenger" parent="system" icon="fa-solid fa-user"/>
         <item id="payment" text="Payments" action="/system/payment" parent="system" icon="fa-regular fa-credit-card"/>
         <item id="reservation" text="Reservations" action="/system/reservation" parent="system" icon="fa-solid fa-ticket"/>

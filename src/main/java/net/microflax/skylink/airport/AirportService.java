@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class AirportService extends AbstractService<Airport,Integer> {
+public class AirportService extends AbstractService{
 
     @Autowired
     private AirportRepository airportRepository;

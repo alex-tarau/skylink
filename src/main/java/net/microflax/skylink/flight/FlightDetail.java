@@ -1,6 +1,7 @@
 package net.microflax.skylink.flight;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Digits;
 import lombok.*;
 import net.microfalx.bootstrap.dataset.annotation.Component;
 import net.microfalx.bootstrap.dataset.annotation.Filterable;
@@ -11,14 +12,16 @@ import net.microfalx.lang.annotation.Position;
 import net.microfalx.lang.annotation.Width;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "skylink_flight_status")
+@Table(name = "skylink_flight_detail")
 @Getter
 @Setter
 @ToString(callSuper = true)
-public class FlightStatus extends TimestampAware {
+public class FlightDetail extends TimestampAware {
 
     @EmbeddedId
     private Id id;
@@ -41,6 +44,12 @@ public class FlightStatus extends TimestampAware {
     @Position(3)
     @Description("The flight status")
     private Status status;
+
+    @Column(name = "price")
+    @Digits(integer = 10,fraction = 2)
+    @Description("The current price of the flight")
+    @Position(4)
+    private BigDecimal price= new BigDecimal("0").setScale(2, RoundingMode.HALF_UP);
 
     @Column(name = "description")
     @Position(1000)

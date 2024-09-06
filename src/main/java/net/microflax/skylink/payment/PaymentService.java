@@ -8,7 +8,7 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
-public class PaymentService extends AbstractService<Payment,Integer> {
+public class PaymentService extends AbstractService{
 
     @Autowired
     private PaymentRepository paymentRepository;

@@ -1,6 +1,7 @@
 package net.microflax.skylink.payment;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Digits;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -10,6 +11,8 @@ import net.microfalx.lang.annotation.Position;
 import net.microflax.skylink.reservation.Reservation;
 import org.hibernate.validator.constraints.CreditCardNumber;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDateTime;
 
 @Getter
@@ -37,10 +40,11 @@ public class Payment extends NamedAndTimestampedIdentityAware<Integer> {
     @Position(15)
     private String creditCardNumber;
 
-    @Column(name = "amount", nullable = false, precision = 2)
+    @Column(name = "amount", nullable = false)
+    @Digits(integer = 10, fraction = 2)
     @Description("The total amount the passenger will pay for the flight reservation")
     @Position(20)
-    private float amount;
+    private BigDecimal amount = new BigDecimal("0").setScale(2, RoundingMode.HALF_DOWN);
 
     @Column(name = "status", nullable = false)
     @Enumerated(EnumType.STRING)

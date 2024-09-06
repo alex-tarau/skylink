@@ -5,6 +5,6 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface FlightStatusRepository extends JpaRepository<FlightStatus, FlightStatus.Id>, JpaSpecificationExecutor<FlightStatus> {
+public interface FlightDetailRepository extends JpaRepository<FlightDetail, FlightDetail.Id>, JpaSpecificationExecutor<FlightDetail> {
 
 }

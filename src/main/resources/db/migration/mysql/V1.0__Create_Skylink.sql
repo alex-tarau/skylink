@@ -55,10 +55,11 @@ create table skylink_flight (
     constraint fk$airline$id foreign key (airline_id) references skylink_airline (id)
 );
 
-create table skylink_flight_status (
+create table skylink_flight_detail (
     flight_id int not null,
     flight_date date not null,
     status enum('ON_SCHEDULE','IN_FLIGHT','ARRIVED','DELAYED') not null,
+    price decimal(10,2) not null,
     created_at datetime not null,
     modified_at datetime,
     description varchar(1000),

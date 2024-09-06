@@ -8,13 +8,13 @@ import java.util.List;
 import java.util.Optional;
 
 @Component
-class FlightScheduler implements Runnable {
+class FlightDetailScheduler implements Runnable {
 
     @Autowired
     private FlightRepository flightRepository;
 
     @Autowired
-    private FlightStatusRepository flightStatusRepository;
+    private FlightDetailRepository flightDetailRepository;
 
     private final static int DAYS_IN_ADVANCE = 30;
 
@@ -34,12 +34,12 @@ class FlightScheduler implements Runnable {
 
     private void validate(Flight flight, LocalDate date) {
         if (!flight.getDaysOfWeek().contains(date.getDayOfWeek())) return;
-        FlightStatus.Id id = new FlightStatus.Id(flight, date);
-        Optional<FlightStatus> optionalFlightStatus = flightStatusRepository.findById(id);
+        FlightDetail.Id id = new FlightDetail.Id(flight, date);
+        Optional<FlightDetail> optionalFlightStatus = flightDetailRepository.findById(id);
         if (optionalFlightStatus.isPresent()) return;
-        FlightStatus flightStatus = new FlightStatus();
-        flightStatus.setId(id);
-        flightStatus.setStatus(FlightStatus.Status.ON_SCHEDULE);
-        flightStatusRepository.save(flightStatus);
+        FlightDetail flightDetail = new FlightDetail();
+        flightDetail.setId(id);
+        flightDetail.setStatus(FlightDetail.Status.ON_SCHEDULE);
+        flightDetailRepository.save(flightDetail);
     }
 }

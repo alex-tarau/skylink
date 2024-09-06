@@ -20,7 +20,7 @@ import static net.microfalx.lang.StringUtils.NA_STRING;
 import static net.microfalx.lang.StringUtils.defaultIfEmpty;
 
 @Service
-public class PassengerService extends AbstractService<Passenger, Integer> {
+public class PassengerService extends AbstractService{
 
     private static final Logger LOGGER = LoggerFactory.getLogger(PassengerService.class);
 

@@ -17,51 +17,51 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class FlightSchedulerTest {
+class FlightDetailSchedulerTest {
 
     @Mock
     private FlightRepository flightRepository;
 
     @Mock
-    private FlightStatusRepository flightStatusRepository;
+    private FlightDetailRepository flightDetailRepository;
 
     @InjectMocks
-    private FlightScheduler flightScheduler;
+    private FlightDetailScheduler flightDetailScheduler;
 
     private Flight flight;
-    private FlightStatus flightStatus;
+    private FlightDetail flightDetail;
 
     @BeforeEach
     void setUp() {
         flight = new Flight();
         flight.setDaysOfWeek(EnumSet.allOf(DayOfWeek.class));
-        flightStatus = new FlightStatus();
-        flightStatus.setFlight(flight);
-        flightStatus.setFlightDate(LocalDate.now());
+        flightDetail = new FlightDetail();
+        flightDetail.setFlight(flight);
+        flightDetail.setFlightDate(LocalDate.now());
     }
 
     @Test
     void noFlightsToSchedule() {
         when(flightRepository.findAll()).thenReturn(Collections.emptyList());
-        flightScheduler.run();
-        verify(flightStatusRepository, never()).save(any(FlightStatus.class));
+        flightDetailScheduler.run();
+        verify(flightDetailRepository, never()).save(any(FlightDetail.class));
     }
 
     @Test
     void flightsAlreadyScheduleOnTime() {
         when(flightRepository.findAll()).thenReturn(Collections.singletonList(flight));
-        when(flightStatusRepository.findById(any(FlightStatus.Id.class))).thenReturn(Optional.of(flightStatus));
-        flightScheduler.run();
-        verify(flightStatusRepository, never()).save(any(FlightStatus.class));
+        when(flightDetailRepository.findById(any(FlightDetail.Id.class))).thenReturn(Optional.of(flightDetail));
+        flightDetailScheduler.run();
+        verify(flightDetailRepository, never()).save(any(FlightDetail.class));
     }
 
     @Test
     void scheduleFlights() {
         when(flightRepository.findAll()).thenReturn(Collections.singletonList(flight));
-        when(flightStatusRepository.findById(any(FlightStatus.Id.class))).thenReturn(Optional.empty());
-        when(flightStatusRepository.save(any(FlightStatus.class))).thenReturn(flightStatus);
-        flightScheduler.run();
-        verify(flightStatusRepository,atLeastOnce()).save(any(FlightStatus.class));
+        when(flightDetailRepository.findById(any(FlightDetail.Id.class))).thenReturn(Optional.empty());
+        when(flightDetailRepository.save(any(FlightDetail.class))).thenReturn(flightDetail);
+        flightDetailScheduler.run();
+        verify(flightDetailRepository,atLeastOnce()).save(any(FlightDetail.class));
     }
 
 }

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Component
@@ -40,7 +41,7 @@ public class PaymentSimulator extends AbstractSimulator<Payment, Integer> {
         Reservation reservation = RESERVATION.get();
         Payment payment = new Payment();
         payment.setName(faker.idNumber().singaporeanFin());
-        payment.setAmount((float) faker.number().randomDouble(2, 300, 500));
+        payment.setAmount(BigDecimal.valueOf(faker.number().randomDouble(2, 300, 500)));
         payment.setMethod(Payment.Method.VISA);
         payment.setReservation(reservation);
         payment.setSentAt(LocalDateTime.now());

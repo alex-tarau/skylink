@@ -2,12 +2,12 @@ package net.microflax.skylink.flight.system;
 
 import net.microfalx.bootstrap.dataset.annotation.DataSet;
 import net.microfalx.bootstrap.web.dataset.DataSetController;
-import net.microflax.skylink.flight.FlightStatus;
+import net.microflax.skylink.flight.FlightDetail;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-@Controller("SystemFlightStatusController")
-@RequestMapping("/system/flight_status")
-@DataSet(model = FlightStatus.class, timeFilter = false)
-public class FlightStatusController extends DataSetController<FlightStatus, Integer> {
+@Controller("SystemFlightDetailController")
+@RequestMapping("/system/flight_detail")
+@DataSet(model = FlightDetail.class, timeFilter = false)
+public class FlightDetailController extends DataSetController<FlightDetail, Integer> {
 }
