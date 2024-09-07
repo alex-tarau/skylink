@@ -17,7 +17,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class FlightDetailSchedulerTest {
+class FlightPlanSchedulerTest {
 
     @Mock
     private FlightRepository flightRepository;
@@ -26,7 +26,7 @@ class FlightDetailSchedulerTest {
     private FlightDetailRepository flightDetailRepository;
 
     @InjectMocks
-    private FlightDetailScheduler flightDetailScheduler;
+    private FlightPlanScheduler flightPlanScheduler;
 
     private Flight flight;
     private FlightDetail flightDetail;
@@ -43,7 +43,7 @@ class FlightDetailSchedulerTest {
     @Test
     void noFlightsToSchedule() {
         when(flightRepository.findAll()).thenReturn(Collections.emptyList());
-        flightDetailScheduler.run();
+        flightPlanScheduler.run();
         verify(flightDetailRepository, never()).save(any(FlightDetail.class));
     }
 
@@ -51,7 +51,7 @@ class FlightDetailSchedulerTest {
     void flightsAlreadyScheduleOnTime() {
         when(flightRepository.findAll()).thenReturn(Collections.singletonList(flight));
         when(flightDetailRepository.findById(any(FlightDetail.Id.class))).thenReturn(Optional.of(flightDetail));
-        flightDetailScheduler.run();
+        flightPlanScheduler.run();
         verify(flightDetailRepository, never()).save(any(FlightDetail.class));
     }
 
@@ -60,7 +60,7 @@ class FlightDetailSchedulerTest {
         when(flightRepository.findAll()).thenReturn(Collections.singletonList(flight));
         when(flightDetailRepository.findById(any(FlightDetail.Id.class))).thenReturn(Optional.empty());
         when(flightDetailRepository.save(any(FlightDetail.class))).thenReturn(flightDetail);
-        flightDetailScheduler.run();
+        flightPlanScheduler.run();
         verify(flightDetailRepository,atLeastOnce()).save(any(FlightDetail.class));
     }
 

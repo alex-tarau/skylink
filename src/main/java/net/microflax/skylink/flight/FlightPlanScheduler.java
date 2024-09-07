@@ -8,13 +8,16 @@ import java.util.List;
 import java.util.Optional;
 
 @Component
-class FlightDetailScheduler implements Runnable {
+class FlightPlanScheduler implements Runnable {
 
     @Autowired
     private FlightRepository flightRepository;
 
     @Autowired
     private FlightDetailRepository flightDetailRepository;
+
+    @Autowired
+    private FlightService flightService;
 
     private final static int DAYS_IN_ADVANCE = 30;
 
@@ -40,6 +43,7 @@ class FlightDetailScheduler implements Runnable {
         FlightDetail flightDetail = new FlightDetail();
         flightDetail.setId(id);
         flightDetail.setStatus(FlightDetail.Status.ON_SCHEDULE);
+        flightService.initializePrice(flightDetail);
         flightDetailRepository.save(flightDetail);
     }
 }

@@ -6,10 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.TaskScheduler;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.time.Duration;
 
 @Service
-public class FlightService extends AbstractService<Flight,Integer> implements InitializingBean {
+public class FlightService extends AbstractService implements InitializingBean {
 
     @Autowired
     private FlightRepository flightRepository;
@@ -18,10 +19,18 @@ public class FlightService extends AbstractService<Flight,Integer> implements In
     private TaskScheduler taskScheduler;
 
     @Autowired
-    private FlightDetailScheduler flightDetailScheduler;
+    private FlightPlanScheduler flightPlanScheduler;
+
+    @Autowired
+    private FlightPriceScheduler flightPriceScheduler;
 
     @Override
     public void afterPropertiesSet() {
-        taskScheduler.scheduleAtFixedRate(flightDetailScheduler, Duration.ofMinutes(60));
+        taskScheduler.scheduleAtFixedRate(flightPriceScheduler, Duration.ofHours(1));
+        taskScheduler.scheduleAtFixedRate(flightPlanScheduler, Duration.ofHours(1));
+    }
+
+    public void initializePrice(FlightDetail flightDetail){
+        flightDetail.setPrice(BigDecimal.ONE);
     }
 }

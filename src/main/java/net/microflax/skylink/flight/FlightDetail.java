@@ -45,7 +45,7 @@ public class FlightDetail extends TimestampAware {
     @Description("The flight status")
     private Status status;
 
-    @Column(name = "price")
+    @Column(name = "price",nullable = false)
     @Digits(integer = 10,fraction = 2)
     @Description("The current price of the flight")
     @Position(4)
