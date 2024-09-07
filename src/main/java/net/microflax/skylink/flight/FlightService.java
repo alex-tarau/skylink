@@ -30,7 +30,7 @@ public class FlightService extends AbstractService implements InitializingBean {
         taskScheduler.scheduleAtFixedRate(flightPlanScheduler, Duration.ofHours(1));
     }
 
-    public void initializePrice(FlightDetail flightDetail){
+     void initializePrice(FlightDetail flightDetail){
         flightDetail.setPrice(BigDecimal.ONE);
     }
 }

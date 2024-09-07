@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 @Component
-public class FlightPriceScheduler implements Runnable {
+class FlightPriceScheduler implements Runnable {
 
     @Autowired
     private FlightDetailRepository flightDetailRepository;
@@ -25,6 +25,7 @@ public class FlightPriceScheduler implements Runnable {
                 flightDetail.setPrice(BigDecimal.valueOf(ThreadLocalRandom.current().nextInt(200, 850)));
             }
             validate(flightDetail, flightDetail.getFlightDate());
+            flightDetailRepository.save(flightDetail);
         });
     }
 
@@ -39,17 +40,19 @@ public class FlightPriceScheduler implements Runnable {
         if (isSummerSeason(flightDate)) {
             flightDetail.setPrice(flightDetail.getPrice().multiply(new BigDecimal("1.3")));
         } else if (isFallOrWinter(flightDate)) {
-            flightDetail.setPrice(flightDetail.getPrice().multiply(new BigDecimal("0.25")));
+            flightDetail.setPrice(flightDetail.getPrice().subtract(flightDetail.getPrice().
+                    multiply(new BigDecimal("0.25"))));
         } else if (isEvening(flightDetail)) {
-            flightDetail.setPrice(flightDetail.getPrice().multiply(new BigDecimal("0.2")));
+            flightDetail.setPrice(flightDetail.getPrice().subtract(flightDetail.getPrice().
+                    multiply(new BigDecimal("0.2"))));
         } else if (isTuesdayOrWednesdayORSaturday(flightDate)) {
-            flightDetail.setPrice(flightDetail.getPrice().multiply(new BigDecimal("0.1")));
+            flightDetail.setPrice(flightDetail.getPrice().subtract(flightDetail.getPrice().multiply(new BigDecimal("0.1"))));
         } else if (isFridayORSaturday(flightDate)) {
             flightDetail.setPrice(flightDetail.getPrice().multiply(new BigDecimal("1.1")));
         } else if (isChristmas(flightDate)) {
-            flightDetail.setPrice(flightDetail.getPrice().multiply(new BigDecimal("0.4")));
+            flightDetail.setPrice(flightDetail.getPrice().subtract(flightDetail.getPrice().multiply(new BigDecimal("0.4"))));
         } else if (isNewYear(flightDate)) {
-            flightDetail.setPrice(flightDetail.getPrice().multiply(new BigDecimal("0.4")));
+            flightDetail.setPrice(flightDetail.getPrice().subtract(flightDetail.getPrice().multiply(new BigDecimal("0.4"))));
         }
     }
 
