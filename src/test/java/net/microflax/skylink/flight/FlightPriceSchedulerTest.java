@@ -22,6 +22,9 @@ class FlightPriceSchedulerTest {
     @Mock
     private FlightDetailRepository flightDetailRepository;
 
+    @Mock
+    private FlightService flightService;
+
     @InjectMocks
     private FlightPriceScheduler flightPriceScheduler;
 

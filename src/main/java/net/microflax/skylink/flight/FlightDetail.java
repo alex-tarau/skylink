@@ -13,7 +13,6 @@ import net.microfalx.lang.annotation.Width;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.time.LocalDate;
 
 @Entity
@@ -45,11 +44,11 @@ public class FlightDetail extends TimestampAware {
     @Description("The flight status")
     private Status status;
 
-    @Column(name = "price",nullable = false)
-    @Digits(integer = 10,fraction = 2)
+    @Column(name = "price", nullable = false)
+    @Digits(integer = 10, fraction = 2)
     @Description("The current price of the flight")
     @Position(4)
-    private BigDecimal price= new BigDecimal("0").setScale(2, RoundingMode.HALF_UP);
+    private BigDecimal price;
 
     @Column(name = "description")
     @Position(1000)
