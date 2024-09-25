@@ -12,6 +12,7 @@ import org.springframework.security.authentication.event.AuthenticationSuccessEv
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.Optional;
@@ -28,6 +29,7 @@ public class PassengerService extends AbstractService{
     private PassengerRepository passengerRepository;
 
     @EventListener
+    @Transactional
     public void onSuccess(AuthenticationSuccessEvent success) {
         Authentication authentication = success.getAuthentication();
         Object principal = authentication.getPrincipal();

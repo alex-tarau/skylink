@@ -3,6 +3,7 @@ package net.microflax.skylink.payment;
 import net.microflax.skylink.AbstractService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -19,6 +20,7 @@ public class PaymentService extends AbstractService{
      *
      * @param id the id of the payment
      */
+    @Transactional
     public void updateStatus(int id) {
         Optional<Payment> newPayment = paymentRepository.findById(id);
         if (newPayment.isEmpty()) throw new NoSuchElementException("There is no payment transaction in database");
