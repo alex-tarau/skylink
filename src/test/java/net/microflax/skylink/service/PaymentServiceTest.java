@@ -41,15 +41,23 @@ class PaymentServiceTest {
         reservation = new Reservation();
         payment = new Payment();
         payment.setReservation(reservation);
-        payment.setSentAt(LocalDateTime.now());
         when(paymentRepository.save(any(Payment.class))).thenReturn(payment);
     }
 
     @Test
     void successfulStatus() {
+        payment.setSentAt(LocalDateTime.now());
         when(paymentRepository.findById(anyInt())).thenReturn(Optional.of(payment));
         paymentService.updateStatus(1);
         assertEquals(Payment.Status.SUCCESS, paymentRepository.findById(1).get().getStatus());
+        verify(paymentRepository).save(payment);
+    }
+
+    @Test
+    void failureStatus() {
+        when(paymentRepository.findById(anyInt())).thenReturn(Optional.of(payment));
+        paymentService.updateStatus(1);
+        assertEquals(Payment.Status.FAIL, paymentRepository.findById(1).get().getStatus());
         verify(paymentRepository).save(payment);
     }
 
