@@ -1,10 +1,7 @@
 # Skylink
 ## Introduction
-A flight reservation system to display all available flights
-for passengers to make reservations. 
-Once a flight reservation is completed, 
-then proceed to make a payment transaction to purchase 
-the reservation.
+A flight reservation application simplifies the booking process by providing real-time flight availability. 
+Passengers can easily search, reserve, and securely purchase tickets within one streamlined platform.
 ## Getting Started
 ## Build & Run
 The project requires Java 17 to develop and run and uses 
