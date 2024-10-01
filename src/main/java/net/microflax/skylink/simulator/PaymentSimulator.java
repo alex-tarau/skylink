@@ -40,6 +40,7 @@ public class PaymentSimulator extends AbstractSimulator<Payment, Integer> {
 
     @Override
     protected Payment simulate() {
+        if (paymentRepository.count() == CREDIT_CARD_NUMBERS.length) return null;
         Reservation reservation = RESERVATION.get();
         Payment payment = new Payment();
         payment.setName(faker.idNumber().singaporeanFin());

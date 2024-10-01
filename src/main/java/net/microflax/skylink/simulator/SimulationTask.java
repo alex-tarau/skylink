@@ -34,6 +34,8 @@ class SimulationTask<T, ID> implements Runnable {
             } catch (DataIntegrityViolationException e) {
                 // ignore and retry, up to a limit
                 LOGGER.debug("Element already exists: {}", ExceptionUtils.getRootCauseMessage(e));
+            } catch (SimulationException e){
+                if (e.getMessage().contains("PaymentSimulator")) return;
             }
         }
     }
