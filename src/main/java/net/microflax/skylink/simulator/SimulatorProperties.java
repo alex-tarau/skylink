@@ -15,7 +15,7 @@ import static java.time.Duration.ofMinutes;
 @Setter
 class SimulatorProperties {
 
-    private boolean enabled = false;
+    private boolean enabled;
     private Duration interval = ofMinutes(1);
     private int maximumAirlineCount = 20;
     private int maximumAirplaneCount = 50;

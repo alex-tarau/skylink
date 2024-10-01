@@ -107,7 +107,7 @@ create table skylink_reservation (
     flight_id int not null,
     passenger_id int not null,
     seat enum('ECONOMY','ECONOMY_PLUS','BUSINESS','FIRST_CLASS') not null,
-    seat_number varchar(3) unique not null,
+    seat_number varchar(3) not null,
     created_at datetime not null,
     modified_at datetime,
     description varchar(1000),

@@ -20,6 +20,8 @@ public class PaymentSimulator extends AbstractSimulator<Payment, Integer> {
     private SimulatorProperties properties;
 
     private static final ThreadLocal<Reservation> RESERVATION = new ThreadLocal<>();
+    private static final String [] CREDIT_CARD_NUMBERS = {"378282246310005","5610591081018250","4012888888881881",
+            "6011111111111117","5555555555554444"};
 
     @Override
     protected JpaRepository<Payment, Integer> getRepository() {
@@ -45,7 +47,7 @@ public class PaymentSimulator extends AbstractSimulator<Payment, Integer> {
         payment.setMethod(Payment.Method.VISA);
         payment.setReservation(reservation);
         payment.setSentAt(LocalDateTime.now());
-        payment.setCreditCardNumber(faker.business().creditCardNumber());
+        payment.setCreditCardNumber(CREDIT_CARD_NUMBERS[random.nextInt(CREDIT_CARD_NUMBERS.length)]);
         return payment;
     }
 
