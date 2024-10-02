@@ -1,6 +1,7 @@
-package net.microflax.skylink;
+package net.microflax.skylink.service;
 
 import jakarta.mail.MessagingException;
+import net.microflax.skylink.EmailService;
 import net.microflax.skylink.airline.Airline;
 import net.microflax.skylink.airplane.Airplane;
 import net.microflax.skylink.airport.Airport;
