@@ -80,12 +80,10 @@ public class EmailService {
 
     private String createConfirmationEmailBody(Passenger passenger, Flight flight, Payment payment) {
         Set<Passenger> dependents = passenger.getDependents();
-        String passengerDependents = "";
-        if (passenger.getDependents() == null) {
-            passengerDependents = "";
-        } else {
+        StringBuilder passengerDependents = new StringBuilder();
+        if (passenger.getDependents() != null) {
             for (Passenger dependent : dependents) {
-                passengerDependents += (dependent.getFirstName() + " " + dependent.getLastName());
+                passengerDependents.append(dependent.getFirstName()).append(" ").append(dependent.getLastName());
             }
         }
         return new StringBuilder().append("Flight confirmed").append("\n\n\n").append("Hi ").append(passenger.getFirstName()).
