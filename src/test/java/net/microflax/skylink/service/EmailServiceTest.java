@@ -16,8 +16,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
 
 import java.math.BigDecimal;
 import java.time.LocalTime;
@@ -32,7 +32,7 @@ import static org.mockito.Mockito.*;
 class EmailServiceTest {
 
     @Mock
-    private JavaMailSender mailSender;
+    private MailSender mailSender;
 
     @Mock
     private PaymentRepository paymentRepository;
