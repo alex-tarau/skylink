@@ -23,7 +23,7 @@ import java.time.LocalDateTime;
 public class Payment extends NamedAndTimestampedIdentityAware<Integer> {
 
     @OneToOne
-    @JoinColumn(name = "reservation_id")
+    @JoinColumn(name = "reservation_id",nullable = false)
     @Description("The flight reservation the passenger will purchase")
     @Position(6)
     private Reservation reservation;
