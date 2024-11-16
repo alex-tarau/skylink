@@ -53,7 +53,6 @@ class ReservationServiceTest {
         reservation.setSeat(Reservation.Seat.ECONOMY);
         when(reservationRepository.findById(anyInt())).thenReturn(Optional.of(reservation));
         when(airplaneRepository.save(any(Airplane.class))).thenReturn(airplane);
-        when(reservationRepository.save(any(Reservation.class))).thenReturn(reservation);
     }
 
     @Test
@@ -61,6 +60,5 @@ class ReservationServiceTest {
         reservationService.updateAvailableSeats(1, Reservation.Seat.ECONOMY);
         assertEquals(99, reservationRepository.findById(1).get().getFlight().getAirplane().getEconomySeats());
         verify(airplaneRepository).save(any(Airplane.class));
-        verify(reservationRepository).save(any(Reservation.class));
     }
 }

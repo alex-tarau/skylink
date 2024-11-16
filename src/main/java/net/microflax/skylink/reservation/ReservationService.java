@@ -45,7 +45,6 @@ public class ReservationService extends AbstractService{
                     break;
             }
             airplaneRepository.save(airplane);
-            reservationRepository.save(optionalReservation.get());
         } else {
             throw new NoSuchElementException("This reservation does not exist in the database");
         }
