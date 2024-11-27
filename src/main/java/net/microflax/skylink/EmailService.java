@@ -1,5 +1,6 @@
 package net.microflax.skylink;
 
+import lombok.extern.slf4j.Slf4j;
 import net.microflax.skylink.flight.Flight;
 import net.microflax.skylink.passenger.Passenger;
 import net.microflax.skylink.payment.Payment;
@@ -17,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.*;
 
 @Service
+@Slf4j
 public class EmailService {
 
     @Autowired
@@ -43,7 +45,7 @@ public class EmailService {
         try {
             mailSender.send(message);
         } catch (MailException e) {
-            //
+            log.error(e.getMessage());
         }
     }
 
@@ -60,7 +62,7 @@ public class EmailService {
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
         props.put("mail.debug", "true");
-        this.mailSender=mailSender;
+        this.mailSender = mailSender;
     }
 
     private SimpleMailMessage createConfirmationEmail(Payment payment) {

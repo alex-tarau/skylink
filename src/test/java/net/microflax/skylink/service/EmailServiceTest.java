@@ -1,6 +1,5 @@
 package net.microflax.skylink.service;
 
-import jakarta.mail.MessagingException;
 import net.microflax.skylink.EmailService;
 import net.microflax.skylink.airline.Airline;
 import net.microflax.skylink.airplane.Airplane;
@@ -65,7 +64,7 @@ class EmailServiceTest {
     }
 
     @Test
-    void sendConfirmationEmail() throws MessagingException {
+    void sendConfirmationEmail() {
         payment.setStatus(Payment.Status.SUCCESS);
         when(paymentRepository.findById(anyInt())).thenReturn(Optional.of(payment));
         emailService.sendConfirmationEmail(1);
