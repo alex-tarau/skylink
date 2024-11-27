@@ -15,7 +15,9 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
+import java.util.Date;
+import java.util.Properties;
+import java.util.Set;
 
 @Service
 @Slf4j
@@ -34,14 +36,10 @@ public class EmailService {
      */
     @Transactional
     public void sendConfirmationEmail(int id) {
-        Optional<Payment> optionalPayment = paymentRepository.findById(id);
-        if (optionalPayment.isPresent()) {
-            if (optionalPayment.get().getStatus() != Payment.Status.SUCCESS)
-                throw new IllegalArgumentException("The payment was not successful");
-        } else {
-            throw new NoSuchElementException("The payment is not persisted in the database");
-        }
-        SimpleMailMessage message = createConfirmationEmail(optionalPayment.get());
+        Payment payment = paymentRepository.findById(id).orElse(null);
+        if (payment == null) return;
+        if (payment.getStatus() != Payment.Status.SUCCESS) throw new IllegalArgumentException("The payment was not successful");
+        SimpleMailMessage message = createConfirmationEmail(payment);
         try {
             mailSender.send(message);
         } catch (MailException e) {
