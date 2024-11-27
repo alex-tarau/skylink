@@ -7,9 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.NoSuchElementException;
-import java.util.Optional;
-
 @Service
 public class ReservationService extends AbstractService{
 
@@ -27,9 +24,9 @@ public class ReservationService extends AbstractService{
      */
     @Transactional
     public void updateAvailableSeats(int id, Reservation.Seat seat) {
-        Optional<Reservation> optionalReservation = reservationRepository.findById(id);
-        if (optionalReservation.isPresent()) {
-            Airplane airplane = optionalReservation.get().getFlight().getAirplane();
+        Reservation reservation = reservationRepository.findById(id).orElse(null);
+        if (reservation!=null) {
+            Airplane airplane = reservation.getFlight().getAirplane();
             switch (seat) {
                 case ECONOMY:
                     airplane.setEconomySeats(airplane.getEconomySeats() - 1);
@@ -45,8 +42,6 @@ public class ReservationService extends AbstractService{
                     break;
             }
             airplaneRepository.save(airplane);
-        } else {
-            throw new NoSuchElementException("This reservation does not exist in the database");
         }
     }
 }

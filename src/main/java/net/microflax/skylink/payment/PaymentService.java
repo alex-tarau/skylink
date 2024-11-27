@@ -5,9 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.NoSuchElementException;
-import java.util.Optional;
-
 @Service
 public class PaymentService extends AbstractService{
 
@@ -22,13 +19,13 @@ public class PaymentService extends AbstractService{
      */
     @Transactional
     public void updateStatus(int id) {
-        Optional<Payment> newPayment = paymentRepository.findById(id);
-        if (newPayment.isEmpty()) throw new NoSuchElementException("There is no payment transaction in database");
-        if (newPayment.get().getSentAt() == null) {
-            newPayment.get().setStatus(Payment.Status.FAIL);
+        Payment payment = paymentRepository.findById(id).orElse(null);
+        if (payment==null) return;
+        if (payment.getSentAt() == null) {
+            payment.setStatus(Payment.Status.FAIL);
         }else {
-            newPayment.get().setStatus(Payment.Status.SUCCESS);
+            payment.setStatus(Payment.Status.SUCCESS);
         }
-        paymentRepository.save(newPayment.get());
+        paymentRepository.save(payment);
     }
 }
