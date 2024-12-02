@@ -1,6 +1,7 @@
 package net.microflax.skylink;
 
 import lombok.extern.slf4j.Slf4j;
+import net.microfalx.lang.ExceptionUtils;
 import net.microflax.skylink.flight.Flight;
 import net.microflax.skylink.passenger.Passenger;
 import net.microflax.skylink.payment.Payment;
@@ -43,7 +44,7 @@ public class EmailService {
         try {
             mailSender.send(message);
         } catch (MailException e) {
-            log.error(e.getMessage());
+            log.error("Failed to send email:{}", ExceptionUtils.getRootCauseDescription(e));
         }
     }
 
