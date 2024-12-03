@@ -39,7 +39,7 @@ public class EmailService {
     public void sendConfirmationEmail(int id) {
         Payment payment = paymentRepository.findById(id).orElse(null);
         if (payment == null) return;
-        if (payment.getStatus() != Payment.Status.SUCCESS) throw new IllegalArgumentException("The payment was not successful");
+        if (payment.getStatus() != Payment.Status.SUCCESS) return;
         SimpleMailMessage message = createConfirmationEmail(payment);
         try {
             mailSender.send(message);
