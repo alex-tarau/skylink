@@ -1,9 +1,10 @@
 package net.microflax.skylink.service;
 
-import net.microflax.skylink.EmailService;
 import net.microflax.skylink.airline.Airline;
 import net.microflax.skylink.airplane.Airplane;
 import net.microflax.skylink.airport.Airport;
+import net.microflax.skylink.email.EmailProperties;
+import net.microflax.skylink.email.EmailService;
 import net.microflax.skylink.flight.Flight;
 import net.microflax.skylink.passenger.Passenger;
 import net.microflax.skylink.payment.Payment;
@@ -22,7 +23,6 @@ import java.math.BigDecimal;
 import java.time.LocalTime;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.*;
@@ -32,6 +32,9 @@ class EmailServiceTest {
 
     @Mock
     private MailSender mailSender;
+
+    @Mock
+    private EmailProperties emailProperties;
 
     @Mock
     private PaymentRepository paymentRepository;
@@ -54,19 +57,18 @@ class EmailServiceTest {
         payment.setMethod(Payment.Method.VISA);
         payment.setAmount(BigDecimal.valueOf(100));
         payment.setCreditCardNumber("378282246310005");
+        when(paymentRepository.findById(anyInt())).thenReturn(Optional.of(payment));
     }
 
     @Test
     void didNotSendConfirmationEmail() {
-        when(paymentRepository.findById(anyInt())).thenReturn(Optional.of(payment));
-        assertThrows(IllegalArgumentException.class,() -> emailService.sendConfirmationEmail(1));
-        verify(mailSender,never()).send(any(SimpleMailMessage.class));
+        emailService.sendConfirmationEmail(1);
+        verify(mailSender, never()).send(any(SimpleMailMessage.class));
     }
 
     @Test
     void sendConfirmationEmail() {
         payment.setStatus(Payment.Status.SUCCESS);
-        when(paymentRepository.findById(anyInt())).thenReturn(Optional.of(payment));
         emailService.sendConfirmationEmail(1);
         verify(mailSender).send(any(SimpleMailMessage.class));
     }

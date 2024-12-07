@@ -1,4 +1,4 @@
-package net.microflax.skylink;
+package net.microflax.skylink.email;
 
 import lombok.extern.slf4j.Slf4j;
 import net.microfalx.lang.ExceptionUtils;
@@ -28,6 +28,9 @@ public class EmailService {
     private MailSender mailSender;
 
     @Autowired
+    private EmailProperties emailProperties;
+
+    @Autowired
     private PaymentRepository paymentRepository;
 
     /**
@@ -52,14 +55,14 @@ public class EmailService {
     @Bean
     public void initializeMailSender() {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
-        mailSender.setHost("smtp.gmail.com");
-        mailSender.setPort(587);
-        mailSender.setUsername("skylink");
-        mailSender.setPassword("skylink123");
+        mailSender.setHost(emailProperties.getHost());
+        mailSender.setPort(emailProperties.getPort());
+        mailSender.setUsername(emailProperties.getUserName());
+        mailSender.setPassword(emailProperties.getPassword());
         Properties props = mailSender.getJavaMailProperties();
         props.put("mail.transport.protocol", "smtp");
-        props.put("mail.smtp.auth", "true");
-        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.auth", emailProperties.isAuth());
+        props.put("mail.smtp.starttls.enable", emailProperties.isTls());
         props.put("mail.debug", "true");
         this.mailSender = mailSender;
     }
@@ -70,7 +73,7 @@ public class EmailService {
         Flight flight = reservation.getFlight();
         message.setSubject("Booking confirmation for " + flight.getOriginAirport().getCity() + " - " +
                 flight.getDestinationAirport().getCity());
-        message.setFrom("smtp.gmail.com");
+        message.setFrom(emailProperties.getHost());
         Passenger passenger = reservation.getPassenger();
         message.setTo(passenger.getEmail());
         message.setSentDate(new Date());
