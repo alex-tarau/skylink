@@ -85,8 +85,10 @@ class EmailServiceTest {
         Airplane airplane = new Airplane();
         airplane.setName("Airplane");
         Airport origin = new Airport();
+        origin.setName("EWR");
         origin.setCity("New York");
         Airport destination = new Airport();
+        destination.setName("CDG");
         destination.setCity("Paris");
         Airline airline = new Airline();
         airline.setName("United Airlines");
@@ -95,7 +97,7 @@ class EmailServiceTest {
         flight.setAirline(airline);
         flight.setOriginAirport(origin);
         flight.setDestinationAirport(destination);
-        flight.setDeparture(LocalTime.of(12, 5));
+        flight.setDeparture(LocalTime.of(1, 5));
         flight.setArrival(LocalTime.MIDNIGHT);
         flight.setName("1234");
         return flight;

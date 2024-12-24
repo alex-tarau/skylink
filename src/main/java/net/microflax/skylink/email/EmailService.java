@@ -16,6 +16,7 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Properties;
 import java.util.Set;
@@ -71,8 +72,7 @@ public class EmailService {
         SimpleMailMessage message = new SimpleMailMessage();
         Reservation reservation = payment.getReservation();
         Flight flight = reservation.getFlight();
-        message.setSubject("Booking confirmation for " + flight.getOriginAirport().getCity() + " - " +
-                flight.getDestinationAirport().getCity());
+        message.setSubject('✈' + "Your Flight Booking Confirmation");
         message.setFrom(emailProperties.getHost());
         Passenger passenger = reservation.getPassenger();
         message.setTo(passenger.getEmail());
@@ -90,17 +90,32 @@ public class EmailService {
                 passengerDependents.append(dependent.getFirstName()).append(" ").append(dependent.getLastName());
             }
         }
-        return new StringBuilder().append("Flight confirmed").append("\n\n\n").append("Hi ").append(passenger.getFirstName()).
-                append("\n").append("Your ").append(flight.getOriginAirport().getCity()).append(" - ").
-                append(flight.getDestinationAirport().getCity()).append(" ").append("flight is confirmed").append("\n").
-                append("We will email you your ticket shortly").append("\n\n\n\n\n").append("Just Booked" + "\n").
-                append(flight.getAirline().getName()).append(" ").append(flight.getName()).append("\n").
-                append(flight.getOriginAirport().getCity()).append(" -> ").append(flight.getDestinationAirport().getCity())
-                .append("       ").append(flight.getDeparture()).append(" - ").append(flight.getArrival()).append("\n\n\n").
-                append("\n Travelers " + "\n").append(passenger.getFirstName()).append(" ").append(passenger.getLastName()).
-                append("\n").append("\n").append(passengerDependents).append("\n").append("Payment receipt \n").
-                append(payment.getMethod().name()).append("\n Credit Card \n").append(payment.getCreditCardNumber()).
-                append("\n ").append("Total Charge \n").append(payment.getAmount()).toString();
+        StringBuilder emailBody = new StringBuilder();
+        emailBody.append("Dear ").append(passenger.getFirstName()).append(" ").append(passenger.getLastName())
+                .append(passengerDependents).append(passengerDependents).append(",").append("\n\n")
+                .append("Thank you for choosing ").append(flight.getAirline().getName())
+                .append(". Your flight reservation is confirmed! Below are the details of your booking")
+                .append("\n\n").append("Date of Booking ")
+                .append(LocalDate.now()).append("\n\n").append("Traveler(s) Details ")
+                .append(passenger.getFirstName()).append(" ").append(passenger.getLastName())
+                .append(", ").append(passengerDependents).append(passengerDependents).append("\n\n")
+                .append("""
+                        Flight Itinerary
+                        Departure Flight
+                        
+                        Flight Number:\s""")
+                .append(flight.getName()).append("\n").append("From: ").append(flight.getOriginAirport().getName())
+                .append("\n").append("To: ").append(flight.getDestinationAirport().getName()).append("\n")
+                .append("Date: [Departure Date]\n").append("Departure Time: ").append(flight.getDeparture())
+                .append("\n").append("Arrival Time: ").append(flight.getArrival()).append("\n").append("""
+                        Important Notes
+                        Please arrive at the airport at least 3 hours before departure.
+                        Ensure all passengers have valid identification or travel documents.
+                        For any changes or assistance, contact us at
+                        """).append(flight.getAirline().getContactNumber()).append(".\n")
+                .append("We look forward to welcoming you onboard!\n").append("\n").append("Safe travels,\n")
+                .append(flight.getAirline().getName()).append(" Team");
+        return emailBody.toString();
     }
 
 }
