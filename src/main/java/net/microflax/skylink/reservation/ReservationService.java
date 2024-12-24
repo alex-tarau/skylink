@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-public class ReservationService extends AbstractService{
+public class ReservationService extends AbstractService {
 
     @Autowired
     private AirplaneRepository airplaneRepository;
@@ -25,21 +25,13 @@ public class ReservationService extends AbstractService{
     @Transactional
     public void updateAvailableSeats(int id, Reservation.Seat seat) {
         Reservation reservation = reservationRepository.findById(id).orElse(null);
-        if (reservation!=null) {
+        if (reservation != null) {
             Airplane airplane = reservation.getFlight().getAirplane();
             switch (seat) {
-                case ECONOMY:
-                    airplane.setEconomySeats(airplane.getEconomySeats() - 1);
-                    break;
-                case ECONOMY_PLUS:
-                    airplane.setEconomyPlusSeats(airplane.getEconomyPlusSeats() - 1);
-                    break;
-                case BUSINESS:
-                    airplane.setBusinessSeats(airplane.getBusinessSeats() - 1);
-                    break;
-                case FIRST_CLASS:
-                    airplane.setFirstClassSeats(airplane.getFirstClassSeats() - 1);
-                    break;
+                case ECONOMY -> airplane.setEconomySeats(airplane.getEconomySeats() - 1);
+                case ECONOMY_PLUS -> airplane.setEconomyPlusSeats(airplane.getEconomyPlusSeats() - 1);
+                case BUSINESS -> airplane.setBusinessSeats(airplane.getBusinessSeats() - 1);
+                case FIRST_CLASS -> airplane.setFirstClassSeats(airplane.getFirstClassSeats() - 1);
             }
             airplaneRepository.save(airplane);
         }
