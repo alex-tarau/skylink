@@ -54,7 +54,7 @@ public class ReservationSimulator extends AbstractSimulator<Reservation, Integer
         reservation.setName(faker.idNumber().valid());
         reservation.setPassenger(passengerSimulator.next());
         reservation.setFlight(flightSimulator.next());
-        reservation.setSeat(Reservation.Seat.ECONOMY);
+        reservation.setSeat(faker.options().option(Reservation.Seat.class));
         reservation.setSeatNumber(generateSeatNumber(reservation.getFlight(), reservation.getSeat()));
         return reservation;
     }

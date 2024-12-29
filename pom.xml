@@ -5,7 +5,7 @@
     <parent>
         <groupId>net.microfalx</groupId>
         <artifactId>pom</artifactId>
-        <version>1.0.0</version>
+        <version>1.0.3</version>
     </parent>
     <groupId>net.microflax</groupId>
     <artifactId>skylink</artifactId>
@@ -28,7 +28,7 @@
 	</scm>
 
     <properties>
-        <bom.version>1.0.0</bom.version>
+        <bom.version>1.0.3</bom.version>
 		<bootstrap.version>1.0.0-SNAPSHOT</bootstrap.version>
         <mysql.version>8.3.0</mysql.version>
     </properties>

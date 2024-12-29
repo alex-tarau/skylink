@@ -8,7 +8,6 @@ import net.microflax.skylink.payment.Payment;
 import net.microflax.skylink.payment.PaymentRepository;
 import net.microflax.skylink.reservation.Reservation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.mail.MailException;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
@@ -53,7 +52,6 @@ public class EmailService {
     }
 
 
-    @Bean
     public void initializeMailSender() {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
         mailSender.setHost(emailProperties.getHost());
