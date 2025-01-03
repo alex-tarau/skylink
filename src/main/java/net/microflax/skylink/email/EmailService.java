@@ -82,21 +82,17 @@ public class EmailService {
 
     private String createConfirmationEmailBody(Passenger passenger, Flight flight, Payment payment) {
         Set<Passenger> dependents = passenger.getDependents();
-        StringBuilder passengerDependents = new StringBuilder();
-        if (passenger.getDependents() != null) {
-            for (Passenger dependent : dependents) {
-                passengerDependents.append(dependent.getFirstName()).append(" ").append(dependent.getLastName());
-            }
-        }
+        StringBuilder travelers = new StringBuilder();
+        if (passenger.getDependents() != null) dependents.forEach(p -> travelers.append(p.getFirstName()).append(" ").append(p.getLastName()));
         StringBuilder emailBody = new StringBuilder();
         emailBody.append("Dear ").append(passenger.getFirstName()).append(" ").append(passenger.getLastName())
-                .append(passengerDependents).append(passengerDependents).append(",").append("\n\n")
+                .append(travelers).append(travelers).append(",").append("\n\n")
                 .append("Thank you for choosing ").append(flight.getAirline().getName())
                 .append(". Your flight reservation is confirmed! Below are the details of your booking")
                 .append("\n\n").append("Date of Booking ")
                 .append(LocalDate.now()).append("\n\n").append("Traveler(s) Details ")
                 .append(passenger.getFirstName()).append(" ").append(passenger.getLastName())
-                .append(", ").append(passengerDependents).append(passengerDependents).append("\n\n")
+                .append(", ").append(travelers).append(travelers).append("\n\n")
                 .append("""
                         Flight Itinerary
                         Departure Flight
